@@ -6,75 +6,87 @@
   "items": [
     {
       "id": "item_1",
-      "name": "Metal Plate of Lord Ram",
-      "price": 420,
-      "emoji": "🛕"
+      "name": "Motichoor Ladoo",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Motichoor_ladoo.jpg/320px-Motichoor_ladoo.jpg",
+      "price": 80,
+      "emoji": "🟡"
     },
     {
       "id": "item_2",
-      "name": "108 Jap Mala",
-      "price": 260,
-      "emoji": "📿"
+      "name": "Kaju Katli",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Kaju_katli.jpg/320px-Kaju_katli.jpg",
+      "price": 150,
+      "emoji": "🥮"
     },
     {
       "id": "item_3",
-      "name": "Dhoop Cone Holder",
-      "price": 150,
+      "name": "Puja Incense Sticks",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Incense_sticks.jpg/320px-Incense_sticks.jpg",
+      "price": 60,
       "emoji": "🕯️"
     },
     {
       "id": "item_4",
-      "name": "Ram Booklet",
-      "price": 40,
-      "emoji": "📖"
-    },
-    {
-      "id": "item_5",
-      "name": "Ram Margdarshan Cards",
-      "price": 110,
+      "name": "Decorative Diya Set",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Diya_on_Diwali.jpg/320px-Diya_on_Diwali.jpg",
+      "price": 120,
       "emoji": "🪔"
     },
     {
+      "id": "item_5",
+      "name": "Saffron Halwa",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Halwa.jpg/320px-Halwa.jpg",
+      "price": 90,
+      "emoji": "🍮"
+    },
+    {
       "id": "item_6",
-      "name": "Tulsi Bead Bracelet",
-      "price": 70,
-      "emoji": "🧿"
+      "name": "Tulsi Mala",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Tulsi_mala.jpg/320px-Tulsi_mala.jpg",
+      "price": 100,
+      "emoji": "📿"
     },
     {
       "id": "item_7",
-      "name": "Sarayu Jal",
-      "price": 100,
-      "emoji": "💧"
+      "name": "Dry Fruits Mix",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Dried_fruits.jpg/320px-Dried_fruits.jpg",
+      "price": 200,
+      "emoji": "🥜"
     },
     {
       "id": "item_8",
-      "name": "Chandan",
-      "price": 60,
+      "name": "Sandal Chandan Tilak",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Chandan_tilak.jpg/320px-Chandan_tilak.jpg",
+      "price": 70,
       "emoji": "🌿"
     },
     {
       "id": "item_9",
-      "name": "Ayodhya Diya",
-      "price": 80,
-      "emoji": "🪔"
+      "name": "Silver Coin (Ram)",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Silver_coins.jpg/320px-Silver_coins.jpg",
+      "price": 350,
+      "emoji": "🪙"
     },
     {
       "id": "item_10",
-      "name": "Ram Fridge Magnet",
-      "price": 90,
-      "emoji": "🧲"
+      "name": "Gulal Colour Pack",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Holi_colors.jpg/320px-Holi_colors.jpg",
+      "price": 50,
+      "emoji": "🎨"
     },
     {
       "id": "item_11",
-      "name": "Hanuman Chalisa",
-      "price": 70,
-      "emoji": "📜"
+      "name": "Puja Thali Set",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Puja_thali.jpg/320px-Puja_thali.jpg",
+      "price": 250,
+      "emoji": "🍽️"
     },
     {
       "id": "item_12",
-      "name": "Dhoop Set",
-      "price": 90,
-      "emoji": "🔥"
+      "name": "Flower Garland",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flower_garland.jpg/320px-Flower_garland.jpg",
+      "price": 40,
+      "emoji": "🌸"
     }
   ]
 }
