@@ -30,7 +30,8 @@ HEADERS = [
 ]
 
 def get_sheets_client():
-    creds = Credentials.from_service_account_file("credentials.json", scopes=SCOPES)
+    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
+    creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     return gspread.authorize(creds)
 
 print("\n" + "="*60)
@@ -154,4 +155,5 @@ def submit():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
