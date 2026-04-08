@@ -338,7 +338,14 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const API = '';
+const API = "https://giftboxsimulator.onrender.com";
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(API + "/api/config")
+    .then(() => console.log("Backend warmed up"))
+    .catch(() => console.log("Warmup failed"));
+});
+
 let config = null;
 let selectedItems = new Set();
 let currentTotal = 0;
