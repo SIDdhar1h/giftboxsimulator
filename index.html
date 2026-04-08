@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MangalDeep – Build Your Gift Box</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8651A; --gold: #F5A623; --cream: #FFF8EE;
+    --card-bg: #FFFAF3; --border: #F0DDB8; --success: #2E7D32;
+    --text: #2C1810; --muted: #8B6547; --radius: 14px;
+    --shadow: 0 4px 20px rgba(232,101,26,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh;
+    background-image: radial-gradient(circle at 10% 20%, rgba(245,166,35,0.08) 0%, transparent 50%),
+                      radial-gradient(circle at 90% 80%, rgba(232,101,26,0.06) 0%, transparent 50%);
+  }
+  header {
+    background: linear-gradient(135deg, var(--saffron) 0%, #C8420A 100%);
+    color: white; text-align: center; padding: 28px 20px 20px; position: relative; overflow: hidden;
+  }
+  header::before {
+    content: 'om  om'; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    font-size: 14px; opacity: 0.5; letter-spacing: 16px;
+  }
+  header h1 { font-family: 'Yatra One', cursive; font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+  #header-subtitle { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; font-weight: 300; }
+
+  .progress-wrap { display: flex; justify-content: center; background: white; border-bottom: 2px solid var(--border); }
+  .step-pill { flex: 1; max-width: 200px; text-align: center; padding: 12px 8px; font-size: 0.78rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; transition: all 0.3s; }
+  .step-pill.active { color: var(--saffron); border-bottom-color: var(--saffron); }
+  .step-pill.done { color: var(--success); border-bottom-color: var(--success); }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
+  .step-panel { display: none; }
+  .step-panel.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  .section-title { font-family: 'Yatra One', cursive; font-size: 1.5rem; color: var(--saffron); margin-bottom: 6px; }
+  .section-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; }
+  .section-divider { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--saffron); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 24px 0 18px; grid-column: 1/-1; }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:560px){ .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1/-1; }
+  label { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+  label .req { color: var(--saffron); }
+  input, select, textarea {
+    padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+    font-family: inherit; font-size: 0.9rem; background: white; color: var(--text);
+    transition: border 0.2s, box-shadow 0.2s; outline: none;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(232,101,26,0.1); }
+  input.invalid, select.invalid, textarea.invalid { border-color: #c0392b; }
+  textarea { resize: vertical; min-height: 72px; }
+
+  /* Checkbox group */
+  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+  .cb-item { display: flex; align-items: center; gap: 6px; background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 0.82rem; font-weight: 500; transition: all 0.15s; user-select: none; }
+  .cb-item:hover { border-color: var(--gold); }
+  .cb-item input[type=checkbox] { accent-color: var(--saffron); width: 14px; height: 14px; cursor: pointer; }
+  .cb-item.checked { background: #FFF3E8; border-color: var(--saffron); }
+
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border: none; border-radius: 50px; font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .btn-primary { background: linear-gradient(135deg, var(--saffron), #C8420A); color: white; box-shadow: 0 4px 14px rgba(232,101,26,0.35); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,101,26,0.45); }
+  .btn-secondary { background: white; color: var(--saffron); border: 2px solid var(--saffron); }
+  .btn-secondary:hover { background: var(--saffron); color: white; }
+  .btn-row { display: flex; gap: 12px; margin-top: 28px; justify-content: flex-end; }
+
+  /* Step 3 post-box questions */
+  .post-box { background: white; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px; margin-top: 28px; }
+  .post-box .section-title { font-size: 1.1rem; margin-bottom: 4px; }
+  .post-box .section-sub { margin-bottom: 18px; }
+
+  /* Builder */
+  .builder-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
+  .box-summary { background: white; border: 2px solid var(--gold); border-radius: var(--radius); padding: 16px 22px; min-width: 200px; text-align: center; box-shadow: var(--shadow); position: sticky; top: 20px; }
+  .box-summary .label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .box-summary .total { font-family: 'Yatra One', cursive; font-size: 2.2rem; color: var(--saffron); line-height: 1.1; }
+  .box-summary .count { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+
+  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
+  .item-card { background: var(--card-bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 14px 12px 12px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; user-select: none; }
+  .item-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .item-card.selected { border-color: var(--saffron); background: #FFF3E8; box-shadow: 0 0 0 3px rgba(232,101,26,0.15); }
+  .item-card .check { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
+  .item-card.selected .check { background: var(--saffron); color: white; }
+  .item-emoji { font-size: 2.2rem; margin-bottom: 8px; }
+  .item-name { font-size: 0.8rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+  /* Success */
+  .success-wrap { text-align: center; padding: 40px 20px; }
+  .success-icon { font-size: 4rem; margin-bottom: 16px; animation: pop 0.5s ease; }
+  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
+  .success-wrap h2 { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--saffron); margin-bottom: 10px; }
+  .cohort-badge { display: inline-block; background: linear-gradient(135deg, var(--saffron), var(--gold)); color: white; border-radius: 50px; padding: 8px 22px; font-weight: 700; font-size: 1rem; margin: 12px 0 4px; letter-spacing: 0.5px; }
+  .cohort-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
+  .success-box { background: white; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin: 20px auto; max-width: 440px; text-align: left; }
+  .success-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; gap: 12px; }
+  .success-row:last-child { border-bottom: none; }
+  .success-row .key { color: var(--muted); white-space: nowrap; }
+  .success-row .val { font-weight: 600; text-align: right; }
+  .total-final { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--saffron); text-align: center; margin: 12px 0; }
+
+  .error-msg { color: #c0392b; font-size: 0.78rem; margin-top: 2px; display: none; }
+  .error-msg.show { display: block; }
+  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: white; padding: 12px 20px; border-radius: 10px; font-size: 0.88rem; opacity: 0; transform: translateY(10px); transition: all 0.3s; z-index: 999; pointer-events: none; }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: #c0392b; }
+  .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--saffron); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 40px auto; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>MangalDeep Gift Box</h1>
+  <p id="header-subtitle">Loading…</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="step-pill active" id="pill-1"><span>①</span> About You</div>
+  <div class="step-pill" id="pill-2"><span>②</span> Build Box</div>
+  <div class="step-pill" id="pill-3"><span>③</span> A Few More</div>
+  <div class="step-pill" id="pill-4"><span>④</span> Done!</div>
+</div>
+
+<div class="container">
+
+  <!-- ── STEP 1: User Form ── -->
+  <div class="step-panel active" id="step-1">
+    <p class="section-title">Tell us about yourself</p>
+    <p class="section-sub">All fields are required — helps us understand your gifting world better</p>
+
+    <div class="form-grid">
+
+      <div class="section-divider">Basic Info</div>
+
+      <div class="form-group">
+        <label>Your Name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="Ramesh Kumar">
+        <span class="error-msg" id="err-name">Please enter your name.</span>
+      </div>
+      <div class="form-group">
+        <label>Email <span class="req">*</span></label>
+        <input type="email" id="f-email" placeholder="you@example.com">
+        <span class="error-msg" id="err-email">Please enter a valid email.</span>
+      </div>
+      <div class="form-group">
+        <label>Age <span class="req">*</span></label>
+        <input type="number" id="f-age" placeholder="28" min="10" max="100">
+        <span class="error-msg" id="err-age">Please enter your age.</span>
+      </div>
+      <div class="form-group">
+        <label>City <span class="req">*</span></label>
+        <input type="text" id="f-city" placeholder="e.g. Chennai, Mumbai, Bengaluru">
+        <span class="error-msg" id="err-city">Please enter your city.</span>
+      </div>
+
+      <div class="section-divider">Your Prayer Life</div>
+
+      <div class="form-group">
+        <label>How often do you pray? <span class="req">*</span></label>
+        <select id="f-pray">
+          <option value="">— Select —</option>
+          <option>Daily — morning and evening</option>
+          <option>Daily — once a day</option>
+          <option>A few times a week</option>
+          <option>On festivals and auspicious days only</option>
+          <option>Rarely / occasionally</option>
+          <option>Never</option>
+        </select>
+        <span class="error-msg" id="err-pray">Please select an option.</span>
+      </div>
+      <div class="form-group">
+        <label>Who taught you your rituals? <span class="req">*</span></label>
+        <select id="f-taught">
+          <option value="">— Select —</option>
+          <option>Grandparents</option>
+          <option>Parents / family elders</option>
+          <option>Temple priests</option>
+          <option>YouTube / social media</option>
+          <option>Books / scriptures</option>
+          <option>Self-learnt / figured it out</option>
+          <option>I don't follow specific rituals</option>
+        </select>
+        <span class="error-msg" id="err-taught">Please select an option.</span>
+      </div>
+
+      <div class="form-group full">
+        <label>Which steps do you follow while praying? <span class="req">*</span></label>
+        <div class="checkbox-group" id="prayer-steps">
+          <label class="cb-item"><input type="checkbox" value="Lighting diya / lamp"> Lighting diya / lamp</label>
+          <label class="cb-item"><input type="checkbox" value="Incense / agarbatti"> Incense / agarbatti</label>
+          <label class="cb-item"><input type="checkbox" value="Flowers / garlands"> Flowers / garlands</label>
+          <label class="cb-item"><input type="checkbox" value="Chanting mantras / shlokas"> Chanting mantras</label>
+          <label class="cb-item"><input type="checkbox" value="Aarti"> Aarti</label>
+          <label class="cb-item"><input type="checkbox" value="Naivedyam / prasad offering"> Naivedyam / prasad</label>
+          <label class="cb-item"><input type="checkbox" value="Tilak / chandan"> Tilak / chandan</label>
+          <label class="cb-item"><input type="checkbox" value="Meditation / silence"> Meditation / silence</label>
+          <label class="cb-item"><input type="checkbox" value="Reading scriptures"> Reading scriptures</label>
+          <label class="cb-item"><input type="checkbox" value="I keep it simple / informal"> Simple / informal</label>
+        </div>
+        <span class="error-msg" id="err-steps">Please select at least one step.</span>
+      </div>
+
+      <div class="section-divider">Your Gifting Habits</div>
+
+      <div class="form-group full">
+        <label>Which occasions do you typically give gifts for? <span class="req">*</span></label>
+        <input type="text" id="f-gifting" placeholder="e.g. Diwali, Gruha Pravesha, Namkaran, Birthdays, Weddings…">
+        <span class="error-msg" id="err-gifting">Please fill this in.</span>
+      </div>
+      <div class="form-group full">
+        <label>One item you would always include in a puja / festive gift, no matter the price? <span class="req">*</span></label>
+        <input type="text" id="f-mustitem" placeholder="e.g. Diya, Ladoo, Agarbatti, Silver coin…">
+        <span class="error-msg" id="err-mustitem">Please fill this in.</span>
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goToBuilder()">Next: Build Box →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 2: Gift Box Builder ── -->
+  <div class="step-panel" id="step-2">
+    <div class="builder-top">
+      <div>
+        <p class="section-title" id="builder-title">Build Your Gift Box</p>
+        <p class="section-sub">Tap items to add or remove — total updates live</p>
+      </div>
+      <div class="box-summary">
+        <div class="label">Box Total</div>
+        <div class="total" id="price-display">₹0</div>
+        <div class="count" id="item-count">0 items selected</div>
+      </div>
+    </div>
+
+    <div class="items-grid" id="items-grid">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goToPostBox()">Next: A Few More Questions →</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 3: Post-box questions ── -->
+  <div class="step-panel" id="step-3">
+    <p class="section-title">Almost there!</p>
+    <p class="section-sub">A couple more questions to help us serve you better</p>
+
+    <div class="form-grid">
+
+      <div class="form-group full">
+        <label>How would you describe your approach to religion / spirituality? <span class="req">*</span></label>
+        <select id="f-approach">
+          <option value="">— Select the one that fits best —</option>
+          <option value="purist">I follow rituals strictly as per scriptures / shastras</option>
+          <option value="traditional">I want to do it right but don't always know the exact way</option>
+          <option value="festive">I celebrate festivals with family — it's more about togetherness than rituals</option>
+          <option value="spiritual">I have my own spiritual practice — not bound by traditional rituals</option>
+          <option value="cultural">It's cultural identity for me — I participate but don't believe deeply</option>
+          <option value="curious">I'm exploring and learning — relatively new to it</option>
+        </select>
+        <span class="error-msg" id="err-approach">Please select an option.</span>
+      </div>
+
+      <div class="form-group full">
+        <label>When you think of this occasion, what feeling comes first? <span class="req">*</span></label>
+        <select id="f-feeling">
+          <option value="">— Select —</option>
+          <option>Devotion and reverence</option>
+          <option>Joy and celebration</option>
+          <option>Family bonding and nostalgia</option>
+          <option>Duty — I do it because it's expected</option>
+          <option>Personal peace and mindfulness</option>
+          <option>Excitement about the rituals and preparations</option>
+        </select>
+        <span class="error-msg" id="err-feeling">Please select an option.</span>
+      </div>
+
+      <div class="form-group full">
+        <label>How do you usually decide what to include in a puja / festive gift? <span class="req">*</span></label>
+        <select id="f-decide">
+          <option value="">— Select —</option>
+          <option>Follow what elders / priests specify</option>
+          <option>Go by what I've always seen at home</option>
+          <option>Search online or ask friends</option>
+          <option>Whatever looks good and festive</option>
+          <option>Based on the recipient's preferences</option>
+          <option>I improvise based on what's available</option>
+        </select>
+        <span class="error-msg" id="err-decide">Please select an option.</span>
+      </div>
+
+      <div class="form-group full">
+        <label>Is there anything specific you look for in a festive gift that most gift boxes miss? <span class="req">*</span></label>
+        <textarea id="f-missing" placeholder="e.g. Authenticity of items, specific regional items, purity / organic, personalisation, convenience…"></textarea>
+        <span class="error-msg" id="err-missing">Please fill this in.</span>
+      </div>
+
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
+      <button class="btn btn-primary" onclick="submitBox()">Submit My Gift Box</button>
+    </div>
+  </div>
+
+  <!-- ── STEP 4: Success ── -->
+  <div class="step-panel" id="step-4">
+    <div class="success-wrap">
+      <div class="success-icon">🎉</div>
+      <h2>Your Box is Ready!</h2>
+      <p style="color:var(--muted); font-size:0.9rem;" id="success-msg">Thank you for participating.</p>
+
+      <div id="cohort-display"></div>
+
+      <div class="success-box" id="summary-box"></div>
+      <div class="total-final" id="final-total"></div>
+
+      <button class="btn btn-primary" onclick="location.reload()" style="margin-top:20px;">Start Over</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API = "https://giftboxsimulator.onrender.com";
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetch(API + "/api/config")
+    .then(() => console.log("Backend warmed up"))
+    .catch(() => console.log("Warmup failed"));
+});
+
+let config = null;
+let selectedItems = new Set();
+let currentTotal = 0;
+
+// ── Cohort classification ─────────────────────────────────────────────────
+function classifyCohort(approach, taught, prayFreq, steps) {
+  const stepsCount = steps.length;
+  const strictApproach = approach === 'purist';
+  const traditionalApproach = approach === 'traditional';
+  const festiveApproach = approach === 'festive' || approach === 'cultural';
+  const spiritualApproach = approach === 'spiritual' || approach === 'curious';
+
+  const selfLearnt = ['YouTube / social media', 'Self-learnt / figured it out', 'Books / scriptures'].includes(taught);
+  const elderTaught = ['Grandparents', 'Parents / family elders', 'Temple priests'].includes(taught);
+  const praysFully = prayFreq.includes('Daily');
+  const hasScriptures = steps.includes('Reading scriptures') || steps.includes('Chanting mantras / shlokas');
+  const simpleStyle = steps.includes('I keep it simple / informal');
+
+  if (strictApproach && elderTaught && stepsCount >= 5 && hasScriptures) {
+    return { label: 'Purist', emoji: '📜', desc: 'Follows rituals strictly as per tradition and scriptures' };
+  }
+  if (traditionalApproach || (elderTaught && stepsCount >= 3 && !simpleStyle)) {
+    return { label: 'Traditional Ritualist', emoji: '🪔', desc: 'Wants to do it right — rooted in family tradition' };
+  }
+  if (spiritualApproach || (selfLearnt && !praysFully)) {
+    return { label: 'Spiritual Seeker', emoji: '🧘', desc: 'Personal, evolving spiritual identity — not bound by ritual' };
+  }
+  if (festiveApproach || simpleStyle) {
+    return { label: 'Festive Devotee', emoji: '🎊', desc: 'Celebration-first — festivals are about joy and togetherness' };
+  }
+  // fallback scoring
+  const score = (praysFully ? 2 : 0) + (elderTaught ? 2 : 0) + (stepsCount >= 4 ? 2 : 0) + (hasScriptures ? 2 : 0);
+  if (score >= 6) return { label: 'Traditional Ritualist', emoji: '🪔', desc: 'Rooted in family tradition and ritual' };
+  if (score >= 3) return { label: 'Festive Devotee', emoji: '🎊', desc: 'Celebrates with heart — community and joy come first' };
+  return { label: 'Spiritual Seeker', emoji: '🧘', desc: 'Finds meaning in spirituality on their own terms' };
+}
+
+// ── Config load ───────────────────────────────────────────────────────────
+async function loadConfig() {
+  try {
+    const res = await fetch(API + '/api/config');
+    config = await res.json();
+    document.getElementById('header-subtitle').textContent = `Build a ${config.occasion} Box for ${config.deity}`;
+    document.getElementById('builder-title').textContent = `Build a ${config.occasion} Box for ${config.deity}`;
+    document.title = `${config.occasion} Gift Box – ${config.deity}`;
+  } catch(e) { showToast('Could not load config from server', true); }
+}
+
+// ── Checkbox styling ─────────────────────────────────────────────────────
+document.getElementById('prayer-steps').addEventListener('change', e => {
+  if (e.target.type === 'checkbox') {
+    e.target.closest('.cb-item').classList.toggle('checked', e.target.checked);
+  }
+});
+
+// ── Validation helpers ────────────────────────────────────────────────────
+function val(id) { return (document.getElementById(id)?.value || '').trim(); }
+function showErr(id, show) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.toggle('show', show); }
+  const input = document.getElementById(id.replace('err-','f-'));
+  if (input) input.classList.toggle('invalid', show);
+  return show;
+}
+function getPrayerSteps() {
+  return [...document.querySelectorAll('#prayer-steps input[type=checkbox]:checked')].map(c => c.value);
+}
+
+// ── Step 1 validation ─────────────────────────────────────────────────────
+function goToBuilder() {
+  let invalid = false;
+  invalid = showErr('err-name',    !val('f-name'))    || invalid;
+  invalid = showErr('err-email',   !val('f-email') || !val('f-email').includes('@')) || invalid;
+  invalid = showErr('err-age',     !val('f-age'))     || invalid;
+  invalid = showErr('err-city',    !val('f-city'))    || invalid;
+  invalid = showErr('err-pray',    !val('f-pray'))    || invalid;
+  invalid = showErr('err-taught',  !val('f-taught'))  || invalid;
+  const steps = getPrayerSteps();
+  invalid = showErr('err-steps',   steps.length === 0) || invalid;
+  invalid = showErr('err-gifting', !val('f-gifting')) || invalid;
+  invalid = showErr('err-mustitem',!val('f-mustitem'))|| invalid;
+  if (invalid) { showToast('Please fill all required fields', true); return; }
+  if (!config) { showToast('Still loading items, please wait…', true); return; }
+  renderItems();
+  goStep(2);
+}
+
+// ── Step 2 → Step 3 ───────────────────────────────────────────────────────
+function goToPostBox() {
+  if (selectedItems.size === 0) { showToast('Please select at least one item!', true); return; }
+  goStep(3);
+}
+
+// ── Render items ──────────────────────────────────────────────────────────
+function renderItems() {
+  const grid = document.getElementById('items-grid');
+  grid.innerHTML = '';
+  config.items.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.id = 'card-' + item.id;
+    card.innerHTML = `<div class="check">✓</div><div class="item-emoji">${item.emoji || '🎁'}</div><div class="item-name">${item.name}</div>`;
+    card.onclick = () => toggleItem(item.id, card);
+    grid.appendChild(card);
+  });
+}
+
+async function toggleItem(id, card) {
+  selectedItems.has(id) ? selectedItems.delete(id) : selectedItems.add(id);
+  card.classList.toggle('selected', selectedItems.has(id));
+  await updateTotal();
+}
+
+async function updateTotal() {
+  try {
+    const res = await fetch(API + '/api/calculate', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({selectedItems:[...selectedItems]}) });
+    const data = await res.json();
+    currentTotal = data.total || 0;
+    document.getElementById('price-display').textContent = '₹' + currentTotal;
+    document.getElementById('item-count').textContent = selectedItems.size + (selectedItems.size === 1 ? ' item' : ' items') + ' selected';
+  } catch(e) {}
+}
+
+// ── Step 3 validation + submit ────────────────────────────────────────────
+async function submitBox() {
+  let invalid = false;
+  invalid = showErr('err-approach', !val('f-approach')) || invalid;
+  invalid = showErr('err-feeling',  !val('f-feeling'))  || invalid;
+  invalid = showErr('err-decide',   !val('f-decide'))   || invalid;
+  invalid = showErr('err-missing',  !val('f-missing'))  || invalid;
+  if (invalid) { showToast('Please fill all required fields', true); return; }
+
+  const btn = event.target;
+  btn.disabled = true; btn.textContent = 'Saving…';
+
+  const steps = getPrayerSteps();
+  const cohort = classifyCohort(val('f-approach'), val('f-taught'), val('f-pray'), steps);
+
+  const payload = {
+    name: val('f-name'), email: val('f-email'), age: val('f-age'), city: val('f-city'),
+    prayingFrequency: val('f-pray'), taughtBy: val('f-taught'),
+    prayerSteps: steps.join('; '),
+    giftingHabits: val('f-gifting'), mustHaveItem: val('f-mustitem'),
+    religiousApproach: val('f-approach'), primaryFeeling: val('f-feeling'),
+    giftDecisionBasis: val('f-decide'), giftBoxGap: val('f-missing'),
+    cohort: cohort.label,
+    selectedItems: [...selectedItems]
+  };
+
+  try {
+    const res = await fetch(API + '/api/submit', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+    const data = await res.json();
+    if (!res.ok || data.error) {
+      showToast(data.error || 'Submission failed', true);
+      btn.disabled = false; btn.textContent = 'Submit My Gift Box'; return;
+    }
+    showSuccess(payload, data, cohort);
+    goStep(4);
+  } catch(e) {
+    showToast('Network error – please try again', true);
+    btn.disabled = false; btn.textContent = 'Submit My Gift Box';
+  }
+}
+
+function showSuccess(payload, data, cohort) {
+  document.getElementById('success-msg').textContent = data.message || 'Your responses have been recorded.';
+  document.getElementById('cohort-display').innerHTML = `
+    <div class="cohort-badge">${cohort.emoji} ${cohort.label}</div>
+    <p class="cohort-desc">${cohort.desc}</p>
+  `;
+  const itemNames = [...selectedItems].map(id => config.items.find(i => i.id === id)?.name || id).join(', ');
+  document.getElementById('summary-box').innerHTML = `
+    <div class="success-row"><span class="key">Name</span><span class="val">${payload.name}</span></div>
+    <div class="success-row"><span class="key">City</span><span class="val">${payload.city}</span></div>
+    <div class="success-row"><span class="key">Occasion</span><span class="val">${config.occasion} – ${config.deity}</span></div>
+    <div class="success-row"><span class="key">Items (${selectedItems.size})</span><span class="val">${itemNames}</span></div>
+    <div class="success-row"><span class="key">Must-have item</span><span class="val">${payload.mustHaveItem}</span></div>
+  `;
+  document.getElementById('final-total').textContent = '₹' + data.total;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────
+function goStep(n) {
+  document.querySelectorAll('.step-panel').forEach((p,i) => p.classList.toggle('active', i+1 === n));
+  document.querySelectorAll('.step-pill').forEach((p,i) => {
+    p.classList.remove('active','done');
+    if (i+1 < n) p.classList.add('done');
+    if (i+1 === n) p.classList.add('active');
+  });
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function showToast(msg, isError=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => t.className = 'toast', 3200);
+}
+
+loadConfig();
+</script>
+</body>
+</html>
