@@ -1,159 +1,194 @@
-from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS
-import json
 import os
+import json
+import logging
 from datetime import datetime
-import gspread
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from google.oauth2.service_account import Credentials
+from googleapiclient.discovery import build
 
-BASE_DIR     = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BASE_DIR, 'frontend')
-CONFIG_FILE  = os.path.join(BASE_DIR, 'config.json')
+# ──────────────────────────────────────────────
+#  CONFIG
+# ──────────────────────────────────────────────
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CONFIGS_DIR = os.path.join(BASE_DIR, "configs")
+SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "service_account.json")
+SHEET_ID = os.environ.get("GOOGLE_SHEET_ID", "177_cbVKg8azNSod84AU2UPX4yaB7HUWPfUTdeJz7a2I")
+TAB_NAME = os.environ.get("SHEET_TAB_NAME", "Master Data")
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 
-app = Flask(__name__, static_folder=FRONTEND_DIR, static_url_path='')
-CORS(app)
+# ──────────────────────────────────────────────
+#  APP SETUP
+# ──────────────────────────────────────────────
+flask_app = Flask(__name__)
+CORS(flask_app)
 
-SCOPES = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive"
-]
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-SPREADSHEET_ID = os.environ.get("SPREADSHEET_ID", "177_cbVKg8azNSod84AU2UPX4yaB7HUWPfUTdeJz7a2I")
+# ──────────────────────────────────────────────
+#  CONFIG LOADERS
+# ──────────────────────────────────────────────
 
-HEADERS = [
-    "Timestamp", "Cohort",
-    "Name", "Email", "Age", "City",
-    "Praying Frequency", "Taught By", "Prayer Steps",
-    "Gifting Habits", "Must-Have Item",
-    "Religious Approach", "Primary Feeling", "Gift Decision Basis", "Gift Box Gap",
-    "Occasion", "Deity", "Selected Items", "Total Price (Rs.)"
-]
+def load_items_config():
+    with open(os.path.join(CONFIGS_DIR, "items_config.json"), "r", encoding="utf-8") as f:
+        return json.load(f)
 
-def get_sheets_client():
-    creds_dict = json.loads(os.environ["GOOGLE_CREDS_JSON"])
-    creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
-    return gspread.authorize(creds)
+def load_images_config():
+    with open(os.path.join(CONFIGS_DIR, "images_config.json"), "r", encoding="utf-8") as f:
+        return json.load(f)
 
-print("\n" + "="*60)
-print("  MANGALDEEP GIFT BOX - startup check")
-print("="*60)
-print(f"  app.py       : {BASE_DIR}")
-print(f"  frontend/    : {'EXISTS' if os.path.isdir(FRONTEND_DIR) else 'MISSING'}")
-print(f"  index.html   : {'EXISTS' if os.path.isfile(os.path.join(FRONTEND_DIR,'index.html')) else 'MISSING'}")
-print(f"  config.json  : {'EXISTS' if os.path.isfile(CONFIG_FILE) else 'MISSING'}")
-print(f"  Sheet ID     : {SPREADSHEET_ID}")
-print("="*60 + "\n")
+# ──────────────────────────────────────────────
+#  PRICING LOGIC  (isolated, never exposed to FE)
+# ──────────────────────────────────────────────
 
-@app.route('/')
-def index():
-    print(f"[GET /] serving index.html")
-    return send_from_directory(FRONTEND_DIR, 'index.html')
+def calculate_total(selected_ids, items):
+    by_id = {it["id"]: it for it in items}
+    return sum(by_id[sid]["price"] for sid in selected_ids if sid in by_id)
 
-@app.route('/api/config')
+def get_selected_names(selected_ids, items):
+    by_id = {it["id"]: it for it in items}
+    return ", ".join(by_id[sid]["name"] for sid in selected_ids if sid in by_id)
+
+# ──────────────────────────────────────────────
+#  GOOGLE SHEETS
+# ──────────────────────────────────────────────
+
+def get_sheets_service():
+    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    return build("sheets", "v4", credentials=creds)
+
+def append_row(row):
+    svc = get_sheets_service()
+    svc.spreadsheets().values().append(
+        spreadsheetId=SHEET_ID,
+        range=f"{TAB_NAME}!A:Z",
+        valueInputOption="USER_ENTERED",
+        insertDataOption="INSERT_ROWS",
+        body={"values": [row]},
+    ).execute()
+    logger.info("Row appended to Google Sheet")
+
+# ──────────────────────────────────────────────
+#  API ROUTES
+# ──────────────────────────────────────────────
+
+from flask import send_from_directory
+
+@flask_app.route("/")
+def serve_frontend():
+    return send_from_directory("frontend", "index.html")
+
+@flask_app.route("/api/health")
+def health():
+    return jsonify(status="ok")
+
+# --- Items config (no prices) ---
+@flask_app.route("/api/config")
 def get_config():
-    print("[GET /api/config] loading config")
-    try:
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-        safe_config = {
-            "occasion": config["occasion"],
-            "deity": config["deity"],
-            "themeColor": config.get("themeColor", "#C8522A"),
-            "accentColor": config.get("accentColor", "#F5A623"),
-            "items": [
-                {"id": item["id"], "name": item["name"], "image": item["image"], "emoji": item.get("emoji", "🎁")}
-                for item in config["items"]
-            ]
-        }
-        print(f"[GET /api/config] OK - {len(safe_config['items'])} items | {config['occasion']} - {config['deity']}")
-        return jsonify(safe_config)
-    except Exception as e:
-        print(f"[GET /api/config] ERROR: {e}")
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/calculate', methods=['POST'])
-def calculate_price():
-    try:
-        data = request.json
-        selected_ids = data.get('selectedItems', [])
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-        price_map = {item['id']: item['price'] for item in config['items']}
-        total = sum(price_map.get(i, 0) for i in selected_ids)
-        print(f"[POST /api/calculate] {len(selected_ids)} items -> Rs.{total}")
-        return jsonify({"total": total})
-    except Exception as e:
-        print(f"[POST /api/calculate] ERROR: {e}")
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/api/submit', methods=['POST'])
-def submit():
-    print("[POST /api/submit] received")
-    try:
-        data = request.json
-
-        if not data.get('email'):
-            return jsonify({"error": "Email is required"}), 400
-        if not data.get('selectedItems'):
-            return jsonify({"error": "Please select at least one item"}), 400
-
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-
-        price_map    = {item['id']: item['price'] for item in config['items']}
-        name_map     = {item['id']: item['name']  for item in config['items']}
-        selected_ids = data.get('selectedItems', [])
-        total        = sum(price_map.get(i, 0) for i in selected_ids)
-        item_names   = ", ".join(name_map.get(i, i) for i in selected_ids)
-
-        print(f"[POST /api/submit] {data.get('email')} | cohort={data.get('cohort')} | items={item_names} | Rs.{total}")
-
-        row = [
-            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            data.get('cohort', ''),
-            data.get('name', ''),
-            data.get('email', ''),
-            data.get('age', ''),
-            data.get('city', ''),
-            data.get('prayingFrequency', ''),
-            data.get('taughtBy', ''),
-            data.get('prayerSteps', ''),
-            data.get('giftingHabits', ''),
-            data.get('mustHaveItem', ''),
-            data.get('religiousApproach', ''),
-            data.get('primaryFeeling', ''),
-            data.get('giftDecisionBasis', ''),
-            data.get('giftBoxGap', ''),
-            config['occasion'],
-            config['deity'],
-            item_names,
-            total
-        ]
-
-        sheets_saved = False
-        try:
-            print("[POST /api/submit] connecting to Sheets...")
-            client = get_sheets_client()
-            sheet  = client.open_by_key(SPREADSHEET_ID).sheet1
-            if not sheet.get_all_values():
-                sheet.append_row(HEADERS)
-                print("[POST /api/submit] header row created")
-            sheet.append_row(row)
-            sheets_saved = True
-            print(f"[POST /api/submit] OK - row appended")
-        except Exception as se:
-            print(f"[POST /api/submit] Sheets ERROR: {se}")
-
-        return jsonify({
-            "success": True, "total": total, "sheetsSaved": sheets_saved,
-            "message": "Thank you! Your gift box has been recorded." if sheets_saved
-                       else "Saved locally — check your SPREADSHEET_ID if Sheets sync failed."
+    cfg = load_items_config()
+    items = []
+    for it in cfg["items"]:
+        items.append({
+            "id": it["id"],
+            "name": it["name"],
+            "image": it.get("image", ""),
+            "emoji": it.get("emoji", ""),
+            "description": it.get("description", ""),
+            "lore": it.get("lore", ""),
         })
+    return jsonify(
+        occasion=cfg["occasion"],
+        deity=cfg["deity"],
+        deity_blessing=cfg.get("deity_blessing", ""),
+        items=items,
+    )
 
+# --- Images config ---
+@flask_app.route("/api/images")
+def get_images():
+    return jsonify(load_images_config())
+
+# --- Submit ---
+@flask_app.route("/api/submit", methods=["POST"])
+def submit():
+    data = request.get_json(force=True)
+
+    # Unpack pages
+    p1 = data.get("page1", {})
+    p2 = data.get("page2", {})
+    selected_ids = data.get("selected_item_ids", [])
+    p4 = data.get("page4", {})
+
+    # Validate required
+    if not p1.get("name") or not p1.get("email"):
+        return jsonify(error="Name and email are required"), 400
+    if not selected_ids:
+        return jsonify(error="Please select at least one item"), 400
+
+    # Load config for pricing
+    cfg = load_items_config()
+    items = cfg["items"]
+    valid_ids = {it["id"] for it in items}
+    bad = [s for s in selected_ids if s not in valid_ids]
+    if bad:
+        return jsonify(error=f"Invalid item IDs: {bad}"), 400
+
+    total = calculate_total(selected_ids, items)
+    names = get_selected_names(selected_ids, items)
+    count = len(selected_ids)
+    ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    # Build sheet row (22 cols)
+    row = [
+        ts,
+        p1.get("name", ""),
+        p1.get("email", ""),
+        p1.get("age", ""),
+        p1.get("gender", ""),
+        p1.get("occupation", ""),
+        p1.get("identity_type", ""),
+        p1.get("gifting_spend", ""),  # ✅ NEW
+        p1.get("considered_devotional", ""),  # ✅ NEW
+        ", ".join(p1.get("gift_occasions", [])) if isinstance(p1.get("gift_occasions"), list) else p1.get("gift_occasions", ""),
+        p1.get("gift_recipients", ""),
+        p1.get("shopping_channel", ""),
+        p2.get("decision_logic", ""),
+        p2.get("prayer_frequency", ""),
+        p2.get("ritual_teacher", ""),
+        str(p2.get("ritual_strictness", "")) if p2.get("ritual_strictness") else "",
+        str(p2.get("authenticity_importance", "")) if p2.get("authenticity_importance") else "",
+        cfg["occasion"],
+        cfg["deity"],
+        names,
+        str(count),
+        p4.get("perceived_price", ""),
+        p4.get("temple_vetted_price", ""),
+        str(total),
+    ]
+
+    try:
+        append_row(row)
     except Exception as e:
-        print(f"[POST /api/submit] FATAL: {e}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Sheet error: {e}")
+        return jsonify(error=f"Failed to save: {e}"), 500
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    return jsonify(
+        success=True,
+        total_price=total,
+        selected_items=names,
+        item_count=count,
+        message="Your gift box preferences have been saved successfully!",
+    )
+
+# ──────────────────────────────────────────────
+#  ASGI WRAPPER  (so uvicorn can serve Flask)
+# ──────────────────────────────────────────────
+from a2wsgi import WSGIMiddleware
+app = WSGIMiddleware(flask_app)      # uvicorn picks up this `app`
+
+# For local dev:  python server.py
+if __name__ == "__main__":
+    flask_app.run(host="0.0.0.0", port=8001, debug=True)
+
