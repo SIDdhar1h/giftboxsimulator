@@ -1,550 +1,972 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MangalDeep – Build Your Gift Box</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#5c1810" />
+<meta name="description" content="Build a Diwali Gift Box for Lord Ram" />
+<title>Gift Box Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
 <style>
-  :root {
-    --saffron: #E8651A; --gold: #F5A623; --cream: #FFF8EE;
-    --card-bg: #FFFAF3; --border: #F0DDB8; --success: #2E7D32;
-    --text: #2C1810; --muted: #8B6547; --radius: 14px;
-    --shadow: 0 4px 20px rgba(232,101,26,0.12);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Poppins', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh;
-    background-image: radial-gradient(circle at 10% 20%, rgba(245,166,35,0.08) 0%, transparent 50%),
-                      radial-gradient(circle at 90% 80%, rgba(232,101,26,0.06) 0%, transparent 50%);
-  }
-  header {
-    background: linear-gradient(135deg, var(--saffron) 0%, #C8420A 100%);
-    color: white; text-align: center; padding: 28px 20px 20px; position: relative; overflow: hidden;
-  }
-  header::before {
-    content: 'om  om'; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
-    font-size: 14px; opacity: 0.5; letter-spacing: 16px;
-  }
-  header h1 { font-family: 'Yatra One', cursive; font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.25); }
-  #header-subtitle { font-size: 0.9rem; opacity: 0.9; margin-top: 4px; font-weight: 300; }
+/* ─── RESET & BASE ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --maroon:#5c1810;--saffron:#f59e0b;--gold:#eab308;--copper:#b45309;
+  --parchment:#faf6f0;--ink:#2d1a0e;--border:#d6c8b8;--muted:#a89480;
+  --font-h:'EB Garamond',Georgia,serif;--font-b:'Figtree',system-ui,sans-serif;
+  --radius:0.75rem;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-b);background:var(--parchment);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+button{cursor:pointer;font-family:inherit}
+input,select{font-family:inherit}
+.h-font{font-family:var(--font-h)}
 
-  .progress-wrap { display: flex; justify-content: center; background: white; border-bottom: 2px solid var(--border); }
-  .step-pill { flex: 1; max-width: 200px; text-align: center; padding: 12px 8px; font-size: 0.78rem; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; transition: all 0.3s; }
-  .step-pill.active { color: var(--saffron); border-bottom-color: var(--saffron); }
-  .step-pill.done { color: var(--success); border-bottom-color: var(--success); }
+/* ─── LAYOUT ─── */
+.container{max-width:72rem;margin:0 auto;padding:0 1rem}
+@media(min-width:640px){.container{padding:0 1.5rem}}
 
-  .container { max-width: 860px; margin: 0 auto; padding: 32px 20px 60px; }
-  .step-panel { display: none; }
-  .step-panel.active { display: block; animation: fadeIn 0.35s ease; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+/* ─── HEADER ─── */
+.hero{position:relative;overflow:hidden;background:var(--maroon);color:var(--parchment);padding:1.5rem 1rem 1.5rem}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 60% at 20% 10%,rgba(245,158,11,.22) 0%,transparent 60%),radial-gradient(50% 50% at 80% 0%,rgba(220,38,38,.14) 0%,transparent 55%);pointer-events:none}
+.hero h1{font-family:var(--font-h);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:600;text-align:center;position:relative}
+.hero p{text-align:center;opacity:.8;font-size:.9rem;margin-top:.35rem;position:relative}
 
-  .section-title { font-family: 'Yatra One', cursive; font-size: 1.5rem; color: var(--saffron); margin-bottom: 6px; }
-  .section-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 24px; }
-  .section-divider { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--saffron); border-bottom: 1px solid var(--border); padding-bottom: 6px; margin: 24px 0 18px; grid-column: 1/-1; }
+/* ─── STEPPER ─── */
+.stepper-bar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:.7rem 0}
+.stepper{display:flex;align-items:center;justify-content:center;gap:0}
+.step-group{display:flex;align-items:center;gap:.4rem}
+.step-circle{width:1.8rem;height:1.8rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;transition:all .3s}
+.step-circle.done{background:var(--gold);color:var(--ink);box-shadow:0 0 10px rgba(245,158,11,.3)}
+.step-circle.active{background:var(--maroon);color:var(--parchment);box-shadow:0 0 10px rgba(92,24,16,.2)}
+.step-circle.pending{background:#e8ddd0;color:var(--muted)}
+.step-label{font-size:.7rem;font-weight:600;transition:color .3s}
+@media(min-width:640px){.step-circle{width:2rem;height:2rem;font-size:.8rem}.step-label{font-size:.8rem}}
+.step-connector{flex:1;max-width:50px;height:2px;margin:0 .4rem;background:#e8ddd0;border-radius:2px;overflow:hidden;position:relative}
+.step-connector-fill{height:100%;background:var(--gold);transition:width .5s}
+@media(min-width:640px){.step-connector{max-width:70px;margin:0 .5rem}}
 
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media(max-width:560px){ .form-grid { grid-template-columns: 1fr; } }
-  .form-group { display: flex; flex-direction: column; gap: 6px; }
-  .form-group.full { grid-column: 1/-1; }
-  label { font-size: 0.82rem; font-weight: 600; color: var(--text); }
-  label .req { color: var(--saffron); }
-  input, select, textarea {
-    padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px;
-    font-family: inherit; font-size: 0.9rem; background: white; color: var(--text);
-    transition: border 0.2s, box-shadow 0.2s; outline: none;
-  }
-  input:focus, select:focus, textarea:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(232,101,26,0.1); }
-  input.invalid, select.invalid, textarea.invalid { border-color: #c0392b; }
-  textarea { resize: vertical; min-height: 72px; }
+/* ─── CARDS ─── */
+.card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 8px 24px rgba(92,24,16,.08);padding:1.5rem}
+.card-title{font-family:var(--font-h);font-size:1.3rem;font-weight:600;color:var(--maroon)}
+.card-desc{color:var(--muted);font-size:.85rem;margin-top:.25rem}
+.section-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--maroon);margin-bottom:.75rem}
 
-  /* Checkbox group */
-  .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
-  .cb-item { display: flex; align-items: center; gap: 6px; background: white; border: 1.5px solid var(--border); border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 0.82rem; font-weight: 500; transition: all 0.15s; user-select: none; }
-  .cb-item:hover { border-color: var(--gold); }
-  .cb-item input[type=checkbox] { accent-color: var(--saffron); width: 14px; height: 14px; cursor: pointer; }
-  .cb-item.checked { background: #FFF3E8; border-color: var(--saffron); }
+/* ─── FORM ELEMENTS ─── */
+.form-group{display:flex;flex-direction:column;gap:.35rem}
+.form-group label{font-size:.8rem;font-weight:600}
+.form-group label .req{color:#dc2626}
+.form-input{height:2.5rem;padding:0 .75rem;border:1px solid var(--border);border-radius:var(--radius);font-size:.85rem;transition:border-color .2s;background:#fff}
+.form-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(234,179,8,.15)}
+.form-input.error{border-color:#dc2626}
+.error-msg{font-size:.7rem;color:#dc2626}
+.form-select{height:2.5rem;padding:0 .75rem;border:1px solid var(--border);border-radius:var(--radius);font-size:.85rem;background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23a89480' viewBox='0 0 16 16'%3E%3Cpath d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center}
+.form-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(234,179,8,.15)}
+.grid-2{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr}}
 
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border: none; border-radius: 50px; font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-  .btn-primary { background: linear-gradient(135deg, var(--saffron), #C8420A); color: white; box-shadow: 0 4px 14px rgba(232,101,26,0.35); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(232,101,26,0.45); }
-  .btn-secondary { background: white; color: var(--saffron); border: 2px solid var(--saffron); }
-  .btn-secondary:hover { background: var(--saffron); color: white; }
-  .btn-row { display: flex; gap: 12px; margin-top: 28px; justify-content: flex-end; }
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem 1.4rem;border-radius:var(--radius);font-weight:600;font-size:.85rem;border:none;transition:all .2s}
+.btn-primary{background:var(--maroon);color:var(--parchment);box-shadow:0 8px 24px rgba(92,24,16,.14)}
+.btn-primary:hover{box-shadow:0 14px 36px rgba(92,24,16,.18);transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.97)}
+.btn-primary:disabled{opacity:.5;pointer-events:none}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--parchment)}
+.btn-outline{background:transparent;border:1px solid rgba(92,24,16,.2);color:var(--maroon)}
+.btn-outline:hover{border-color:rgba(92,24,16,.35);background:var(--parchment)}
 
-  /* Step 3 post-box questions */
-  .post-box { background: white; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 24px; margin-top: 28px; }
-  .post-box .section-title { font-size: 1.1rem; margin-bottom: 4px; }
-  .post-box .section-sub { margin-bottom: 18px; }
+/* ─── IDENTITY CARDS ─── */
+.identity-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+@media(min-width:640px){.identity-grid{grid-template-columns:repeat(4,1fr)}}
+.identity-card{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .3s;text-align:left}
+.identity-card.selected{border-color:rgba(234,179,8,.5);box-shadow:0 0 0 2px rgba(234,179,8,.35),0 12px 30px rgba(92,24,16,.12)}
+.identity-card:not(.selected):hover{border-color:rgba(234,179,8,.25);box-shadow:0 8px 24px rgba(92,24,16,.1)}
+.identity-card img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.identity-card .ic-body{padding:.5rem .6rem .6rem}
+.identity-card .ic-label{font-size:.8rem;font-weight:700;color:var(--ink)}
+.identity-card .ic-sub{font-size:.6rem;color:var(--muted);margin-top:.1rem}
+.identity-check{position:absolute;top:.4rem;right:.4rem;width:1.25rem;height:1.25rem;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center}
 
-  /* Builder */
-  .builder-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; }
-  .box-summary { background: white; border: 2px solid var(--gold); border-radius: var(--radius); padding: 16px 22px; min-width: 200px; text-align: center; box-shadow: var(--shadow); position: sticky; top: 20px; }
-  .box-summary .label { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-  .box-summary .total { font-family: 'Yatra One', cursive; font-size: 2.2rem; color: var(--saffron); line-height: 1.1; }
-  .box-summary .count { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+/* ─── CHECKBOX LIST ─── */
+.cb-list{display:grid;grid-template-columns:1fr;gap:.4rem}
+@media(min-width:640px){.cb-list{grid-template-columns:1fr 1fr}}
+.cb-item{display:flex;align-items:center;gap:.6rem;padding:.65rem .75rem;border-radius:var(--radius);border:1px solid var(--border);cursor:pointer;transition:all .2s;font-size:.8rem}
+.cb-item.checked{border-color:rgba(234,179,8,.4);background:rgba(234,179,8,.04)}
+.cb-item:hover{border-color:rgba(234,179,8,.2)}
+.cb-box{width:1rem;height:1rem;border-radius:.25rem;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+.cb-item.checked .cb-box{background:var(--maroon);border-color:var(--maroon)}
 
-  .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 14px; }
-  .item-card { background: var(--card-bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 14px 12px 12px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; user-select: none; }
-  .item-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: var(--shadow); }
-  .item-card.selected { border-color: var(--saffron); background: #FFF3E8; box-shadow: 0 0 0 3px rgba(232,101,26,0.15); }
-  .item-card .check { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all 0.2s; }
-  .item-card.selected .check { background: var(--saffron); color: white; }
-  .item-emoji { font-size: 2.2rem; margin-bottom: 8px; }
-  .item-name { font-size: 0.8rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+/* ─── OPTION PILLS ─── */
+.pill-group{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.pill{padding:.7rem .8rem;border-radius:var(--radius);border:1px solid var(--border);background:#fff;font-size:.8rem;font-weight:600;text-align:left;transition:all .2s;cursor:pointer}
+.pill.selected{background:rgba(92,24,16,.04);border-color:rgba(92,24,16,.3);color:var(--maroon);box-shadow:0 4px 12px rgba(92,24,16,.06)}
+.pill:not(.selected):hover{border-color:rgba(234,179,8,.25);background:rgba(250,246,240,.5)}
 
-  /* Success */
-  .success-wrap { text-align: center; padding: 40px 20px; }
-  .success-icon { font-size: 4rem; margin-bottom: 16px; animation: pop 0.5s ease; }
-  @keyframes pop { 0%{transform:scale(0)} 70%{transform:scale(1.15)} 100%{transform:scale(1)} }
-  .success-wrap h2 { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--saffron); margin-bottom: 10px; }
-  .cohort-badge { display: inline-block; background: linear-gradient(135deg, var(--saffron), var(--gold)); color: white; border-radius: 50px; padding: 8px 22px; font-weight: 700; font-size: 1rem; margin: 12px 0 4px; letter-spacing: 0.5px; }
-  .cohort-desc { color: var(--muted); font-size: 0.85rem; margin-bottom: 18px; }
-  .success-box { background: white; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px; margin: 20px auto; max-width: 440px; text-align: left; }
-  .success-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; gap: 12px; }
-  .success-row:last-child { border-bottom: none; }
-  .success-row .key { color: var(--muted); white-space: nowrap; }
-  .success-row .val { font-weight: 600; text-align: right; }
-  .total-final { font-family: 'Yatra One', cursive; font-size: 1.8rem; color: var(--saffron); text-align: center; margin: 12px 0; }
+/* ─── HARMONIZED SELECTOR CARDS ─── */
+/* Used for spend + devotional + any single/multi-select options */
+.selector-grid{display:grid;gap:.5rem}
+.selector-grid.cols-2{grid-template-columns:1fr 1fr}
+.selector-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.selector-grid.cols-4{grid-template-columns:1fr 1fr;} /* 2×2 on mobile */
+@media(min-width:640px){.selector-grid.cols-4{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:640px){.selector-grid.cols-3{grid-template-columns:repeat(3,1fr)}}
 
-  .error-msg { color: #c0392b; font-size: 0.78rem; margin-top: 2px; display: none; }
-  .error-msg.show { display: block; }
-  .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: white; padding: 12px 20px; border-radius: 10px; font-size: 0.88rem; opacity: 0; transform: translateY(10px); transition: all 0.3s; z-index: 999; pointer-events: none; }
-  .toast.show { opacity: 1; transform: translateY(0); }
-  .toast.error { background: #c0392b; }
-  .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--saffron); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 40px auto; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+.selector-card{
+  position:relative;
+  display:flex;align-items:center;gap:.55rem;
+  padding:.65rem .85rem;
+  border-radius:var(--radius);
+  border:1.5px solid var(--border);
+  background:#fff;
+  cursor:pointer;
+  font-size:.8rem;font-weight:600;color:var(--ink);
+  transition:all .2s;
+  user-select:none;
+  line-height:1.3;
+}
+.selector-card:hover:not(.selected){
+  border-color:rgba(234,179,8,.35);
+  background:rgba(250,246,240,.6);
+}
+.selector-card.selected{
+  border-color:rgba(92,24,16,.35);
+  background:rgba(92,24,16,.04);
+  color:var(--maroon);
+  box-shadow:0 0 0 2px rgba(92,24,16,.08), 0 4px 12px rgba(92,24,16,.06);
+}
+.selector-card .sel-dot{
+  width:.85rem;height:.85rem;
+  border-radius:50%;
+  border:2px solid var(--border);
+  flex-shrink:0;
+  transition:all .2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.selector-card.selected .sel-dot{
+  background:var(--maroon);
+  border-color:var(--maroon);
+}
+.selector-card .sel-dot-inner{
+  width:.35rem;height:.35rem;border-radius:50%;background:#fff;
+  opacity:0;transition:opacity .15s;
+}
+.selector-card.selected .sel-dot-inner{opacity:1}
+
+/* ─── LIKERT ─── */
+.likert{display:flex;gap:.4rem}
+.likert-btn{flex:1;padding:.6rem 0;border-radius:var(--radius);border:1px solid var(--border);text-align:center;font-weight:700;font-size:1rem;transition:all .2s;background:#fff;cursor:pointer}
+.likert-btn.selected{background:var(--maroon);color:var(--parchment);border-color:var(--maroon);box-shadow:0 4px 12px rgba(92,24,16,.15)}
+.likert-btn:not(.selected):hover{border-color:rgba(234,179,8,.3);background:var(--parchment)}
+.likert-labels{display:flex;justify-content:space-between;font-size:.6rem;color:var(--muted);padding:0 .2rem;margin-top:.3rem}
+
+/* ─── ITEM GRID ─── */
+.items-layout{display:flex;flex-direction:column;gap:1.5rem}
+@media(min-width:1024px){.items-layout{flex-direction:row}}
+.items-grid{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}
+@media(min-width:640px){.items-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1280px){.items-grid{grid-template-columns:repeat(4,1fr)}}
+.item-card{position:relative;border-radius:var(--radius);border:1px solid var(--border);background:#fff;overflow:hidden;transition:all .3s;cursor:pointer}
+.item-card.selected{border-color:rgba(234,179,8,.5);box-shadow:0 0 0 2px rgba(234,179,8,.35),0 14px 36px rgba(92,24,16,.1)}
+.item-card:not(.selected):hover{border-color:rgba(234,179,8,.25);box-shadow:0 10px 30px rgba(92,24,16,.1)}
+.item-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.item-card .ic-fallback{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:var(--parchment);font-size:2rem}
+.item-card .item-body{padding:.6rem .7rem}
+.item-card .item-name{font-size:.8rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-card .item-desc{font-size:.65rem;color:var(--muted);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-badge{display:inline-flex;align-items:center;gap:.2rem;font-size:.65rem;font-weight:600;padding:.15rem .5rem;border-radius:1rem;margin-top:.35rem}
+.item-badge.added{background:rgba(234,179,8,.1);color:var(--copper)}
+.item-badge.add{color:var(--muted)}
+.item-check{position:absolute;top:.4rem;right:.4rem;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.lore-toggle{display:flex;align-items:center;gap:.2rem;font-size:.6rem;color:var(--copper);background:none;border:none;padding:.3rem .7rem;cursor:pointer;transition:color .2s}
+.lore-toggle:hover{color:var(--maroon)}
+.lore-text{font-size:.65rem;color:var(--muted);line-height:1.5;font-style:italic;padding:.4rem .7rem .6rem;border-top:1px solid rgba(214,200,184,.4)}
+
+/* ─── SIDEBAR ─── */
+.sidebar{width:100%}
+@media(min-width:1024px){.sidebar{width:17rem;flex-shrink:0}}
+.sidebar-inner{position:sticky;top:4.5rem;border-radius:var(--radius);border:1px solid rgba(234,179,8,.2);background:rgba(255,255,255,.85);backdrop-filter:blur(8px);box-shadow:0 14px 36px rgba(92,24,16,.1);padding:1.2rem}
+.sidebar-list{max-height:10rem;overflow-y:auto;margin:.5rem 0}
+.sidebar-list-item{display:flex;align-items:center;gap:.35rem;font-size:.7rem;padding:.2rem 0;color:var(--ink)}
+
+/* ─── MOBILE BAR ─── */
+.mobile-bar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-top:1px solid rgba(234,179,8,.2);box-shadow:0 -4px 16px rgba(92,24,16,.06);padding:.6rem 1rem;align-items:center;justify-content:space-between}
+@media(min-width:1024px){.mobile-bar{display:none}}
+.mobile-spacer{height:4.5rem}
+@media(min-width:1024px){.mobile-spacer{height:0}}
+
+/* ─── WTP PAGE ─── */
+.wtp-items{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+@media(min-width:640px){.wtp-items{grid-template-columns:repeat(3,1fr)}}
+.wtp-chip{display:flex;align-items:center;gap:.4rem;background:#fff;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .6rem;font-size:.75rem;font-weight:600}
+.wtp-chip .emoji{font-size:1.1rem;flex-shrink:0}
+.price-input-wrap{position:relative;margin-top:.4rem}
+.price-input-wrap .rupee{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-weight:700;color:var(--maroon);font-size:.9rem}
+.price-input-wrap input{padding-left:1.6rem}
+
+/* ─── CONFIRMATION ─── */
+.success-ring{width:5rem;height:5rem;border-radius:50%;background:rgba(234,179,8,.15);display:flex;align-items:center;justify-content:center;margin:0 auto;animation:pulse 3s ease-in-out infinite}
+.success-ring-inner{width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(234,179,8,.25);display:flex;align-items:center;justify-content:center}
+@keyframes pulse{0%,100%{box-shadow:0 0 16px rgba(245,158,11,.15)}50%{box-shadow:0 0 32px rgba(245,158,11,.3)}}
+.badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:600;padding:.3rem .7rem;border-radius:1rem;background:rgba(234,179,8,.1);color:var(--maroon);border:1px solid rgba(234,179,8,.2)}
+
+/* ─── REQUIRED ASTERISK ─── */
+.req{color:#dc2626;margin-left:.15rem}
+
+/* ─── QUESTION LABEL ─── */
+.q-label{font-size:.8rem;font-weight:600;display:block;margin-bottom:.5rem}
+
+/* ─── FOOTER ─── */
+.app-footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;text-align:center;font-size:.7rem;color:var(--muted)}
+
+/* ─── ANIM ─── */
+.fade-in{animation:fadeIn .35s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hidden{display:none!important}
+
+/* ─── CTA BANNER ─── */
+.cta-banner{background:var(--parchment);border-radius:var(--radius);padding:.75rem;text-align:center;font-size:.85rem;font-weight:600;color:var(--maroon)}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>MangalDeep Gift Box</h1>
-  <p id="header-subtitle">Loading…</p>
-</header>
-
-<div class="progress-wrap">
-  <div class="step-pill active" id="pill-1"><span>①</span> About You</div>
-  <div class="step-pill" id="pill-2"><span>②</span> Build Box</div>
-  <div class="step-pill" id="pill-3"><span>③</span> A Few More</div>
-  <div class="step-pill" id="pill-4"><span>④</span> Done!</div>
+<!-- ─── APP SHELL ─── -->
+<div id="app">
+  <div id="loading" style="min-height:100vh;display:flex;align-items:center;justify-content:center">
+    <div style="text-align:center">
+      <div class="success-ring" style="width:4rem;height:4rem"><div class="success-ring-inner" style="width:2.8rem;height:2.8rem"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 8 6 8 10C8 12.21 9.79 14 12 14C14.21 14 16 12.21 16 10C16 6 12 2 12 2Z" fill="#f59e0b" opacity=".8"/><path d="M12 14V22" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/><path d="M8 22H16" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/></svg></div></div>
+      <p class="h-font" style="color:var(--maroon);font-size:1rem;margin-top:.75rem">Loading your gift box...</p>
+    </div>
+  </div>
 </div>
 
-<div class="container">
-
-  <!-- ── STEP 1: User Form ── -->
-  <div class="step-panel active" id="step-1">
-    <p class="section-title">Tell us about yourself</p>
-    <p class="section-sub">All fields are required — helps us understand your gifting world better</p>
-
-    <div class="form-grid">
-
-      <div class="section-divider">Basic Info</div>
-
-      <div class="form-group">
-        <label>Your Name <span class="req">*</span></label>
-        <input type="text" id="f-name" placeholder="Ramesh Kumar">
-        <span class="error-msg" id="err-name">Please enter your name.</span>
-      </div>
-      <div class="form-group">
-        <label>Email <span class="req">*</span></label>
-        <input type="email" id="f-email" placeholder="you@example.com">
-        <span class="error-msg" id="err-email">Please enter a valid email.</span>
-      </div>
-      <div class="form-group">
-        <label>Age <span class="req">*</span></label>
-        <input type="number" id="f-age" placeholder="28" min="10" max="100">
-        <span class="error-msg" id="err-age">Please enter your age.</span>
-      </div>
-      <div class="form-group">
-        <label>City <span class="req">*</span></label>
-        <input type="text" id="f-city" placeholder="e.g. Chennai, Mumbai, Bengaluru">
-        <span class="error-msg" id="err-city">Please enter your city.</span>
-      </div>
-
-      <div class="section-divider">Your Prayer Life</div>
-
-      <div class="form-group">
-        <label>How often do you pray? <span class="req">*</span></label>
-        <select id="f-pray">
-          <option value="">— Select —</option>
-          <option>Daily — morning and evening</option>
-          <option>Daily — once a day</option>
-          <option>A few times a week</option>
-          <option>On festivals and auspicious days only</option>
-          <option>Rarely / occasionally</option>
-          <option>Never</option>
-        </select>
-        <span class="error-msg" id="err-pray">Please select an option.</span>
-      </div>
-      <div class="form-group">
-        <label>Who taught you your rituals? <span class="req">*</span></label>
-        <select id="f-taught">
-          <option value="">— Select —</option>
-          <option>Grandparents</option>
-          <option>Parents / family elders</option>
-          <option>Temple priests</option>
-          <option>YouTube / social media</option>
-          <option>Books / scriptures</option>
-          <option>Self-learnt / figured it out</option>
-          <option>I don't follow specific rituals</option>
-        </select>
-        <span class="error-msg" id="err-taught">Please select an option.</span>
-      </div>
-
-      <div class="form-group full">
-        <label>Which steps do you follow while praying? <span class="req">*</span></label>
-        <div class="checkbox-group" id="prayer-steps">
-          <label class="cb-item"><input type="checkbox" value="Lighting diya / lamp"> Lighting diya / lamp</label>
-          <label class="cb-item"><input type="checkbox" value="Incense / agarbatti"> Incense / agarbatti</label>
-          <label class="cb-item"><input type="checkbox" value="Flowers / garlands"> Flowers / garlands</label>
-          <label class="cb-item"><input type="checkbox" value="Chanting mantras / shlokas"> Chanting mantras</label>
-          <label class="cb-item"><input type="checkbox" value="Aarti"> Aarti</label>
-          <label class="cb-item"><input type="checkbox" value="Naivedyam / prasad offering"> Naivedyam / prasad</label>
-          <label class="cb-item"><input type="checkbox" value="Tilak / chandan"> Tilak / chandan</label>
-          <label class="cb-item"><input type="checkbox" value="Meditation / silence"> Meditation / silence</label>
-          <label class="cb-item"><input type="checkbox" value="Reading scriptures"> Reading scriptures</label>
-          <label class="cb-item"><input type="checkbox" value="I keep it simple / informal"> Simple / informal</label>
-        </div>
-        <span class="error-msg" id="err-steps">Please select at least one step.</span>
-      </div>
-
-      <div class="section-divider">Your Gifting Habits</div>
-
-      <div class="form-group full">
-        <label>Which occasions do you typically give gifts for? <span class="req">*</span></label>
-        <input type="text" id="f-gifting" placeholder="e.g. Diwali, Gruha Pravesha, Namkaran, Birthdays, Weddings…">
-        <span class="error-msg" id="err-gifting">Please fill this in.</span>
-      </div>
-      <div class="form-group full">
-        <label>One item you would always include in a puja / festive gift, no matter the price? <span class="req">*</span></label>
-        <input type="text" id="f-mustitem" placeholder="e.g. Diya, Ladoo, Agarbatti, Silver coin…">
-        <span class="error-msg" id="err-mustitem">Please fill this in.</span>
-      </div>
-
+<!-- ─── TEMPLATE: MAIN APP ─── -->
+<template id="tpl-app">
+  <header class="hero" data-testid="app-header">
+    <div class="container">
+      <h1 class="h-font" data-testid="app-title">Build a <span id="h-occasion"></span> Box for <span id="h-deity"></span></h1>
+      <p>Discover your gifting personality and create a sacred gift box</p>
     </div>
+  </header>
 
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="goToBuilder()">Next: Build Box →</button>
+  <div class="stepper-bar" data-testid="step-progress-bar">
+    <div class="container">
+      <div class="stepper" id="stepper"></div>
     </div>
   </div>
 
-  <!-- ── STEP 2: Gift Box Builder ── -->
-  <div class="step-panel" id="step-2">
-    <div class="builder-top">
-      <div>
-        <p class="section-title" id="builder-title">Build Your Gift Box</p>
-        <p class="section-sub">Tap items to add or remove — total updates live</p>
-      </div>
-      <div class="box-summary">
-        <div class="label">Box Total</div>
-        <div class="total" id="price-display">₹0</div>
-        <div class="count" id="item-count">0 items selected</div>
-      </div>
-    </div>
+  <main class="container" style="padding-top:1.5rem;padding-bottom:1.5rem">
+    <section id="page1" class="fade-in" data-testid="step-page1"></section>
+    <section id="page2" class="hidden fade-in" data-testid="step-page2"></section>
+    <section id="page3" class="hidden fade-in" data-testid="step-page3"></section>
+    <section id="page4" class="hidden fade-in" data-testid="step-page4"></section>
+  </main>
 
-    <div class="items-grid" id="items-grid">
-      <div class="spinner"></div>
-    </div>
+  <footer class="app-footer" data-testid="app-footer">
+    <div class="container"><p>Made with devotion for <span id="f-occasion"></span> celebrations</p></div>
+  </footer>
+</template>
 
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(1)">← Back</button>
-      <button class="btn btn-primary" onclick="goToPostBox()">Next: A Few More Questions →</button>
-    </div>
-  </div>
-
-  <!-- ── STEP 3: Post-box questions ── -->
-  <div class="step-panel" id="step-3">
-    <p class="section-title">Almost there!</p>
-    <p class="section-sub">A couple more questions to help us serve you better</p>
-
-    <div class="form-grid">
-
-      <div class="form-group full">
-        <label>How would you describe your approach to religion / spirituality? <span class="req">*</span></label>
-        <select id="f-approach">
-          <option value="">— Select the one that fits best —</option>
-          <option value="purist">I follow rituals strictly as per scriptures / shastras</option>
-          <option value="traditional">I want to do it right but don't always know the exact way</option>
-          <option value="festive">I celebrate festivals with family — it's more about togetherness than rituals</option>
-          <option value="spiritual">I have my own spiritual practice — not bound by traditional rituals</option>
-          <option value="cultural">It's cultural identity for me — I participate but don't believe deeply</option>
-          <option value="curious">I'm exploring and learning — relatively new to it</option>
-        </select>
-        <span class="error-msg" id="err-approach">Please select an option.</span>
-      </div>
-
-      <div class="form-group full">
-        <label>When you think of this occasion, what feeling comes first? <span class="req">*</span></label>
-        <select id="f-feeling">
-          <option value="">— Select —</option>
-          <option>Devotion and reverence</option>
-          <option>Joy and celebration</option>
-          <option>Family bonding and nostalgia</option>
-          <option>Duty — I do it because it's expected</option>
-          <option>Personal peace and mindfulness</option>
-          <option>Excitement about the rituals and preparations</option>
-        </select>
-        <span class="error-msg" id="err-feeling">Please select an option.</span>
-      </div>
-
-      <div class="form-group full">
-        <label>How do you usually decide what to include in a puja / festive gift? <span class="req">*</span></label>
-        <select id="f-decide">
-          <option value="">— Select —</option>
-          <option>Follow what elders / priests specify</option>
-          <option>Go by what I've always seen at home</option>
-          <option>Search online or ask friends</option>
-          <option>Whatever looks good and festive</option>
-          <option>Based on the recipient's preferences</option>
-          <option>I improvise based on what's available</option>
-        </select>
-        <span class="error-msg" id="err-decide">Please select an option.</span>
-      </div>
-
-      <div class="form-group full">
-        <label>Is there anything specific you look for in a festive gift that most gift boxes miss? <span class="req">*</span></label>
-        <textarea id="f-missing" placeholder="e.g. Authenticity of items, specific regional items, purity / organic, personalisation, convenience…"></textarea>
-        <span class="error-msg" id="err-missing">Please fill this in.</span>
-      </div>
-
-    </div>
-
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep(2)">← Back</button>
-      <button class="btn btn-primary" onclick="submitBox()">Submit My Gift Box</button>
-    </div>
-  </div>
-
-  <!-- ── STEP 4: Success ── -->
-  <div class="step-panel" id="step-4">
-    <div class="success-wrap">
-      <div class="success-icon">🎉</div>
-      <h2>Your Box is Ready!</h2>
-      <p style="color:var(--muted); font-size:0.9rem;" id="success-msg">Thank you for participating.</p>
-
-      <div id="cohort-display"></div>
-
-      <div class="success-box" id="summary-box"></div>
-      <div class="total-final" id="final-total"></div>
-
-      <button class="btn btn-primary" onclick="location.reload()" style="margin-top:20px;">Start Over</button>
-    </div>
-  </div>
-
-</div>
-
-<div class="toast" id="toast"></div>
+<div id="root"></div>
 
 <script>
-const API = "https://giftboxsimulator.onrender.com";
+(function(){
+"use strict";
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetch(API + "/api/config")
-    .then(() => console.log("Backend warmed up"))
-    .catch(() => console.log("Warmup failed"));
-});
+const state = {
+  step: 0,
+  config: null,
+  images: null,
+  page1: { name:'',email:'',age:'',gender:'',occupation:'',identity_type:'',gift_occasions:[],gift_recipients:'',shopping_channel:'',gifting_spend:'',considered_devotional:'' },
+  page2: { decision_logic:'',prayer_frequency:'',ritual_teacher:'',ritual_strictness:0,authenticity_importance:0 },
+  selectedItems: new Set(),
+  page4: { perceived_price:'', temple_vetted_price:'' },
+  submitting: false,
+  result: null,
+};
 
-let config = null;
-let selectedItems = new Set();
-let currentTotal = 0;
+const CHECK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const ARROW_R = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+const ARROW_L = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
+const BOOK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
+const SEND_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
+const PKG_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>';
 
-// ── Cohort classification ─────────────────────────────────────────────────
-function classifyCohort(approach, taught, prayFreq, steps) {
-  const stepsCount = steps.length;
-  const strictApproach = approach === 'purist';
-  const traditionalApproach = approach === 'traditional';
-  const festiveApproach = approach === 'festive' || approach === 'cultural';
-  const spiritualApproach = approach === 'spiritual' || approach === 'curious';
+const STEPS = [{s:'1. You',f:'About You'},{s:'2. Rituals',f:'Your Rituals'},{s:'3. Build',f:'Build Box'},{s:'4. Final',f:'Your Box'}];
 
-  const selfLearnt = ['YouTube / social media', 'Self-learnt / figured it out', 'Books / scriptures'].includes(taught);
-  const elderTaught = ['Grandparents', 'Parents / family elders', 'Temple priests'].includes(taught);
-  const praysFully = prayFreq.includes('Daily');
-  const hasScriptures = steps.includes('Reading scriptures') || steps.includes('Chanting mantras / shlokas');
-  const simpleStyle = steps.includes('I keep it simple / informal');
+function $(sel, ctx){ return (ctx||document).querySelector(sel); }
+function $$(sel, ctx){ return Array.from((ctx||document).querySelectorAll(sel)); }
+function h(tag, cls, html){ const el=document.createElement(tag); if(cls)el.className=cls; if(html!==undefined)el.innerHTML=html; return el; }
 
-  if (strictApproach && elderTaught && stepsCount >= 5 && hasScriptures) {
-    return { label: 'Purist', emoji: '📜', desc: 'Follows rituals strictly as per tradition and scriptures' };
+// ── Selector card HTML helper ──
+function selectorCard(value, label, currentValue){
+  const sel = currentValue === value;
+  return `<div class="selector-card${sel?' selected':''}" data-id="${value}">
+    <div class="sel-dot"><div class="sel-dot-inner"></div></div>
+    <span>${label}</span>
+  </div>`;
+}
+
+async function init(){
+  try{
+    const backendUrl = getBackendUrl();
+    const [cfgR, imgR] = await Promise.all([
+      fetch(backendUrl + '/api/config'),
+      fetch(backendUrl + '/api/images')
+    ]);
+    state.config = await cfgR.json();
+    state.images = imgR.ok ? await imgR.json() : {personalities:[]};
+    render();
+  }catch(e){
+    $('#loading').innerHTML = '<div style="text-align:center;padding:2rem"><p style="color:#dc2626;font-size:1.1rem;margin-bottom:.5rem">Something went wrong</p><p style="color:var(--muted)">'+e.message+'</p><button class="btn btn-primary" style="margin-top:1rem" onclick="location.reload()">Retry</button></div>';
   }
-  if (traditionalApproach || (elderTaught && stepsCount >= 3 && !simpleStyle)) {
-    return { label: 'Traditional Ritualist', emoji: '🪔', desc: 'Wants to do it right — rooted in family tradition' };
-  }
-  if (spiritualApproach || (selfLearnt && !praysFully)) {
-    return { label: 'Spiritual Seeker', emoji: '🧘', desc: 'Personal, evolving spiritual identity — not bound by ritual' };
-  }
-  if (festiveApproach || simpleStyle) {
-    return { label: 'Festive Devotee', emoji: '🎊', desc: 'Celebration-first — festivals are about joy and togetherness' };
-  }
-  // fallback scoring
-  const score = (praysFully ? 2 : 0) + (elderTaught ? 2 : 0) + (stepsCount >= 4 ? 2 : 0) + (hasScriptures ? 2 : 0);
-  if (score >= 6) return { label: 'Traditional Ritualist', emoji: '🪔', desc: 'Rooted in family tradition and ritual' };
-  if (score >= 3) return { label: 'Festive Devotee', emoji: '🎊', desc: 'Celebrates with heart — community and joy come first' };
-  return { label: 'Spiritual Seeker', emoji: '🧘', desc: 'Finds meaning in spirituality on their own terms' };
 }
 
-// ── Config load ───────────────────────────────────────────────────────────
-async function loadConfig() {
-  try {
-    const res = await fetch(API + '/api/config');
-    config = await res.json();
-    document.getElementById('header-subtitle').textContent = `Build a ${config.occasion} Box for ${config.deity}`;
-    document.getElementById('builder-title').textContent = `Build a ${config.occasion} Box for ${config.deity}`;
-    document.title = `${config.occasion} Gift Box – ${config.deity}`;
-  } catch(e) { showToast('Could not load config from server', true); }
+function getBackendUrl(){
+  try { if(window.__BACKEND_URL) return window.__BACKEND_URL; return 'http://127.0.0.1:8001'; }
+  catch(e) { return ''; }
 }
 
-// ── Checkbox styling ─────────────────────────────────────────────────────
-document.getElementById('prayer-steps').addEventListener('change', e => {
-  if (e.target.type === 'checkbox') {
-    e.target.closest('.cb-item').classList.toggle('checked', e.target.checked);
-  }
-});
-
-// ── Validation helpers ────────────────────────────────────────────────────
-function val(id) { return (document.getElementById(id)?.value || '').trim(); }
-function showErr(id, show) {
-  const el = document.getElementById(id);
-  if (el) { el.classList.toggle('show', show); }
-  const input = document.getElementById(id.replace('err-','f-'));
-  if (input) input.classList.toggle('invalid', show);
-  return show;
-}
-function getPrayerSteps() {
-  return [...document.querySelectorAll('#prayer-steps input[type=checkbox]:checked')].map(c => c.value);
+function render(){
+  const appEl = $('#app');
+  const tpl = $('#tpl-app');
+  appEl.innerHTML = '';
+  appEl.appendChild(tpl.content.cloneNode(true));
+  $('#h-occasion').textContent = state.config.occasion;
+  $('#h-deity').textContent = state.config.deity;
+  $('#f-occasion').textContent = state.config.occasion;
+  renderStepper();
+  renderPage1();
+  renderPage2();
+  renderPage3();
+  renderPage4();
+  showStep(state.step);
 }
 
-// ── Step 1 validation ─────────────────────────────────────────────────────
-function goToBuilder() {
-  let invalid = false;
-  invalid = showErr('err-name',    !val('f-name'))    || invalid;
-  invalid = showErr('err-email',   !val('f-email') || !val('f-email').includes('@')) || invalid;
-  invalid = showErr('err-age',     !val('f-age'))     || invalid;
-  invalid = showErr('err-city',    !val('f-city'))    || invalid;
-  invalid = showErr('err-pray',    !val('f-pray'))    || invalid;
-  invalid = showErr('err-taught',  !val('f-taught'))  || invalid;
-  const steps = getPrayerSteps();
-  invalid = showErr('err-steps',   steps.length === 0) || invalid;
-  invalid = showErr('err-gifting', !val('f-gifting')) || invalid;
-  invalid = showErr('err-mustitem',!val('f-mustitem'))|| invalid;
-  if (invalid) { showToast('Please fill all required fields', true); return; }
-  if (!config) { showToast('Still loading items, please wait…', true); return; }
-  renderItems();
-  goStep(2);
-}
-
-// ── Step 2 → Step 3 ───────────────────────────────────────────────────────
-function goToPostBox() {
-  if (selectedItems.size === 0) { showToast('Please select at least one item!', true); return; }
-  goStep(3);
-}
-
-// ── Render items ──────────────────────────────────────────────────────────
-function renderItems() {
-  const grid = document.getElementById('items-grid');
-  grid.innerHTML = '';
-  config.items.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'item-card';
-    card.id = 'card-' + item.id;
-    card.innerHTML = `<div class="check">✓</div><div class="item-emoji">${item.emoji || '🎁'}</div><div class="item-name">${item.name}</div>`;
-    card.onclick = () => toggleItem(item.id, card);
-    grid.appendChild(card);
-  });
-}
-
-async function toggleItem(id, card) {
-  selectedItems.has(id) ? selectedItems.delete(id) : selectedItems.add(id);
-  card.classList.toggle('selected', selectedItems.has(id));
-  await updateTotal();
-}
-
-async function updateTotal() {
-  try {
-    const res = await fetch(API + '/api/calculate', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({selectedItems:[...selectedItems]}) });
-    const data = await res.json();
-    currentTotal = data.total || 0;
-    document.getElementById('price-display').textContent = '₹' + currentTotal;
-    document.getElementById('item-count').textContent = selectedItems.size + (selectedItems.size === 1 ? ' item' : ' items') + ' selected';
-  } catch(e) {}
-}
-
-// ── Step 3 validation + submit ────────────────────────────────────────────
-async function submitBox() {
-  let invalid = false;
-  invalid = showErr('err-approach', !val('f-approach')) || invalid;
-  invalid = showErr('err-feeling',  !val('f-feeling'))  || invalid;
-  invalid = showErr('err-decide',   !val('f-decide'))   || invalid;
-  invalid = showErr('err-missing',  !val('f-missing'))  || invalid;
-  if (invalid) { showToast('Please fill all required fields', true); return; }
-
-  const btn = event.target;
-  btn.disabled = true; btn.textContent = 'Saving…';
-
-  const steps = getPrayerSteps();
-  const cohort = classifyCohort(val('f-approach'), val('f-taught'), val('f-pray'), steps);
-
-  const payload = {
-    name: val('f-name'), email: val('f-email'), age: val('f-age'), city: val('f-city'),
-    prayingFrequency: val('f-pray'), taughtBy: val('f-taught'),
-    prayerSteps: steps.join('; '),
-    giftingHabits: val('f-gifting'), mustHaveItem: val('f-mustitem'),
-    religiousApproach: val('f-approach'), primaryFeeling: val('f-feeling'),
-    giftDecisionBasis: val('f-decide'), giftBoxGap: val('f-missing'),
-    cohort: cohort.label,
-    selectedItems: [...selectedItems]
-  };
-
-  try {
-    const res = await fetch(API + '/api/submit', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-    const data = await res.json();
-    if (!res.ok || data.error) {
-      showToast(data.error || 'Submission failed', true);
-      btn.disabled = false; btn.textContent = 'Submit My Gift Box'; return;
+function renderStepper(){
+  const el = $('#stepper');
+  el.innerHTML = '';
+  STEPS.forEach((s,i)=>{
+    const g = h('div','step-group');
+    const cls = i < state.step ? 'done' : i === state.step ? 'active' : 'pending';
+    g.innerHTML = `<div class="step-circle ${cls}" data-testid="step-node-${i}">${i < state.step ? CHECK_SVG : i+1}</div><span class="step-label" style="color:${i<=state.step?'var(--ink)':'var(--muted)'}"><span class="mobile-only">${s.s}</span><span class="desktop-only">${s.f}</span></span>`;
+    el.appendChild(g);
+    if(i < STEPS.length-1){
+      const c = h('div','step-connector');
+      c.innerHTML = `<div class="step-connector-fill" style="width:${i<state.step?'100%':'0'}"></div>`;
+      el.appendChild(c);
     }
-    showSuccess(payload, data, cohort);
-    goStep(4);
-  } catch(e) {
-    showToast('Network error – please try again', true);
-    btn.disabled = false; btn.textContent = 'Submit My Gift Box';
-  }
-}
-
-function showSuccess(payload, data, cohort) {
-  document.getElementById('success-msg').textContent = data.message || 'Your responses have been recorded.';
-  document.getElementById('cohort-display').innerHTML = `
-    <div class="cohort-badge">${cohort.emoji} ${cohort.label}</div>
-    <p class="cohort-desc">${cohort.desc}</p>
-  `;
-  const itemNames = [...selectedItems].map(id => config.items.find(i => i.id === id)?.name || id).join(', ');
-  document.getElementById('summary-box').innerHTML = `
-    <div class="success-row"><span class="key">Name</span><span class="val">${payload.name}</span></div>
-    <div class="success-row"><span class="key">City</span><span class="val">${payload.city}</span></div>
-    <div class="success-row"><span class="key">Occasion</span><span class="val">${config.occasion} – ${config.deity}</span></div>
-    <div class="success-row"><span class="key">Items (${selectedItems.size})</span><span class="val">${itemNames}</span></div>
-    <div class="success-row"><span class="key">Must-have item</span><span class="val">${payload.mustHaveItem}</span></div>
-  `;
-  document.getElementById('final-total').textContent = '₹' + data.total;
-}
-
-// ── Navigation ────────────────────────────────────────────────────────────
-function goStep(n) {
-  document.querySelectorAll('.step-panel').forEach((p,i) => p.classList.toggle('active', i+1 === n));
-  document.querySelectorAll('.step-pill').forEach((p,i) => {
-    p.classList.remove('active','done');
-    if (i+1 < n) p.classList.add('done');
-    if (i+1 === n) p.classList.add('active');
   });
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  const style = document.getElementById('resp-step-style') || document.createElement('style');
+  style.id='resp-step-style';
+  style.textContent = '.mobile-only{display:inline}@media(min-width:640px){.mobile-only{display:none}}.desktop-only{display:none}@media(min-width:640px){.desktop-only{display:inline}}';
+  if(!style.parentNode) document.head.appendChild(style);
 }
 
-function showToast(msg, isError=false) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast show' + (isError ? ' error' : '');
-  setTimeout(() => t.className = 'toast', 3200);
+function showStep(n){
+  state.step = n;
+  ['page1','page2','page3','page4'].forEach((id,i)=>{
+    const el = $('#'+id);
+    el.classList.toggle('hidden', i!==n);
+    if(i===n){ el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in'); }
+  });
+  renderStepper();
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-loadConfig();
+// ══════════════════════════════
+//   PAGE 1 — Demographics
+// ══════════════════════════════
+function renderPage1(){
+  const el = $('#page1');
+  const p = state.images?.personalities || [];
+  const d = state.page1;
+  el.innerHTML = `
+  <div class="card">
+    <div class="card-title">Tell us a bit about yourself</div>
+    <div class="card-desc">Help us understand your gifting personality</div>
+    <form id="form1" style="margin-top:1.5rem" novalidate>
+
+      <div class="section-label">Basic Details</div>
+      <div class="grid-2">
+        <div class="form-group">
+          <label>Name <span class="req">*</span></label>
+          <input class="form-input" id="f-name" value="${d.name}" placeholder="Enter your name" data-testid="input-name">
+          <div class="error-msg hidden" id="err-name"></div>
+        </div>
+        <div class="form-group">
+          <label>Email <span class="req">*</span></label>
+          <input class="form-input" type="email" id="f-email" value="${d.email}" placeholder="your@email.com" data-testid="input-email">
+          <div class="error-msg hidden" id="err-email"></div>
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input class="form-input" type="number" min="1" max="120" id="f-age" value="${d.age}" placeholder="Your age" data-testid="input-age">
+        </div>
+        <div class="form-group">
+          <label>Gender</label>
+          <select class="form-select" id="f-gender" data-testid="select-gender">
+            <option value="">Select gender</option>
+            <option ${d.gender==='Male'?'selected':''}>Male</option>
+            <option ${d.gender==='Female'?'selected':''}>Female</option>
+            <option ${d.gender==='Other'?'selected':''}>Other</option>
+            <option ${d.gender==='Prefer not to say'?'selected':''}>Prefer not to say</option>
+          </select>
+        </div>
+        <div class="form-group" style="grid-column:1/-1">
+          <label>Occupation</label>
+          <input class="form-input" id="f-occupation" value="${d.occupation}" placeholder="What do you do?" data-testid="input-occupation">
+        </div>
+      </div>
+
+      ${p.length ? `
+      <div style="margin-top:2rem">
+        <div class="section-label">Which best describes you? <span class="req">*</span></div>
+        <p style="font-size:.7rem;color:var(--muted);margin-bottom:.75rem">Select the personality that resonates with you most</p>
+        <div class="identity-grid" data-testid="identity-selector">
+          ${p.map(x=>`
+            <div class="identity-card${d.identity_type===x.id?' selected':''}" data-id="${x.id}" data-testid="identity-${x.id}">
+              <img src="${x.image}" alt="${x.label}" loading="lazy" onerror="this.style.display='none'">
+              ${d.identity_type===x.id?`<div class="identity-check">${CHECK_SVG}</div>`:''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+
+      <div style="margin-top:2rem">
+        <div class="section-label">Gifting Behavior</div>
+
+        <div style="margin-bottom:1.2rem">
+          <label class="q-label">Which occasions do you typically give gifts for? <span class="req">*</span></label>
+          <div class="cb-list" data-testid="gift-occasions">
+            ${['Diwali','Holi','Raksha Bandhan','Gruha Pravesha (Housewarming)','Namkaran (Naming ceremony)','Weddings','Birthdays','Anniversaries','Religious pujas / havans','Other festivals'].map(o=>`
+              <div class="cb-item${d.gift_occasions.includes(o)?' checked':''}" data-val="${o}">
+                <div class="cb-box">${d.gift_occasions.includes(o)?CHECK_SVG:''}</div>
+                <span>${o}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:1rem">
+          <div class="form-group">
+            <label>Who do you usually gift? <span class="req">*</span></label>
+            <select class="form-select" id="f-recipients" data-testid="select-gift-recipients">
+              <option value="">Select recipient type</option>
+              ${['Family members','Friends','Colleagues / Business associates','Elders / Gurus','Temple / Religious institutions','Neighbors'].map(o=>`<option ${d.gift_recipients===o?'selected':''}>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Where do you usually shop for gifts? <span class="req">*</span></label>
+            <select class="form-select" id="f-channel" data-testid="select-shopping-channel">
+              <option value="">Select shopping channel</option>
+              ${['Quick Commerce (Blinkit, Zepto, etc.)','E-commerce (Amazon, Flipkart, etc.)','Retail (D-Mart, Big Bazaar, etc.)','Offline (Local shops, markets)'].map(o=>`<option ${d.shopping_channel===o?'selected':''}>${o}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="section-label">Gifting Insights</div>
+
+        <div style="margin-bottom:1.5rem">
+          <label class="q-label">How much do you usually spend on gifting? <span class="req">*</span></label>
+          <div class="selector-grid cols-4" data-group="gifting_spend" data-testid="gifting-spend-selector">
+            ${selectorCard('low',  'Under ₹500',     d.gifting_spend)}
+            ${selectorCard('mid',  '₹500 – ₹1,500',  d.gifting_spend)}
+            ${selectorCard('high', '₹1,500 – ₹3,000',d.gifting_spend)}
+            ${selectorCard('premium','₹3,000+',       d.gifting_spend)}
+          </div>
+        </div>
+
+        <div>
+          <label class="q-label">Have you considered devotional gift boxes for gifting? <span class="req">*</span></label>
+          <div class="selector-grid cols-3" data-group="considered_devotional" data-testid="considered-devotional-selector">
+            ${selectorCard('yes',   'Yes',   d.considered_devotional)}
+            ${selectorCard('maybe', 'Maybe', d.considered_devotional)}
+            ${selectorCard('no',    'No',    d.considered_devotional)}
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
+        <button type="submit" class="btn btn-primary" data-testid="page1-next-button">Continue ${ARROW_R}</button>
+      </div>
+    </form>
+  </div>`;
+
+  // ── Save helper ──
+  function saveP1Inputs(){
+    const n=document.getElementById('f-name');if(n)state.page1.name=n.value;
+    const e=document.getElementById('f-email');if(e)state.page1.email=e.value;
+    const a=document.getElementById('f-age');if(a)state.page1.age=a.value;
+    const g=document.getElementById('f-gender');if(g)state.page1.gender=g.value;
+    const o=document.getElementById('f-occupation');if(o)state.page1.occupation=o.value;
+    const r=document.getElementById('f-recipients');if(r)state.page1.gift_recipients=r.value;
+    const c=document.getElementById('f-channel');if(c)state.page1.shopping_channel=c.value;
+  }
+
+  // Identity cards
+  $$('.identity-card', el).forEach(c => c.addEventListener('click', ()=>{
+    saveP1Inputs();
+    state.page1.identity_type = c.dataset.id;
+    $$('.identity-card', el).forEach(ic=>{
+      const isSel = ic.dataset.id === state.page1.identity_type;
+      ic.classList.toggle('selected', isSel);
+      const existing = ic.querySelector('.identity-check');
+      if(isSel && !existing){
+        const badge = document.createElement('div');badge.className='identity-check';badge.innerHTML=CHECK_SVG;ic.appendChild(badge);
+      } else if(!isSel && existing){ existing.remove(); }
+    });
+  }));
+
+  // Selector grids (spend + devotional) — generic handler
+  $$('[data-group]', el).forEach(grid => {
+    $$('.selector-card', grid).forEach(card => {
+      card.addEventListener('click', ()=>{
+        const group = grid.dataset.group;
+        state.page1[group] = card.dataset.id;
+        $$('.selector-card', grid).forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+      });
+    });
+  });
+
+  // Checkbox items
+  $$('.cb-item', el).forEach(c => c.addEventListener('click', ()=>{
+    const v = c.dataset.val;
+    const arr = state.page1.gift_occasions;
+    const idx = arr.indexOf(v);
+    if(idx >= 0) arr.splice(idx,1); else arr.push(v);
+    c.classList.toggle('checked');
+    c.querySelector('.cb-box').innerHTML = c.classList.contains('checked') ? CHECK_SVG : '';
+  }));
+
+  // Form submit — stop at FIRST error only
+  $('#form1').addEventListener('submit', e => {
+    e.preventDefault();
+    state.page1.name = $('#f-name').value.trim();
+    state.page1.email = $('#f-email').value.trim();
+    state.page1.age = $('#f-age').value;
+    state.page1.gender = $('#f-gender').value;
+    state.page1.occupation = $('#f-occupation').value.trim();
+    state.page1.gift_recipients = $('#f-recipients').value;
+    state.page1.shopping_channel = $('#f-channel').value;
+
+    // Clear previous inline errors
+    $('#err-name').classList.add('hidden');
+    $('#f-name').classList.remove('error');
+    $('#err-email').classList.add('hidden');
+    $('#f-email').classList.remove('error');
+
+    // ── Validate in order, stop at first failure ──
+    if(!state.page1.name){
+      $('#err-name').textContent='Name is required';
+      $('#err-name').classList.remove('hidden');
+      $('#f-name').classList.add('error');
+      $('#f-name').focus();
+      return;
+    }
+    if(!state.page1.email){
+      $('#err-email').textContent='Email is required';
+      $('#err-email').classList.remove('hidden');
+      $('#f-email').classList.add('error');
+      $('#f-email').focus();
+      return;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.page1.email)){
+      $('#err-email').textContent='Enter a valid email';
+      $('#err-email').classList.remove('hidden');
+      $('#f-email').classList.add('error');
+      $('#f-email').focus();
+      return;
+    }
+    if(!state.page1.identity_type){
+      alert("Please select a personality that resonates with you");
+      return;
+    }
+    if(state.page1.gift_occasions.length === 0){
+      alert("Please select at least one gifting occasion");
+      return;
+    }
+    if(!state.page1.gift_recipients){
+      alert("Please select who you usually gift");
+      return;
+    }
+    if(!state.page1.shopping_channel){
+      alert("Please select where you shop for gifts");
+      return;
+    }
+    if(!state.page1.gifting_spend){
+      alert("Please select how much you usually spend on gifting");
+      return;
+    }
+    if(!state.page1.considered_devotional){
+      alert("Please answer the devotional gifting question");
+      return;
+    }
+
+    showStep(1);
+  });
+}
+
+// ══════════════════════════════
+//   PAGE 2 — Behavior / Rituals
+// ══════════════════════════════
+function renderPage2(){
+  const el = $('#page2');
+  const d = state.page2;
+  el.innerHTML = `
+  <div class="card">
+    <div class="card-title">Your approach to gifting & rituals</div>
+    <div class="card-desc">Help us understand how you connect with traditions</div>
+    <form id="form2" style="margin-top:1.5rem" novalidate>
+      <div class="section-label">Decision Making</div>
+      <label class="q-label">How do you usually decide what to include in a puja / festive gift?</label>
+      <div class="pill-group" data-testid="decision-logic">
+        ${[{v:'tradition',l:'Based on tradition'},{v:'meaning',l:'Based on meaning'},{v:'convenience',l:'Based on convenience'},{v:'recommendations',l:'Based on recommendations'}].map(o=>`
+          <button type="button" class="pill${d.decision_logic===o.v?' selected':''}" data-val="${o.v}" data-testid="decision-${o.v}">${o.l}</button>
+        `).join('')}
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="section-label">Prayer & Ritual Background</div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>How often do you pray?</label>
+            <select class="form-select" id="f-prayer" data-testid="select-prayer-frequency">
+              <option value="">Select frequency</option>
+              ${['Daily','Twice a day','Weekly','On festivals','Monthly','Rarely','Never'].map(o=>`<option ${d.prayer_frequency===o?'selected':''}>${o}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Who taught you your rituals?</label>
+            <select class="form-select" id="f-teacher" data-testid="select-ritual-teacher">
+              <option value="">Select</option>
+              ${['Parents / Grandparents','Priest / Pandit','YouTube / Social media','Books / Scriptures','Friends / Community','Self-taught','No one'].map(o=>`<option ${d.ritual_teacher===o?'selected':''}>${o}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem">
+        <div class="section-label">Your Values</div>
+        <div style="margin-bottom:1.5rem" data-testid="likert-ritual-strictness">
+          <label class="q-label">How particular are you about following rituals exactly as prescribed?</label>
+          <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.ritual_strictness===n?' selected':''}" data-n="${n}" data-group="rs" data-testid="likert-ritual-strictness-${n}">${n}</button>`).join('')}</div>
+          <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
+        </div>
+        <div data-testid="likert-authenticity">
+          <label class="q-label">How important is authenticity (source, correctness, origin) in devotional items?</label>
+          <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.authenticity_importance===n?' selected':''}" data-n="${n}" data-group="ai" data-testid="likert-authenticity-${n}">${n}</button>`).join('')}</div>
+          <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
+        </div>
+      </div>
+
+      <div class="cta-banner" style="margin-top:1.5rem">Build the box next — the big questions are done!</div>
+
+      <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+        <button type="button" class="btn btn-ghost" id="p2-back" data-testid="page2-back-button">${ARROW_L} Back</button>
+        <button type="submit" class="btn btn-primary" data-testid="page2-next-button">Build Your Box ${ARROW_R}</button>
+      </div>
+    </form>
+  </div>`;
+
+  $$('.pill[data-testid^="decision-"]', el).forEach(b => b.addEventListener('click', ()=>{ state.page2.decision_logic=b.dataset.val; renderPage2(); }));
+  $$('.likert-btn', el).forEach(b => b.addEventListener('click', ()=>{
+    const n = parseInt(b.dataset.n);
+    if(b.dataset.group==='rs') state.page2.ritual_strictness=n; else state.page2.authenticity_importance=n;
+    renderPage2();
+  }));
+  $('#p2-back').addEventListener('click', ()=> showStep(0));
+  $('#form2').addEventListener('submit', e=>{
+    e.preventDefault();
+    state.page2.prayer_frequency = $('#f-prayer').value;
+    state.page2.ritual_teacher = $('#f-teacher').value;
+    showStep(2);
+  });
+}
+
+// ══════════════════════════════
+//   PAGE 3 — Gift Box Builder
+// ══════════════════════════════
+function renderPage3(){
+  const el = $('#page3');
+  const items = state.config.items;
+  const sel = state.selectedItems;
+
+  el.innerHTML = `
+  <div style="text-align:center;margin-bottom:1.2rem">
+    <h2 class="h-font" style="font-size:clamp(1.2rem,3vw,1.5rem);font-weight:600;color:var(--maroon)">Build your own gift box</h2>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:.2rem">Tap items to add them to your ${state.config.occasion} gift box for ${state.config.deity}</p>
+  </div>
+  <div class="items-layout" data-testid="page3-builder">
+    <div class="items-grid" data-testid="items-grid">
+      ${items.map(it => {
+        const isSel = sel.has(it.id);
+        return `
+        <div class="item-card${isSel?' selected':''}" data-id="${it.id}" data-testid="gift-item-card-${it.id}">
+          ${isSel ? `<div class="item-check">${CHECK_SVG}</div>` : ''}
+          <img src="${it.image}" alt="${it.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'ic-fallback\\'>${it.emoji||'\\uD83C\\uDF81'}</div>'">
+          <div class="item-body">
+            <div class="item-name">${it.name}</div>
+            ${it.description ? `<div class="item-desc">${it.description}</div>` : ''}
+            <div class="item-badge ${isSel?'added':'add'}">${isSel ? CHECK_SVG+' Added' : 'Tap to add'}</div>
+          </div>
+          ${it.lore ? `<button class="lore-toggle" data-lore="${it.id}" data-testid="lore-toggle-${it.id}">${BOOK_SVG} Read the story</button><div class="lore-text hidden" id="lore-${it.id}" data-testid="lore-text-${it.id}">${it.lore}</div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="sidebar" style="display:none" id="sidebar-desktop">
+      <div class="sidebar-inner" data-testid="selection-widget">
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center">${PKG_SVG}</div>
+          <div><div style="font-size:.8rem;font-weight:600">Your Gift Box</div><div style="font-size:.65rem;color:var(--muted)" id="sidebar-count">${sel.size} items selected</div></div>
+        </div>
+        <div style="height:1px;background:rgba(234,179,8,.12);margin:.7rem 0"></div>
+        <div class="sidebar-list"></div>
+        <div style="margin-top:.7rem;display:flex;flex-direction:column;gap:.4rem">
+          <button class="btn btn-primary" style="width:100%" ${sel.size===0?'disabled':''} id="p3-continue-d" data-testid="page3-continue-button">See Your Box ${ARROW_R}</button>
+          <button class="btn btn-ghost" style="width:100%" id="p3-back-d" data-testid="page3-back-button">${ARROW_L} Back to Rituals</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mobile-bar" data-testid="mobile-bottom-bar">
+    <button class="btn btn-ghost" style="font-size:.8rem" id="p3-back-m" data-testid="page3-back-mobile">${ARROW_L} Back</button>
+    <div style="text-align:center"><div style="display:flex;align-items:center;gap:.3rem;justify-content:center">${PKG_SVG} <span style="font-size:.7rem;color:var(--muted)">${sel.size} items</span></div></div>
+    <button class="btn btn-primary" style="font-size:.8rem;padding:.5rem .8rem" ${sel.size===0?'disabled':''} id="p3-continue-m" data-testid="page3-continue-mobile">See Your Box ${ARROW_R}</button>
+  </div>
+  <div class="mobile-spacer"></div>`;
+
+  if(window.innerWidth >= 1024) $('#sidebar-desktop').style.display = 'block';
+
+  $$('.item-card', el).forEach(c => {
+    c.addEventListener('click', e=>{
+      if(e.target.closest('.lore-toggle')) return;
+      const id = c.dataset.id;
+      if(state.selectedItems.has(id)){
+        state.selectedItems.delete(id);
+        c.classList.remove('selected');
+        const tick = c.querySelector('.item-check');
+        if(tick) tick.remove();
+        c.querySelector('.item-badge').className = 'item-badge add';
+        c.querySelector('.item-badge').innerHTML = 'Tap to add';
+      } else {
+        state.selectedItems.add(id);
+        c.classList.add('selected');
+        const tick = document.createElement('div');
+        tick.className = 'item-check';
+        tick.innerHTML = CHECK_SVG;
+        c.appendChild(tick);
+        c.querySelector('.item-badge').className = 'item-badge added';
+        c.querySelector('.item-badge').innerHTML = CHECK_SVG + ' Added';
+      }
+      updateSelectionUI();
+      updateSidebar();
+    });
+  });
+
+  $$('.lore-toggle', el).forEach(b => b.addEventListener('click', e=>{
+    e.stopPropagation();
+    const loreEl = $('#lore-'+b.dataset.lore);
+    loreEl.classList.toggle('hidden');
+    b.innerHTML = loreEl.classList.contains('hidden') ? BOOK_SVG+' Read the story' : BOOK_SVG+' Hide story';
+  }));
+
+  const goP4 = ()=>{ if(state.selectedItems.size > 0){ renderPage4(); showStep(3); } };
+  const goP2 = ()=> showStep(1);
+  if($('#p3-continue-d')) $('#p3-continue-d').addEventListener('click', goP4);
+  if($('#p3-back-d')) $('#p3-back-d').addEventListener('click', goP2);
+  $('#p3-continue-m').addEventListener('click', goP4);
+  $('#p3-back-m').addEventListener('click', goP2);
+  updateSidebar();
+}
+
+function updateSelectionUI(){
+  const count = state.selectedItems.size;
+  const mobileCount = document.querySelector('[data-testid="mobile-bottom-bar"] span');
+  if(mobileCount) mobileCount.innerText = count + " items";
+  const btn1 = document.getElementById('p3-continue-d');
+  const btn2 = document.getElementById('p3-continue-m');
+  if(btn1) btn1.disabled = count === 0;
+  if(btn2) btn2.disabled = count === 0;
+}
+
+function updateSidebar(){
+  const page3 = document.getElementById('page3');
+  if(!page3) return;
+  const items = state.config.items;
+  const selected = Array.from(state.selectedItems);
+  const listContainer = page3.querySelector('.sidebar-list');
+  const countText = page3.querySelector('#sidebar-count');
+  if(countText) countText.innerText = selected.length + " items selected";
+  if(!listContainer) return;
+  if(selected.length === 0){
+    listContainer.innerHTML = `<p style="font-size:.7rem;color:var(--muted);text-align:center;padding:.5rem 0">Select items to build your box</p>`;
+    return;
+  }
+  const itemMap = Object.fromEntries(items.map(it => [it.id, it]));
+  listContainer.innerHTML = selected.map(id => {
+    const it = itemMap[id];
+    if(!it) return '';
+    return `<div class="sidebar-list-item">${CHECK_SVG} <span>${it.name}</span></div>`;
+  }).join('');
+}
+
+// ══════════════════════════════
+//   PAGE 4 — WTP + Submit
+// ══════════════════════════════
+function renderPage4(){
+  const el = $('#page4');
+  const items = state.config.items;
+  const sel = state.selectedItems;
+  const selectedArray = Array.from(state.selectedItems).map(id => String(id));
+  const itemMap = Object.fromEntries(items.map(it => [String(it.id), it]));
+  const selList = selectedArray.map(id => itemMap[id]).filter(Boolean);
+
+  if(state.result){
+    el.innerHTML = `
+    <div style="max-width:28rem;margin:0 auto" data-testid="confirmation-screen">
+      <div class="success-ring"><div class="success-ring-inner"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--maroon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+      <div class="card" style="margin-top:1.2rem;text-align:center">
+        <div class="badge" style="margin-bottom:1rem">${CHECK_SVG} Submitted Successfully</div>
+        <div class="card-title" style="font-size:1.2rem">Your gift box preferences are saved!</div>
+        ${state.config.deity_blessing ? `<p class="h-font" style="font-size:1.1rem;color:var(--saffron);margin-top:.5rem;font-weight:600">${state.config.deity_blessing}</p>` : ''}
+        <div style="background:var(--parchment);border-radius:var(--radius);padding:1rem;margin:1rem 0">
+          <p style="font-size:.7rem;color:var(--muted);margin-bottom:.5rem">Your selected items (${state.result.item_count})</p>
+          <div style="display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center">
+            ${state.result.selected_items.split(', ').map(n=>`<span class="badge" style="font-size:.65rem">${n}</span>`).join('')}
+          </div>
+        </div>
+        <button class="btn btn-outline" style="margin-top:1rem" id="start-over">↺ Build Another Box</button>
+      </div>
+    </div>`;
+    $('#start-over').addEventListener('click', ()=>{
+      state.step=0; state.result=null; state.selectedItems=new Set(); render();
+    });
+    return;
+  }
+
+  el.innerHTML = `
+  <div style="max-width:38rem;margin:0 auto">
+    <div class="card">
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <div class="card-title" style="font-size:1.3rem">Your gift box is ready</div>
+        <p class="card-desc">Review your selections and tell us what you think</p>
+      </div>
+
+      ${state.images?.product_images ? `
+        <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem">
+          ${Object.values(state.images.product_images).map(img => `
+            <img src="${img}" style="width:110px;height:110px;object-fit:cover;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)">
+          `).join('')}
+        </div>
+      ` : ''}
+
+      <div style="background:var(--parchment);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1.5rem">
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem">
+          ${PKG_SVG}
+          <span style="font-size:.85rem;font-weight:700">Your Box (${selList.length || sel.size} items)</span>
+        </div>
+        <div class="wtp-items">
+          ${selList.map(it=>`
+            <div class="wtp-chip">
+              ${it.image ? `<img src="${it.image}" style="width:28px;height:28px;object-fit:contain;">` : `<span class="emoji">${it.emoji||'🎁'}</span>`}
+              <span>${it.name}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <form id="form4">
+        <div style="background:rgba(92,24,16,.02);border:1px solid rgba(92,24,16,.08);border-radius:var(--radius);padding:1rem 1.2rem;display:flex;flex-direction:column;gap:1.2rem">
+
+          <div class="form-group">
+            <label>What do you think this box should cost? <span class="req">*</span></label>
+            <div class="price-input-wrap">
+              <span class="rupee">₹</span>
+              <input class="form-input" type="number" id="f-price1" value="${state.page4.perceived_price}" placeholder="0">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>If temple vetted, what would you pay? <span class="req">*</span></label>
+            <div class="price-input-wrap">
+              <span class="rupee">₹</span>
+              <input class="form-input" type="number" id="f-price2" value="${state.page4.temple_vetted_price}" placeholder="0">
+            </div>
+          </div>
+
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
+          <button type="button" class="btn btn-ghost" id="p4-back">${ARROW_L} Back</button>
+          <button type="submit" class="btn btn-primary">
+            ${state.submitting ? 'Saving...' : 'Submit'} ${SEND_SVG}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>`;
+
+  $('#p4-back').addEventListener('click', ()=> showStep(2));
+
+  $('#form4').addEventListener('submit', async e=>{
+    e.preventDefault();
+    if(state.submitting) return;
+
+    state.page4.perceived_price = $('#f-price1').value;
+    state.page4.temple_vetted_price = $('#f-price2').value;
+
+    // Stop at first missing field
+    if(!state.page4.perceived_price){
+      $('#f-price1').focus();
+      alert("Please enter what you think this box should cost");
+      return;
+    }
+    if(!state.page4.temple_vetted_price){
+      $('#f-price2').focus();
+      alert("Please enter what you would pay for a temple-vetted version");
+      return;
+    }
+
+    state.submitting = true;
+    const submitBtn = document.querySelector('#form4 button[type="submit"]');
+    if(submitBtn){ submitBtn.innerText = 'Saving...'; submitBtn.disabled = true; }
+
+    try{
+      const res = await fetch(getBackendUrl() + '/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          page1: state.page1,
+          page2: state.page2,
+          selected_item_ids: Array.from(state.selectedItems),
+          page4: state.page4
+        })
+      });
+      const text = await res.text();
+      let data;
+      try{ data = JSON.parse(text); } catch(e){ throw new Error('Backend is not returning valid JSON'); }
+      if(!res.ok) throw new Error(data.error || 'Submission failed');
+      state.result = data;
+      renderPage4();
+    } catch(err){
+      alert(err.message);
+      if(submitBtn){ submitBtn.innerText = 'Submit'; submitBtn.disabled = false; }
+    } finally {
+      state.submitting = false;
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+})();
 </script>
 </body>
 </html>
