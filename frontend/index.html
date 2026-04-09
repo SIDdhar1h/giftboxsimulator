@@ -325,7 +325,17 @@ async function init(){
   }
 }
 
-function getBackendUrl() { return ''; }
+function getBackendUrl(){
+  const host = window.location.hostname;
+
+  // If running on GitHub Pages → use Render backend
+  if(host.includes('github.io')){
+    return 'https://giftboxsimulator.onrender.com';
+  }
+
+  // Otherwise (Render / local)
+  return '';
+}
 
 function render(){
   const appEl = $('#app');
@@ -499,15 +509,25 @@ function renderPage1(){
   </div>`;
 
   // ── Save helper ──
+
   function saveP1Inputs(){
-    const n=document.getElementById('f-name');if(n)state.page1.name=n.value;
-    const e=document.getElementById('f-email');if(e)state.page1.email=e.value;
-    const a=document.getElementById('f-age');if(a)state.page1.age=a.value;
-    const g=document.getElementById('f-gender');if(g)state.page1.gender=g.value;
-    const o=document.getElementById('f-occupation');if(o)state.page1.occupation=o.value;
-    const r=document.getElementById('f-recipients');if(r)state.page1.gift_recipients=r.value;
-    const c=document.getElementById('f-channel');if(c)state.page1.shopping_channel=c.value;
+    const n=document.getElementById('f-name'); if(n) state.page1.name=n.value;
+    const e=document.getElementById('f-email'); if(e) state.page1.email=e.value;
+    const a=document.getElementById('f-age'); if(a) state.page1.age=a.value;
+    const g=document.getElementById('f-gender'); if(g) state.page1.gender=g.value;
+    const o=document.getElementById('f-occupation'); if(o) state.page1.occupation=o.value;
+    const r=document.getElementById('f-recipients'); if(r) state.page1.gift_recipients=r.value;
+    const c=document.getElementById('f-channel'); if(c) state.page1.shopping_channel=c.value;
+
+    // ✅ Use specific selector — avoids collision with identity-card .selected
+    const spend = document.querySelector('[data-group="gifting_spend"] .selector-card.selected');
+    if(spend) state.page1.gifting_spend = spend.dataset.id;
+
+    const devotional = document.querySelector('[data-group="considered_devotional"] .selector-card.selected');
+    if(devotional) state.page1.considered_devotional = devotional.dataset.id;
+
   }
+  
 
   // Identity cards
   $$('.identity-card', el).forEach(c => c.addEventListener('click', ()=>{
@@ -527,6 +547,7 @@ function renderPage1(){
   $$('[data-group]', el).forEach(grid => {
     $$('.selector-card', grid).forEach(card => {
       card.addEventListener('click', ()=>{
+        saveP1Inputs();
         const group = grid.dataset.group;
         state.page1[group] = card.dataset.id;
         $$('.selector-card', grid).forEach(c => c.classList.remove('selected'));
@@ -548,6 +569,8 @@ function renderPage1(){
   // Form submit — stop at FIRST error only
   $('#form1').addEventListener('submit', e => {
     e.preventDefault();
+
+    // Sync all inputs
     state.page1.name = $('#f-name').value.trim();
     state.page1.email = $('#f-email').value.trim();
     state.page1.age = $('#f-age').value;
@@ -556,13 +579,20 @@ function renderPage1(){
     state.page1.gift_recipients = $('#f-recipients').value;
     state.page1.shopping_channel = $('#f-channel').value;
 
+    // Sync selector cards
+    const spendEl = document.querySelector('[data-group="gifting_spend"] .selector-card.selected');
+    if (spendEl) state.page1.gifting_spend = spendEl.dataset.id;
+
+    const devEl = document.querySelector('[data-group="considered_devotional"] .selector-card.selected');
+    if (devEl) state.page1.considered_devotional = devEl.dataset.id;
+
     // Clear previous inline errors
     $('#err-name').classList.add('hidden');
     $('#f-name').classList.remove('error');
     $('#err-email').classList.add('hidden');
     $('#f-email').classList.remove('error');
 
-    // ── Validate in order, stop at first failure ──
+    // Validate in order, stop at first failure
     if(!state.page1.name){
       $('#err-name').textContent='Name is required';
       $('#err-name').classList.remove('hidden');
