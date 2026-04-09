@@ -13,7 +13,6 @@ from googleapiclient.discovery import build
 # ──────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIGS_DIR = os.path.join(BASE_DIR, "configs")
-SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, "service_account.json")
 SHEET_ID = os.environ.get("GOOGLE_SHEET_ID", "177_cbVKg8azNSod84AU2UPX4yaB7HUWPfUTdeJz7a2I")
 TAB_NAME = os.environ.get("SHEET_TAB_NAME", "Master Data")
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -56,7 +55,8 @@ def get_selected_names(selected_ids, items):
 # ──────────────────────────────────────────────
 
 def get_sheets_service():
-    creds = Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+    creds_dict = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
+    creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     return build("sheets", "v4", credentials=creds)
 
 def append_row(row):
@@ -182,11 +182,7 @@ def submit():
         message="Your gift box preferences have been saved successfully!",
     )
 
-# ──────────────────────────────────────────────
-#  ASGI WRAPPER  (so uvicorn can serve Flask)
-# ──────────────────────────────────────────────
-from a2wsgi import WSGIMiddleware
-app = flask_app      # uvicorn picks up this `app`
+app = flask_app     
 
 # For local dev:  python server.py
 if __name__ == "__main__":
