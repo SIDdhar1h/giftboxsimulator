@@ -54,9 +54,16 @@ def get_selected_names(selected_ids, items):
 #  GOOGLE SHEETS
 # ──────────────────────────────────────────────
 
+import os, json
+from google.oauth2.service_account import Credentials
+
 def get_sheets_service():
-    creds_dict = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
-    creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+    if "GOOGLE_SERVICE_ACCOUNT_JSON" in os.environ:
+        creds_dict = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
+        creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
+    else:
+        creds = Credentials.from_service_account_file("service_account.json", scopes=SCOPES)
+    
     return build("sheets", "v4", credentials=creds)
 
 def append_row(row):
