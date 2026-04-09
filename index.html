@@ -85,7 +85,7 @@ input,select{font-family:inherit}
 .identity-card{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .3s;text-align:left}
 .identity-card.selected{border-color:rgba(234,179,8,.5);box-shadow:0 0 0 2px rgba(234,179,8,.35),0 12px 30px rgba(92,24,16,.12)}
 .identity-card:not(.selected):hover{border-color:rgba(234,179,8,.25);box-shadow:0 8px 24px rgba(92,24,16,.1)}
-.identity-card img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.identity-card img{width:100%;aspect-ratio:5/3;object-fit:cover}
 .identity-card .ic-body{padding:.5rem .6rem .6rem}
 .identity-card .ic-label{font-size:.8rem;font-weight:700;color:var(--ink)}
 .identity-card .ic-sub{font-size:.6rem;color:var(--muted);margin-top:.1rem}
@@ -325,10 +325,7 @@ async function init(){
   }
 }
 
-function getBackendUrl(){
-  try { if(window.__BACKEND_URL) return window.__BACKEND_URL; return 'http://127.0.0.1:8001'; }
-  catch(e) { return ''; }
-}
+function getBackendUrl() { return ''; }
 
 function render(){
   const appEl = $('#app');
@@ -382,6 +379,8 @@ function showStep(n){
 // ══════════════════════════════
 function renderPage1(){
   const el = $('#page1');
+  // 🔥 Warm-up ping (Render keep-alive)
+  fetch(getBackendUrl() + '/api/health').catch(()=>{});
   const p = state.images?.personalities || [];
   const d = state.page1;
   el.innerHTML = `
@@ -676,12 +675,36 @@ function renderPage2(){
     </form>
   </div>`;
 
-  $$('.pill[data-testid^="decision-"]', el).forEach(b => b.addEventListener('click', ()=>{ state.page2.decision_logic=b.dataset.val; renderPage2(); }));
-  $$('.likert-btn', el).forEach(b => b.addEventListener('click', ()=>{
-    const n = parseInt(b.dataset.n);
-    if(b.dataset.group==='rs') state.page2.ritual_strictness=n; else state.page2.authenticity_importance=n;
-    renderPage2();
-  }));
+
+  $$('.pill[data-testid^="decision-"]', el).forEach(b => 
+    b.addEventListener('click', ()=>{
+      // ✅ SAVE dropdown values before re-render
+      state.page2.prayer_frequency = $('#f-prayer').value;
+      state.page2.ritual_teacher = $('#f-teacher').value;
+
+      state.page2.decision_logic = b.dataset.val;
+      renderPage2();
+    })
+  );
+
+  $$('.likert-btn', el).forEach(b => 
+    b.addEventListener('click', ()=>{
+      // ✅ SAVE dropdown values before re-render
+      state.page2.prayer_frequency = $('#f-prayer').value;
+      state.page2.ritual_teacher = $('#f-teacher').value;
+
+      const n = parseInt(b.dataset.n);
+      if(b.dataset.group==='rs') 
+        state.page2.ritual_strictness = n; 
+      else 
+        state.page2.authenticity_importance = n;
+
+      renderPage2();
+    })
+  );
+
+
+
   $('#p2-back').addEventListener('click', ()=> showStep(0));
   $('#form2').addEventListener('submit', e=>{
     e.preventDefault();
