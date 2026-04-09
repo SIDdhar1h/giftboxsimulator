@@ -186,7 +186,7 @@ def submit():
 #  ASGI WRAPPER  (so uvicorn can serve Flask)
 # ──────────────────────────────────────────────
 from a2wsgi import WSGIMiddleware
-app = WSGIMiddleware(flask_app)      # uvicorn picks up this `app`
+app = flask_app      # uvicorn picks up this `app`
 
 # For local dev:  python server.py
 if __name__ == "__main__":
