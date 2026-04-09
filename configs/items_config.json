@@ -111,23 +111,5 @@
       "description": "Traditional dhoop incense sticks",
       "lore": "Dhoop purifies the atmosphere and prepares the space for prayer. In ancient Ayodhya, specific blends were used during Ram's daily sandhya prayers at sunrise and sunset."
     },
-    {
-      "id": "box",
-      "name": "Gift Box",
-      "price": 140,
-      "image": "https://images.unsplash.com/photo-1720798231559-287de1c8a3e5?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "emoji": "🎁",
-      "description": "Premium decorative gift box packaging",
-      "lore": "The vessel that holds your curated collection. Designed to reflect the grandeur of Ayodhya — a gift box worthy of carrying items blessed by tradition."
-    },
-    {
-      "id": "alternate_1",
-      "name": "Alternate 1",
-      "price": 60,
-      "image": "https://images.unsplash.com/photo-1635564981692-857482d9325f?crop=entropy&cs=srgb&fm=jpg&q=85",
-      "emoji": "🍪",
-      "description": "Special festive offering",
-      "lore": "A special addition to complete your devotional gift — chosen to complement the sacred items and add a touch of festive sweetness to your offering."
-    }
   ]
 }
