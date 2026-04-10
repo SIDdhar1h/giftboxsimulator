@@ -54,16 +54,13 @@ def get_selected_names(selected_ids, items):
 #  GOOGLE SHEETS
 # ──────────────────────────────────────────────
 
-import os, json
-from google.oauth2.service_account import Credentials
-
 def get_sheets_service():
     if "GOOGLE_SERVICE_ACCOUNT_JSON" in os.environ:
         creds_dict = json.loads(os.environ["GOOGLE_SERVICE_ACCOUNT_JSON"])
         creds = Credentials.from_service_account_info(creds_dict, scopes=SCOPES)
     else:
         creds = Credentials.from_service_account_file("service_account.json", scopes=SCOPES)
-    
+
     return build("sheets", "v4", credentials=creds)
 
 def append_row(row):
@@ -134,6 +131,14 @@ def submit():
     if not selected_ids:
         return jsonify(error="Please select at least one item"), 400
 
+    # Validate page 4 required fields
+    if not p4.get("perceived_price"):
+        return jsonify(error="Perceived price is required"), 400
+    if not p4.get("temple_vetted_price"):
+        return jsonify(error="Temple-vetted price is required"), 400
+    if not p4.get("other_item_suggestion", "").strip():
+        return jsonify(error="Please fill in the other item suggestion field"), 400
+
     # Load config for pricing
     cfg = load_items_config()
     items = cfg["items"]
@@ -147,32 +152,34 @@ def submit():
     count = len(selected_ids)
     ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Build sheet row (22 cols)
+    # Build sheet row (25 cols)
     row = [
-        ts,
-        p1.get("name", ""),
-        p1.get("email", ""),
-        p1.get("age", ""),
-        p1.get("gender", ""),
-        p1.get("occupation", ""),
-        p1.get("identity_type", ""),
-        p1.get("gifting_spend", ""),  # ✅ NEW
-        p1.get("considered_devotional", ""),  # ✅ NEW
-        ", ".join(p1.get("gift_occasions", [])) if isinstance(p1.get("gift_occasions"), list) else p1.get("gift_occasions", ""),
-        p1.get("gift_recipients", ""),
-        p1.get("shopping_channel", ""),
-        p2.get("decision_logic", ""),
-        p2.get("prayer_frequency", ""),
-        p2.get("ritual_teacher", ""),
-        str(p2.get("ritual_strictness", "")) if p2.get("ritual_strictness") else "",
-        str(p2.get("authenticity_importance", "")) if p2.get("authenticity_importance") else "",
-        cfg["occasion"],
-        cfg["deity"],
-        names,
-        str(count),
-        p4.get("perceived_price", ""),
-        p4.get("temple_vetted_price", ""),
-        str(total),
+        ts,                                                                                         # A
+        p1.get("name", ""),                                                                         # B
+        p1.get("email", ""),                                                                        # C
+        p1.get("age", ""),                                                                          # D
+        p1.get("gender", ""),                                                                       # E
+        p1.get("occupation", ""),                                                                   # F
+        p1.get("identity_type", ""),                                                                # G
+        p1.get("gifting_spend", ""),                                                                # H
+        p1.get("considered_devotional", ""),                                                        # I
+        ", ".join(p1.get("gift_occasions", [])) if isinstance(p1.get("gift_occasions"), list)
+            else p1.get("gift_occasions", ""),                                                      # J
+        p1.get("gift_recipients", ""),                                                              # K
+        p1.get("shopping_channel", ""),                                                             # L
+        p2.get("decision_logic", ""),                                                               # M
+        p2.get("prayer_frequency", ""),                                                             # N
+        p2.get("ritual_teacher", ""),                                                               # O
+        str(p2.get("ritual_strictness", "")) if p2.get("ritual_strictness") else "",               # P
+        str(p2.get("authenticity_importance", "")) if p2.get("authenticity_importance") else "",   # Q
+        cfg["occasion"],                                                                            # R
+        cfg["deity"],                                                                               # S
+        names,                                                                                      # T
+        str(count),                                                                                 # U
+        p4.get("perceived_price", ""),                                                              # V
+        p4.get("temple_vetted_price", ""),                                                          # W
+        p4.get("other_item_suggestion", "").strip(),                                                # X
+        str(total),                                                                                 # Y
     ]
 
     try:
@@ -189,9 +196,8 @@ def submit():
         message="Your gift box preferences have been saved successfully!",
     )
 
-app = flask_app     
+app = flask_app
 
 # For local dev:  python server.py
 if __name__ == "__main__":
     flask_app.run(host="0.0.0.0", port=8001, debug=True)
-
