@@ -1,34 +1,34 @@
 {
   "personalities": [
-    {
-      "id": "purist",
-      "label": "The Devoted",
-      "subtitle": "Rooted in scripture and tradition",
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_300,c_fill,g_auto,q_auto,f_auto/v1775748592/Purist_ptlqgb.png"
-    },
-    {
-      "id": "traditional_ritualist",
-      "label": "The Ritualist",
-      "subtitle": "Every step has meaning",
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_300,c_fill,g_auto,q_auto,f_auto/v1775748725/Traditional_Ritualist_ddkzpp.png"
-    },
-    {
-      "id": "spiritual_seeker",
-      "label": "The Seeker",
-      "subtitle": "Finding meaning beyond ritual",
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_300,c_fill,g_auto,q_auto,f_auto/v1775748709/Spritual_Seeker_vnux46.png"
-    },
-    {
-      "id": "festive_devotee",
-      "label": "The Celebrant",
-      "subtitle": "Faith through celebration",
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_300,c_fill,g_auto,q_auto,f_auto/v1775748592/Festive_devotee_wccszl.png"
-    }
-  ],
+  {
+    "id": "purist",
+    "label": "The Devoted",
+    "subtitle": "Rooted in scripture and tradition",
+    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Purist_ptlqgb.png"
+  },
+  {
+    "id": "traditional_ritualist",
+    "label": "The Ritualist",
+    "subtitle": "Every step has meaning",
+    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748725/Traditional_Ritualist_ddkzpp.png"
+  },
+  {
+    "id": "spiritual_seeker",
+    "label": "The Seeker",
+    "subtitle": "Finding meaning beyond ritual",
+    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748709/Spritual_Seeker_vnux46.png"
+  },
+  {
+    "id": "festive_devotee",
+    "label": "The Celebrant",
+    "subtitle": "Faith through celebration",
+    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Festive_devotee_wccszl.png"
+  }
+],
   "product_images": {
-    "box_open": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_600,q_auto,f_auto/v1775748711/box_open_nxj4ei.png",
-    "box_closed": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_250,q_auto,f_auto/v1775748710/box_closed_chqyui.png",
-    "box_items_display": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_250,q_auto,f_auto/v1775748711/box_contents_p3enwc.png"
+    "box_open": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775814479/boxclose_k4vxyy.png",
+    "box_closed": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775814478/boxitems_ixc1ov.png",
+    "box_items_display": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775813851/boxopen_qkdowx.png"
   },
   "hero_background": "https://images.unsplash.com/photo-1590297827410-3c566433f427?crop=entropy&cs=srgb&fm=jpg&q=85"
 }
