@@ -5,16 +5,16 @@
   "items": [
     {
       "id": "metal_plate",
-      "name": "Metal Plate",
+      "name": "Ram Sita Metal Wall Plate",
       "price": 155,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Ram_Wall_Plate_dk8t6b.png",
       "emoji": "🥏",
-      "description": "Premium brass puja thali for offerings",
-      "lore": "The sacred thali represents the universe in miniature. In Ayodhya tradition, Lord Ram's aarti was performed on brass plates believed to be blessed by Sage Vasishtha himself."
+      "description": "Premium brass wall plate for hanging",
+      "lore": "Images of Ram and Sita are kept in homes as a reminder of ideal dharma, devotion, and balance in relationships. Displaying them in living spaces is a way of keeping those values present in daily life."
     },
     {
       "id": "jap_mala_108",
-      "name": "108 Jap Mala",
+      "name": "108 Jaap Metal Flower Plate",
       "price": 94,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/108_Tulsi_Japa_mala_vinwjb.png",
       "emoji": "📿",
@@ -23,7 +23,7 @@
     },
     {
       "id": "cone_holder",
-      "name": "Cone Holder",
+      "name": "Dhoop Cone Holder",
       "price": 55,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Dhoop_Cone_Holder_l0tcv1.png",
       "emoji": "🔮",
@@ -32,34 +32,34 @@
     },
     {
       "id": "ram_booklet",
-      "name": "Ram Booklet",
+      "name": "Ram Naam Booklet",
       "price": 12,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/ram_booklet_itadzr.png",
       "emoji": "📖",
-      "description": "Devotional booklet about Lord Ram",
-      "lore": "Contains select verses from the Ramcharitmanas by Tulsidas. This pocket guide carries the essence of Ram's teachings on duty, love, and righteousness."
+      "description": "Devotional booklet for Lord Ram",
+      "lore": "Writing or reciting Ram's name is a long-standing devotional practice. Small booklets like this help devotees stay connected to that practice in everyday life."
     },
     {
       "id": "margdarshan",
-      "name": "Margdarshan",
+      "name": "Margdarshan Cards",
       "price": 38,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Margdarshan_Cards_gstdvc.png",
       "emoji": "🪵",
-      "description": "Premium Mangaldeep incense sticks",
-      "lore": "Margdarshan means 'the one who shows the path.' These incense sticks are crafted from ingredients traditionally used in Ayodhya temples to invoke clarity and divine guidance."
+      "description": "Affirmation cards inspired from Ram's Margdarshan",
+      "lore": "Inspired by values associated with Ram — such as duty, patience, and righteousness — these cards are meant to offer simple reflections and guidance for daily life."
     },
     {
       "id": "tulsi",
-      "name": "Tulsi",
+      "name": "Tulsi Mala Bracelet",
       "price": 25,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/Bracelet_tc0qab.png",
       "emoji": "🌿",
-      "description": "Sacred Tulsi (Holy Basil) plant",
+      "description": "Ram's favourite Tulsi Bracelet",
       "lore": "Tulsi is considered a manifestation of Goddess Lakshmi. In the Ramayana, Tulsi leaves were an essential offering during Ram's coronation ceremony in Ayodhya."
     },
     {
       "id": "sarayu",
-      "name": "Sarayu",
+      "name": "Sarayu Water Spray",
       "price": 35,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Sarayu_Jal_Spray_jykf6z.png",
       "emoji": "🌊",
@@ -68,7 +68,7 @@
     },
     {
       "id": "chandan",
-      "name": "Chandan",
+      "name": "Ram's Favourite Chandan",
       "price": 22,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Chandan_wjalyq.png",
       "emoji": "🪨",
@@ -77,7 +77,7 @@
     },
     {
       "id": "ayodhya_diya",
-      "name": "Ayodhya Diya",
+      "name": "Ayodhya Mitti Diya",
       "price": 26,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775748164/Ayodhya_diya_rsta9q.png",
       "emoji": "🪔",
@@ -86,11 +86,11 @@
     },
     {
       "id": "magnet",
-      "name": "Magnet",
+      "name": "Ram Fridge Magnet",
       "price": 30,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/ram_fridge_magnet_bsxd71.png",
       "emoji": "🧲",
-      "description": "Decorative temple fridge magnet",
+      "description": "Decorative Ram fridge magnet",
       "lore": "A miniature reminder of Ayodhya's Ram Mandir. Place it where you see it daily — a small anchor of faith in your everyday life."
     },
     {
@@ -104,11 +104,11 @@
     },
     {
       "id": "dhoop",
-      "name": "Dhoop",
+      "name": "Ram Dhoop Sticks",
       "price": 30,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/Dhoop_Set_vrcx1w.png",
       "emoji": "🌫️",
-      "description": "Traditional dhoop incense sticks",
+      "description": "Dhoop sticks of Ram's favourite fragrance",
       "lore": "Dhoop purifies the atmosphere and prepares the space for prayer. In ancient Ayodhya, specific blends were used during Ram's daily sandhya prayers at sunrise and sunset."
     }
   ]
