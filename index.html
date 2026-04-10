@@ -916,7 +916,7 @@ function renderPage4(){
       ${state.images?.product_images ? `
         <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem">
           ${Object.values(state.images.product_images).map(img => `
-            <img src="${img}" style="width:110px;height:110px;object-fit:cover;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)">
+            <img src="${img}" style="width:300px;height:180px;object-fit:cover;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)">
           `).join('')}
         </div>
       ` : ''}
