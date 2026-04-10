@@ -9,7 +9,7 @@
       "price": 155,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Ram_Wall_Plate_dk8t6b.png",
       "emoji": "🥏",
-      "description": "Premium wall plate for hanging",
+      "description": "Premium brass wall plate for hanging",
       "lore": "Images of Ram and Sita are kept in homes as a reminder of ideal dharma, devotion, and balance in relationships. Displaying them in living spaces is a way of keeping those values present in daily life."
     },
     {
@@ -18,8 +18,8 @@
       "price": 94,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775820207/108_jap_plate_vodaa9.png",
       "emoji": "📿",
-      "description": "Sacred 108 bead japa tray for prayer",
-      "lore": "The 108 beads represent the 108 Upanishads. Each bead chanted in Ram's name is said to invoke a blessing from the cosmic order that Ram himself upheld through dharma."
+      "description": "Sacred 108 bead japa mala for prayer",
+      "lore": "Each hole you mark while chanting serves as a physical step alongside Rama. Moving through all 108 holes represents completing the arduous journey from Ayodhya to the battlefields of Lanka and his eventual return."
     },
     {
       "id": "cone_holder",
@@ -63,7 +63,7 @@
       "price": 35,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Sarayu_Jal_Spray_jykf6z.png",
       "emoji": "🌊",
-      "description": "From the Sarayu river at Ayodhya",
+      "description": "Sacred Sarayu river at Ayodhya's boundary",
       "lore": "The Sarayu river flows through Ayodhya, where Lord Ram spent his earthly life. Its waters are believed to carry the blessings of millennia of devotion and are used in the most sacred rituals."
     },
     {
@@ -72,7 +72,7 @@
       "price": 22,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775820207/chandan_hi_res_fqlrq0.png",
       "emoji": "🪨",
-      "description": "Pure sandalwood powder for tilak",
+      "description": "Pure sandalwood paste for tilak",
       "lore": "Chandan tilak on the forehead represents the third eye of wisdom. Lord Ram was always adorned with a sandalwood mark, symbolizing purity and the awakened mind."
     },
     {
@@ -81,7 +81,7 @@
       "price": 26,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775748164/Ayodhya_diya_rsta9q.png",
       "emoji": "🪔",
-      "description": "Diya made from Ayodhya's soil",
+      "description": "Diya from Ayodhya's soil",
       "lore": "When Ram returned to Ayodhya after 14 years of exile, the entire city was lit with millions of diyas. This tradition became Diwali — the festival of lights. Each diya carries that homecoming joy."
     },
     {
@@ -99,7 +99,7 @@
       "price": 24,
       "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775819373/hanuman_chalisa_1_aqnpkq.webp",
       "emoji": "📜",
-      "description": "Pocket-sized wooden Hanuman Chalisa book",
+      "description": "Pocket-sized Hanuman Chalisa book",
       "lore": "The 40 verses composed by Tulsidas celebrate Hanuman — Ram's greatest devotee. Carrying the Hanuman Chalisa is believed to provide protection and courage in all endeavors."
     },
     {
