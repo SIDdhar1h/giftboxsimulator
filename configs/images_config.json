@@ -26,9 +26,9 @@
   }
 ],
   "product_images": {
-    "box_open": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775814479/boxclose_k4vxyy.png",
-    "box_closed": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775814478/boxitems_ixc1ov.png",
-    "box_items_display": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775813851/boxopen_qkdowx.png"
+    "box_open": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818388/box_items_jrcmm8.png",
+    "box_closed": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818386/box_close_kvntrx.png",
+    "box_items_display": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818386/box_open_rygbeo.png"
   },
   "hero_background": "https://images.unsplash.com/photo-1590297827410-3c566433f427?crop=entropy&cs=srgb&fm=jpg&q=85"
 }
