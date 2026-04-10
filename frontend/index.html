@@ -266,7 +266,7 @@ input,select{font-family:inherit}
   </main>
 
   <footer class="app-footer" data-testid="app-footer">
-    <div class="container"><p>Made with devotion for <span id="f-occasion"></span> celebrations</p></div>
+    <div class="container"><p>Made with devotion for celebrations</p></div>
   </footer>
 </template>
 
@@ -342,9 +342,6 @@ function render(){
   const tpl = $('#tpl-app');
   appEl.innerHTML = '';
   appEl.appendChild(tpl.content.cloneNode(true));
-  $('#h-occasion').textContent = state.config.occasion;
-  $('#h-deity').textContent = state.config.deity;
-  $('#f-occasion').textContent = state.config.occasion;
   renderStepper();
   renderPage1();
   renderPage2();
@@ -874,6 +871,9 @@ function updateSidebar(){
 // ══════════════════════════════
 //   PAGE 4 — WTP + Submit
 // ══════════════════════════════
+// ══════════════════════════════
+//   PAGE 4 — WTP + Submit
+// ══════════════════════════════
 function renderPage4(){
   const el = $('#page4');
   const items = state.config.items;
@@ -943,7 +943,7 @@ function renderPage4(){
             <label>If all items were to be selected, what do you think this box should cost? <span class="req">*</span></label>
             <div class="price-input-wrap">
               <span class="rupee">₹</span>
-              <input class="form-input" type="number" id="f-price1" value="${state.page4.perceived_price}" placeholder="0">
+              <input class="form-input" type="number" id="f-price1" value="${state.page4.perceived_price}" placeholder="0" min="0">
             </div>
           </div>
 
@@ -951,15 +951,20 @@ function renderPage4(){
             <label>If the box was authorised by Ayodhya's Ram Temple, with all items selected, how much would you be willing to pay? <span class="req">*</span></label>
             <div class="price-input-wrap">
               <span class="rupee">₹</span>
-              <input class="form-input" type="number" id="f-price2" value="${state.page4.temple_vetted_price}" placeholder="0">
+              <input class="form-input" type="number" id="f-price2" value="${state.page4.temple_vetted_price}" placeholder="0" min="0">
             </div>
+          </div>
+
+          <div class="form-group">
+            <label>Any other item, beyond the suggestions, that you wish to add? <span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-other-item" value="${state.page4.other_item_suggestion || ''}" placeholder="e.g. Tulsi mala, Panchamrit kit…">
           </div>
 
         </div>
 
         <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
           <button type="button" class="btn btn-ghost" id="p4-back">${ARROW_L} Back</button>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary" data-testid="page4-submit-button">
             ${state.submitting ? 'Saving...' : 'Submit'} ${SEND_SVG}
           </button>
         </div>
@@ -973,10 +978,11 @@ function renderPage4(){
     e.preventDefault();
     if(state.submitting) return;
 
-    state.page4.perceived_price = $('#f-price1').value;
-    state.page4.temple_vetted_price = $('#f-price2').value;
+    state.page4.perceived_price      = $('#f-price1').value.trim();
+    state.page4.temple_vetted_price  = $('#f-price2').value.trim();
+    state.page4.other_item_suggestion = $('#f-other-item').value.trim();
 
-    // Stop at first missing field
+    // Validate — stop at first missing field
     if(!state.page4.perceived_price){
       $('#f-price1').focus();
       alert("Please enter what you think this box should cost");
@@ -985,6 +991,11 @@ function renderPage4(){
     if(!state.page4.temple_vetted_price){
       $('#f-price2').focus();
       alert("Please enter what you would pay for a temple-vetted version");
+      return;
+    }
+    if(!state.page4.other_item_suggestion){
+      $('#f-other-item').focus();
+      alert("Please suggest any other item you would like to add (or type 'None' if you have no suggestions)");
       return;
     }
 
