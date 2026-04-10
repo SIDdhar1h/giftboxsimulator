@@ -247,7 +247,7 @@ input,select{font-family:inherit}
 <template id="tpl-app">
   <header class="hero" data-testid="app-header">
     <div class="container">
-      <h1 class="h-font" data-testid="app-title">Build a <span id="h-occasion"></span> Box for <span id="h-deity"></span></h1>
+      <h1 class="h-font" data-testid="app-title">Build a Gift Box</h1>
       <p>Discover your gifting personality and create a sacred gift box</p>
     </div>
   </header>
@@ -466,7 +466,7 @@ function renderPage1(){
             <label>Who do you usually gift? <span class="req">*</span></label>
             <select class="form-select" id="f-recipients" data-testid="select-gift-recipients">
               <option value="">Select recipient type</option>
-              ${['Family members','Friends','Colleagues / Business associates','Elders / Gurus','Temple / Religious institutions','Neighbors'].map(o=>`<option ${d.gift_recipients===o?'selected':''}>${o}</option>`).join('')}
+              ${['Colleagues / Business associates','Elders / Gurus','Family members','Friends','Neighbors','Spouses'].map(o=>`<option ${d.gift_recipients===o?'selected':''}>${o}</option>`).join('')}
             </select>
           </div>
           <div class="form-group">
@@ -486,9 +486,9 @@ function renderPage1(){
           <label class="q-label">How much do you usually spend on gifting? <span class="req">*</span></label>
           <div class="selector-grid cols-4" data-group="gifting_spend" data-testid="gifting-spend-selector">
             ${selectorCard('low',  'Under ₹500',     d.gifting_spend)}
-            ${selectorCard('mid',  '₹500 – ₹1,500',  d.gifting_spend)}
-            ${selectorCard('high', '₹1,500 – ₹3,000',d.gifting_spend)}
-            ${selectorCard('premium','₹3,000+',       d.gifting_spend)}
+            ${selectorCard('mid',  '₹500 – ₹1,000',  d.gifting_spend)}
+            ${selectorCard('high', '₹1,000 – ₹2,000',d.gifting_spend)}
+            ${selectorCard('premium','₹2,000+',       d.gifting_spend)}
           </div>
         </div>
 
@@ -948,7 +948,7 @@ function renderPage4(){
           </div>
 
           <div class="form-group">
-            <label>If the box was authorised by Adyodhya's Ram Temple,with all items selected, how much would you be willing to pay? <span class="req">*</span></label>
+            <label>If the box was authorised by Ayodhya's Ram Temple, with all items selected, how much would you be willing to pay? <span class="req">*</span></label>
             <div class="price-input-wrap">
               <span class="rupee">₹</span>
               <input class="form-input" type="number" id="f-price2" value="${state.page4.temple_vetted_price}" placeholder="0">
