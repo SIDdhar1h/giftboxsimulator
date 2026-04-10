@@ -4,11 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="theme-color" content="#5c1810" />
-<meta name="description" content="Build a Diwali Gift Box for Lord Ram" />
+<meta name="description" content="Build a Diwali Gift Box" />
 <title>Gift Box Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
 <style>
 /* ─── RESET & BASE ─── */
@@ -30,7 +30,7 @@ input,select{font-family:inherit}
 @media(min-width:640px){.container{padding:0 1.5rem}}
 
 /* ─── HEADER ─── */
-.hero{position:relative;overflow:hidden;background:var(--maroon);color:var(--parchment);padding:1.5rem 1rem 1.5rem}
+.hero{position:relative;overflow:hidden;background:var(--maroon);color:var(--parchment);padding:1.5rem 1rem}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(60% 60% at 20% 10%,rgba(245,158,11,.22) 0%,transparent 60%),radial-gradient(50% 50% at 80% 0%,rgba(220,38,38,.14) 0%,transparent 55%);pointer-events:none}
 .hero h1{font-family:var(--font-h);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:600;text-align:center;position:relative}
 .hero p{text-align:center;opacity:.8;font-size:.9rem;margin-top:.35rem;position:relative}
@@ -45,20 +45,19 @@ input,select{font-family:inherit}
 .step-circle.pending{background:#e8ddd0;color:var(--muted)}
 .step-label{font-size:.7rem;font-weight:600;transition:color .3s}
 @media(min-width:640px){.step-circle{width:2rem;height:2rem;font-size:.8rem}.step-label{font-size:.8rem}}
-.step-connector{flex:1;max-width:50px;height:2px;margin:0 .4rem;background:#e8ddd0;border-radius:2px;overflow:hidden;position:relative}
+.step-connector{flex:1;max-width:60px;height:2px;margin:0 .5rem;background:#e8ddd0;border-radius:2px;overflow:hidden}
 .step-connector-fill{height:100%;background:var(--gold);transition:width .5s}
-@media(min-width:640px){.step-connector{max-width:70px;margin:0 .5rem}}
 
 /* ─── CARDS ─── */
 .card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:0 8px 24px rgba(92,24,16,.08);padding:1.5rem}
 .card-title{font-family:var(--font-h);font-size:1.3rem;font-weight:600;color:var(--maroon)}
 .card-desc{color:var(--muted);font-size:.85rem;margin-top:.25rem}
 .section-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--maroon);margin-bottom:.75rem}
+.section-divider{border:none;border-top:1px solid var(--border);margin:2rem 0}
 
 /* ─── FORM ELEMENTS ─── */
 .form-group{display:flex;flex-direction:column;gap:.35rem}
 .form-group label{font-size:.8rem;font-weight:600}
-.form-group label .req{color:#dc2626}
 .form-input{height:2.5rem;padding:0 .75rem;border:1px solid var(--border);border-radius:var(--radius);font-size:.85rem;transition:border-color .2s;background:#fff}
 .form-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(234,179,8,.15)}
 .form-input.error{border-color:#dc2626}
@@ -67,6 +66,8 @@ input,select{font-family:inherit}
 .form-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(234,179,8,.15)}
 .grid-2{display:grid;grid-template-columns:1fr;gap:1rem}
 @media(min-width:640px){.grid-2{grid-template-columns:1fr 1fr}}
+.q-label{font-size:.8rem;font-weight:600;display:block;margin-bottom:.5rem}
+.req{color:#dc2626;margin-left:.15rem}
 
 /* ─── BUTTONS ─── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem 1.4rem;border-radius:var(--radius);font-weight:600;font-size:.85rem;border:none;transition:all .2s}
@@ -79,17 +80,12 @@ input,select{font-family:inherit}
 .btn-outline{background:transparent;border:1px solid rgba(92,24,16,.2);color:var(--maroon)}
 .btn-outline:hover{border-color:rgba(92,24,16,.35);background:var(--parchment)}
 
-/* ─── IDENTITY CARDS ─── */
-.identity-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-@media(min-width:640px){.identity-grid{grid-template-columns:repeat(4,1fr)}}
-.identity-card{position:relative;overflow:hidden;border-radius:var(--radius);border:1px solid var(--border);background:#fff;cursor:pointer;transition:all .3s;text-align:left}
-.identity-card.selected{border-color:rgba(234,179,8,.5);box-shadow:0 0 0 2px rgba(234,179,8,.35),0 12px 30px rgba(92,24,16,.12)}
-.identity-card:not(.selected):hover{border-color:rgba(234,179,8,.25);box-shadow:0 8px 24px rgba(92,24,16,.1)}
-.identity-card img{width:100%;aspect-ratio:5/3;object-fit:cover}
-.identity-card .ic-body{padding:.5rem .6rem .6rem}
-.identity-card .ic-label{font-size:.8rem;font-weight:700;color:var(--ink)}
-.identity-card .ic-sub{font-size:.6rem;color:var(--muted);margin-top:.1rem}
-.identity-check{position:absolute;top:.4rem;right:.4rem;width:1.25rem;height:1.25rem;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center}
+/* ─── MULTI-SELECT CHIPS ─── */
+.chip-group{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{display:inline-flex;align-items:center;gap:.3rem;padding:.45rem .85rem;border-radius:2rem;border:1.5px solid var(--border);background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(--ink);user-select:none}
+.chip:hover:not(.selected){border-color:rgba(234,179,8,.4);background:rgba(250,246,240,.7)}
+.chip.selected{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.chip.selected svg path{stroke:#fff}
 
 /* ─── CHECKBOX LIST ─── */
 .cb-list{display:grid;grid-template-columns:1fr;gap:.4rem}
@@ -100,60 +96,18 @@ input,select{font-family:inherit}
 .cb-box{width:1rem;height:1rem;border-radius:.25rem;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
 .cb-item.checked .cb-box{background:var(--maroon);border-color:var(--maroon)}
 
-/* ─── OPTION PILLS ─── */
-.pill-group{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
-.pill{padding:.7rem .8rem;border-radius:var(--radius);border:1px solid var(--border);background:#fff;font-size:.8rem;font-weight:600;text-align:left;transition:all .2s;cursor:pointer}
-.pill.selected{background:rgba(92,24,16,.04);border-color:rgba(92,24,16,.3);color:var(--maroon);box-shadow:0 4px 12px rgba(92,24,16,.06)}
-.pill:not(.selected):hover{border-color:rgba(234,179,8,.25);background:rgba(250,246,240,.5)}
-
-/* ─── HARMONIZED SELECTOR CARDS ─── */
-/* Used for spend + devotional + any single/multi-select options */
+/* ─── SELECTOR CARDS (single-select) ─── */
 .selector-grid{display:grid;gap:.5rem}
 .selector-grid.cols-2{grid-template-columns:1fr 1fr}
 .selector-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
-.selector-grid.cols-4{grid-template-columns:1fr 1fr;} /* 2×2 on mobile */
-@media(min-width:640px){.selector-grid.cols-4{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:640px){.selector-grid.cols-3{grid-template-columns:repeat(3,1fr)}}
-
-.selector-card{
-  position:relative;
-  display:flex;align-items:center;gap:.55rem;
-  padding:.65rem .85rem;
-  border-radius:var(--radius);
-  border:1.5px solid var(--border);
-  background:#fff;
-  cursor:pointer;
-  font-size:.8rem;font-weight:600;color:var(--ink);
-  transition:all .2s;
-  user-select:none;
-  line-height:1.3;
-}
-.selector-card:hover:not(.selected){
-  border-color:rgba(234,179,8,.35);
-  background:rgba(250,246,240,.6);
-}
-.selector-card.selected{
-  border-color:rgba(92,24,16,.35);
-  background:rgba(92,24,16,.04);
-  color:var(--maroon);
-  box-shadow:0 0 0 2px rgba(92,24,16,.08), 0 4px 12px rgba(92,24,16,.06);
-}
-.selector-card .sel-dot{
-  width:.85rem;height:.85rem;
-  border-radius:50%;
-  border:2px solid var(--border);
-  flex-shrink:0;
-  transition:all .2s;
-  display:flex;align-items:center;justify-content:center;
-}
-.selector-card.selected .sel-dot{
-  background:var(--maroon);
-  border-color:var(--maroon);
-}
-.selector-card .sel-dot-inner{
-  width:.35rem;height:.35rem;border-radius:50%;background:#fff;
-  opacity:0;transition:opacity .15s;
-}
+.selector-grid.cols-4{grid-template-columns:1fr 1fr}
+@media(min-width:640px){.selector-grid.cols-4{grid-template-columns:repeat(4,1fr)}.selector-grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+.selector-card{position:relative;display:flex;align-items:center;gap:.55rem;padding:.65rem .85rem;border-radius:var(--radius);border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--ink);transition:all .2s;user-select:none;line-height:1.3}
+.selector-card:hover:not(.selected){border-color:rgba(234,179,8,.35);background:rgba(250,246,240,.6)}
+.selector-card.selected{border-color:rgba(92,24,16,.35);background:rgba(92,24,16,.04);color:var(--maroon);box-shadow:0 0 0 2px rgba(92,24,16,.08),0 4px 12px rgba(92,24,16,.06)}
+.selector-card .sel-dot{width:.85rem;height:.85rem;border-radius:50%;border:2px solid var(--border);flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.selector-card.selected .sel-dot{background:var(--maroon);border-color:var(--maroon)}
+.selector-card .sel-dot-inner{width:.35rem;height:.35rem;border-radius:50%;background:#fff;opacity:0;transition:opacity .15s}
 .selector-card.selected .sel-dot-inner{opacity:1}
 
 /* ─── LIKERT ─── */
@@ -202,22 +156,28 @@ input,select{font-family:inherit}
 .wtp-items{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
 @media(min-width:640px){.wtp-items{grid-template-columns:repeat(3,1fr)}}
 .wtp-chip{display:flex;align-items:center;gap:.4rem;background:#fff;border:1px solid var(--border);border-radius:.5rem;padding:.5rem .6rem;font-size:.75rem;font-weight:600}
-.wtp-chip .emoji{font-size:1.1rem;flex-shrink:0}
 .price-input-wrap{position:relative;margin-top:.4rem}
 .price-input-wrap .rupee{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);font-weight:700;color:var(--maroon);font-size:.9rem}
 .price-input-wrap input{padding-left:1.6rem}
+
+/* ─── PERSONALITY REVEAL ─── */
+.personality-card{border-radius:1rem;padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+.personality-card::before{content:'';position:absolute;inset:0;opacity:.07;background:radial-gradient(circle at 30% 30%,var(--saffron),transparent 60%),radial-gradient(circle at 70% 70%,var(--maroon),transparent 60%)}
+.personality-icon{font-size:3.5rem;margin-bottom:.75rem;display:block}
+.personality-type{font-family:var(--font-h);font-size:1.6rem;font-weight:700;color:var(--maroon)}
+.personality-subtitle{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--copper);margin-top:.2rem}
+.personality-desc{font-size:.85rem;color:var(--muted);margin-top:.75rem;line-height:1.6;max-width:24rem;margin-left:auto;margin-right:auto}
+.trait-bars{display:flex;flex-direction:column;gap:.6rem;margin-top:1.2rem;text-align:left}
+.trait-row{display:flex;flex-direction:column;gap:.2rem}
+.trait-label{font-size:.7rem;font-weight:600;color:var(--ink);display:flex;justify-content:space-between}
+.trait-bar-bg{height:.4rem;background:#e8ddd0;border-radius:2rem;overflow:hidden}
+.trait-bar-fill{height:100%;background:linear-gradient(90deg,var(--copper),var(--saffron));border-radius:2rem;transition:width 1s ease}
 
 /* ─── CONFIRMATION ─── */
 .success-ring{width:5rem;height:5rem;border-radius:50%;background:rgba(234,179,8,.15);display:flex;align-items:center;justify-content:center;margin:0 auto;animation:pulse 3s ease-in-out infinite}
 .success-ring-inner{width:3.5rem;height:3.5rem;border-radius:50%;background:rgba(234,179,8,.25);display:flex;align-items:center;justify-content:center}
 @keyframes pulse{0%,100%{box-shadow:0 0 16px rgba(245,158,11,.15)}50%{box-shadow:0 0 32px rgba(245,158,11,.3)}}
 .badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;font-weight:600;padding:.3rem .7rem;border-radius:1rem;background:rgba(234,179,8,.1);color:var(--maroon);border:1px solid rgba(234,179,8,.2)}
-
-/* ─── REQUIRED ASTERISK ─── */
-.req{color:#dc2626;margin-left:.15rem}
-
-/* ─── QUESTION LABEL ─── */
-.q-label{font-size:.8rem;font-weight:600;display:block;margin-bottom:.5rem}
 
 /* ─── FOOTER ─── */
 .app-footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;text-align:center;font-size:.7rem;color:var(--muted)}
@@ -226,14 +186,12 @@ input,select{font-family:inherit}
 .fade-in{animation:fadeIn .35s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .hidden{display:none!important}
-
-/* ─── CTA BANNER ─── */
-.cta-banner{background:var(--parchment);border-radius:var(--radius);padding:.75rem;text-align:center;font-size:.85rem;font-weight:600;color:var(--maroon)}
+.mobile-only{display:inline}@media(min-width:640px){.mobile-only{display:none}}
+.desktop-only{display:none}@media(min-width:640px){.desktop-only{display:inline}}
 </style>
 </head>
 <body>
 
-<!-- ─── APP SHELL ─── -->
 <div id="app">
   <div id="loading" style="min-height:100vh;display:flex;align-items:center;justify-content:center">
     <div style="text-align:center">
@@ -243,7 +201,6 @@ input,select{font-family:inherit}
   </div>
 </div>
 
-<!-- ─── TEMPLATE: MAIN APP ─── -->
 <template id="tpl-app">
   <header class="hero" data-testid="app-header">
     <div class="container">
@@ -251,22 +208,16 @@ input,select{font-family:inherit}
       <p>Discover your gifting personality and create a sacred gift box</p>
     </div>
   </header>
-
   <div class="stepper-bar" data-testid="step-progress-bar">
-    <div class="container">
-      <div class="stepper" id="stepper"></div>
-    </div>
+    <div class="container"><div class="stepper" id="stepper"></div></div>
   </div>
-
   <main class="container" style="padding-top:1.5rem;padding-bottom:1.5rem">
     <section id="page1" class="fade-in" data-testid="step-page1"></section>
     <section id="page2" class="hidden fade-in" data-testid="step-page2"></section>
     <section id="page3" class="hidden fade-in" data-testid="step-page3"></section>
-    <section id="page4" class="hidden fade-in" data-testid="step-page4"></section>
   </main>
-
   <footer class="app-footer" data-testid="app-footer">
-    <div class="container"><p>Made with devotion for celebrations</p></div>
+    <div class="container"><p>Made with devotion for <span id="f-occasion"></span> celebrations</p></div>
   </footer>
 </template>
 
@@ -276,87 +227,170 @@ input,select{font-family:inherit}
 (function(){
 "use strict";
 
+/* ─── STATE ─── */
 const state = {
   step: 0,
   config: null,
   images: null,
-  page1: { name:'',email:'',age:'',gender:'',occupation:'',identity_type:'',gift_occasions:[],gift_recipients:'',shopping_channel:'',gifting_spend:'',considered_devotional:'' },
-  page2: { decision_logic:'',prayer_frequency:'',ritual_teacher:'',ritual_strictness:0,authenticity_importance:0 },
+  page1: {
+    gift_occasions: [],
+    gift_recipients: [],
+    shopping_channel: [],
+    gifting_spend: '',
+    considered_devotional: '',
+    decision_logic: [],
+    prayer_frequency: [],
+    ritual_teacher: [],       // ← now an array (multi-select)
+    ritual_strictness: 0,
+    authenticity_importance: 0,
+  },
   selectedItems: new Set(),
-  page4: { perceived_price:'', temple_vetted_price:'' },
+  page3: {
+    perceived_price: '',
+    temple_vetted_price: '',
+    other_item_suggestion: '',
+    age: '',
+    gender: '',
+    occupation: '',
+  },
   submitting: false,
   result: null,
 };
 
+/* ─── SVG CONSTANTS ─── */
 const CHECK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CHECK_SVG_DARK = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--maroon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const ARROW_R = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
 const ARROW_L = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>';
 const BOOK_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
 const SEND_SVG = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4z"/></svg>';
 const PKG_SVG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16.5 9.4l-9-5.19M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>';
 
-const STEPS = [{s:'1. You',f:'About You'},{s:'2. Rituals',f:'Your Rituals'},{s:'3. Build',f:'Build Box'},{s:'4. Final',f:'Your Box'}];
+const STEPS = [
+  {s:'1. You & Rituals', f:'You & Rituals'},
+  {s:'2. Build Box',     f:'Build Your Box'},
+  {s:'3. Your Box',     f:'Your Box'},
+];
 
+/* ─── PERSONALITY SCORING ─── */
+const PERSONALITIES = {
+  devoted: {
+    icon: '🪔',
+    type: 'The Devoted',
+    subtitle: 'Rooted in Scripture and Tradition',
+    desc: 'Every ritual you perform carries the weight of generations. You seek items that are authentic, prescribed, and spiritually correct — gifting is an act of dharma for you.',
+    traits: { 'Ritual Adherence': 95, 'Authenticity Seeking': 90, 'Spiritual Depth': 85, 'Tradition First': 92 }
+  },
+  ritualist: {
+    icon: '📿',
+    type: 'The Ritualist',
+    subtitle: 'Every Step Has a Meaning',
+    desc: 'You follow the steps with precision and care. The how matters as much as the what. You look for items that fit a specific ritual context and carry symbolic weight.',
+    traits: { 'Ritual Adherence': 88, 'Authenticity Seeking': 75, 'Spiritual Depth': 70, 'Tradition First': 80 }
+  },
+  seeker: {
+    icon: '🌿',
+    type: 'The Seeker',
+    subtitle: 'Finding Meaning Beyond Ritual',
+    desc: 'You connect with tradition on your own terms. Less about protocol, more about intention. You gift things that carry personal meaning and emotional resonance.',
+    traits: { 'Ritual Adherence': 40, 'Authenticity Seeking': 65, 'Spiritual Depth': 80, 'Tradition First': 35 }
+  },
+  celebrant: {
+    icon: '✨',
+    type: 'The Celebrant',
+    subtitle: 'Faith Through Celebration',
+    desc: 'For you, festivity is the ritual. Joy, abundance, togetherness — these are sacred. You gift to create delight, not to satisfy a checklist.',
+    traits: { 'Ritual Adherence': 25, 'Authenticity Seeking': 45, 'Spiritual Depth': 55, 'Tradition First': 30 }
+  }
+};
+
+function computePersonality(p1) {
+  let score = 0;
+  score += (p1.ritual_strictness || 0) * 12;
+  score += (p1.authenticity_importance || 0) * 10;
+  if (p1.decision_logic.includes('tradition'))    score += 20;
+  if (p1.decision_logic.includes('meaning'))      score += 10;
+  if (p1.decision_logic.includes('convenience'))  score -= 15;
+  if (p1.prayer_frequency.includes('Twice a day')) score += 20;
+  if (p1.prayer_frequency.includes('Daily'))       score += 14;
+  if (p1.prayer_frequency.includes('Weekly'))      score += 8;
+  if (p1.prayer_frequency.includes('On festivals'))score += 3;
+  if (p1.prayer_frequency.includes('Rarely'))      score -= 5;
+  if (p1.prayer_frequency.includes('Never'))       score -= 10;
+  // ritual_teacher is now an array — check if any traditional source is included
+  const teacherArr = Array.isArray(p1.ritual_teacher) ? p1.ritual_teacher : [p1.ritual_teacher];
+  if (teacherArr.includes('Parents / Grandparents') || teacherArr.includes('Priest / Pandit')) score += 10;
+  if (teacherArr.includes('YouTube / Social media') || teacherArr.includes('Self-taught'))     score -= 5;
+
+  if (score >= 80) return 'devoted';
+  if (score >= 50) return 'ritualist';
+  if (score >= 25) return 'seeker';
+  return 'celebrant';
+}
+
+/* ─── HELPERS ─── */
 function $(sel, ctx){ return (ctx||document).querySelector(sel); }
 function $$(sel, ctx){ return Array.from((ctx||document).querySelectorAll(sel)); }
 function h(tag, cls, html){ const el=document.createElement(tag); if(cls)el.className=cls; if(html!==undefined)el.innerHTML=html; return el; }
 
-// ── Selector card HTML helper ──
 function selectorCard(value, label, currentValue){
   const sel = currentValue === value;
   return `<div class="selector-card${sel?' selected':''}" data-id="${value}">
-    <div class="sel-dot"><div class="sel-dot-inner"></div></div>
-    <span>${label}</span>
+    <div class="sel-dot"><div class="sel-dot-inner"></div></div><span>${label}</span>
   </div>`;
 }
 
+function multiChip(value, label, arr){
+  const sel = arr.includes(value);
+  return `<div class="chip${sel?' selected':''}" data-val="${value}">${sel ? CHECK_SVG : ''}<span>${label}</span></div>`;
+}
+
+/* ─── BACKEND URL ─── */
+function getBackendUrl(){
+  const host = window.location.hostname;
+  if(host.includes('github.io')) return 'https://giftboxsimulator.onrender.com';
+  return '';
+}
+
+/* ─── INIT ─── */
 async function init(){
   try{
-    const backendUrl = getBackendUrl();
+    fetch(getBackendUrl() + '/api/health').catch(()=>{});
     const [cfgR, imgR] = await Promise.all([
-      fetch(backendUrl + '/api/config'),
-      fetch(backendUrl + '/api/images')
+      fetch(getBackendUrl() + '/api/config'),
+      fetch(getBackendUrl() + '/api/images')
     ]);
     state.config = await cfgR.json();
-    state.images = imgR.ok ? await imgR.json() : {personalities:[]};
+    state.images = imgR.ok ? await imgR.json() : {};
     render();
   }catch(e){
     $('#loading').innerHTML = '<div style="text-align:center;padding:2rem"><p style="color:#dc2626;font-size:1.1rem;margin-bottom:.5rem">Something went wrong</p><p style="color:var(--muted)">'+e.message+'</p><button class="btn btn-primary" style="margin-top:1rem" onclick="location.reload()">Retry</button></div>';
   }
 }
 
-function getBackendUrl(){
-  const host = window.location.hostname;
-
-  // If running on GitHub Pages → use Render backend
-  if(host.includes('github.io')){
-    return 'https://giftboxsimulator.onrender.com';
-  }
-
-  // Otherwise (Render / local)
-  return '';
-}
-
+/* ─── RENDER SHELL ─── */
 function render(){
   const appEl = $('#app');
-  const tpl = $('#tpl-app');
   appEl.innerHTML = '';
-  appEl.appendChild(tpl.content.cloneNode(true));
+  appEl.appendChild($('#tpl-app').content.cloneNode(true));
+  const focc = $('#f-occasion');
+  if(focc) focc.textContent = state.config.occasion;
   renderStepper();
   renderPage1();
   renderPage2();
   renderPage3();
-  renderPage4();
   showStep(state.step);
 }
 
+/* ─── STEPPER ─── */
 function renderStepper(){
   const el = $('#stepper');
+  if(!el) return;
   el.innerHTML = '';
   STEPS.forEach((s,i)=>{
     const g = h('div','step-group');
     const cls = i < state.step ? 'done' : i === state.step ? 'active' : 'pending';
-    g.innerHTML = `<div class="step-circle ${cls}" data-testid="step-node-${i}">${i < state.step ? CHECK_SVG : i+1}</div><span class="step-label" style="color:${i<=state.step?'var(--ink)':'var(--muted)'}"><span class="mobile-only">${s.s}</span><span class="desktop-only">${s.f}</span></span>`;
+    g.innerHTML = `<div class="step-circle ${cls}">${i < state.step ? CHECK_SVG : i+1}</div><span class="step-label" style="color:${i<=state.step?'var(--ink)':'var(--muted)'}"><span class="mobile-only">${s.s}</span><span class="desktop-only">${s.f}</span></span>`;
     el.appendChild(g);
     if(i < STEPS.length-1){
       const c = h('div','step-connector');
@@ -364,16 +398,13 @@ function renderStepper(){
       el.appendChild(c);
     }
   });
-  const style = document.getElementById('resp-step-style') || document.createElement('style');
-  style.id='resp-step-style';
-  style.textContent = '.mobile-only{display:inline}@media(min-width:640px){.mobile-only{display:none}}.desktop-only{display:none}@media(min-width:640px){.desktop-only{display:inline}}';
-  if(!style.parentNode) document.head.appendChild(style);
 }
 
 function showStep(n){
   state.step = n;
-  ['page1','page2','page3','page4'].forEach((id,i)=>{
+  ['page1','page2','page3'].forEach((id,i)=>{
     const el = $('#'+id);
+    if(!el) return;
     el.classList.toggle('hidden', i!==n);
     if(i===n){ el.classList.remove('fade-in'); void el.offsetWidth; el.classList.add('fade-in'); }
   });
@@ -381,170 +412,146 @@ function showStep(n){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ══════════════════════════════
-//   PAGE 1 — Demographics
-// ══════════════════════════════
+/* ══════════════════════════════════════════════
+   PAGE 1 — You & Rituals
+══════════════════════════════════════════════ */
 function renderPage1(){
   const el = $('#page1');
-  // 🔥 Warm-up ping (Render keep-alive)
-  fetch(getBackendUrl() + '/api/health').catch(()=>{});
-  const p = state.images?.personalities || [];
   const d = state.page1;
+
   el.innerHTML = `
   <div class="card">
-    <div class="card-title">Tell us a bit about yourself</div>
-    <div class="card-desc">Help us understand your gifting personality</div>
+    <div class="card-title">You & Your Rituals</div>
+    <div class="card-desc">Help us understand your gifting and devotional personality</div>
     <form id="form1" style="margin-top:1.5rem" novalidate>
 
-      <div class="section-label">Basic Details</div>
-      <div class="grid-2">
-        <div class="form-group">
-          <label>Name <span class="req">*</span></label>
-          <input class="form-input" id="f-name" value="${d.name}" placeholder="Enter your name" data-testid="input-name">
-          <div class="error-msg hidden" id="err-name"></div>
-        </div>
-        <div class="form-group">
-          <label>Email <span class="req">*</span></label>
-          <input class="form-input" type="email" id="f-email" value="${d.email}" placeholder="your@email.com" data-testid="input-email">
-          <div class="error-msg hidden" id="err-email"></div>
-        </div>
-        <div class="form-group">
-          <label>Age</label>
-          <input class="form-input" type="number" min="1" max="120" id="f-age" value="${d.age}" placeholder="Your age" data-testid="input-age">
-        </div>
-        <div class="form-group">
-          <label>Gender</label>
-          <select class="form-select" id="f-gender" data-testid="select-gender">
-            <option value="">Select gender</option>
-            <option ${d.gender==='Male'?'selected':''}>Male</option>
-            <option ${d.gender==='Female'?'selected':''}>Female</option>
-            <option ${d.gender==='Other'?'selected':''}>Other</option>
-            <option ${d.gender==='Prefer not to say'?'selected':''}>Prefer not to say</option>
-          </select>
-        </div>
-        <div class="form-group" style="grid-column:1/-1">
-          <label>Occupation</label>
-          <input class="form-input" id="f-occupation" value="${d.occupation}" placeholder="What do you do?" data-testid="input-occupation">
-        </div>
-      </div>
+      <!-- GIFTING BEHAVIOR -->
+      <div class="section-label">Gifting Behavior</div>
 
-      ${p.length ? `
-      <div style="margin-top:2rem">
-        <div class="section-label">Which best describes you? <span class="req">*</span></div>
-        <p style="font-size:.7rem;color:var(--muted);margin-bottom:.75rem">Select the personality that resonates with you most</p>
-        <div class="identity-grid" data-testid="identity-selector">
-          ${p.map(x=>`
-            <div class="identity-card${d.identity_type===x.id?' selected':''}" data-id="${x.id}" data-testid="identity-${x.id}">
-              <img src="${x.image}" alt="${x.label}" loading="lazy" onerror="this.style.display='none'">
-              ${d.identity_type===x.id?`<div class="identity-check">${CHECK_SVG}</div>`:''}
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">Which occasions do you typically give gifts for? <span class="req">*</span></label>
+        <div class="cb-list">
+          ${['Diwali','Holi','Raksha Bandhan','Gruha Pravesha (Housewarming)','Namkaran (Naming ceremony)','Weddings','Birthdays','Anniversaries','Religious pujas / havans','Other festivals'].map(o=>`
+            <div class="cb-item${d.gift_occasions.includes(o)?' checked':''}" data-val="${o}">
+              <div class="cb-box">${d.gift_occasions.includes(o)?CHECK_SVG:''}</div>
+              <span>${o}</span>
             </div>
           `).join('')}
         </div>
       </div>
-      ` : ''}
 
-      <div style="margin-top:2rem">
-        <div class="section-label">Gifting Behavior</div>
-
-        <div style="margin-bottom:1.2rem">
-          <label class="q-label">Which occasions do you typically give gifts for? <span class="req">*</span></label>
-          <div class="cb-list" data-testid="gift-occasions">
-            ${['Diwali','Holi','Raksha Bandhan','Gruha Pravesha (Housewarming)','Namkaran (Naming ceremony)','Weddings','Birthdays','Anniversaries','Religious pujas / havans','Other festivals'].map(o=>`
-              <div class="cb-item${d.gift_occasions.includes(o)?' checked':''}" data-val="${o}">
-                <div class="cb-box">${d.gift_occasions.includes(o)?CHECK_SVG:''}</div>
-                <span>${o}</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-
-        <div class="grid-2" style="margin-top:1rem">
-          <div class="form-group">
-            <label>Who do you usually gift? <span class="req">*</span></label>
-            <select class="form-select" id="f-recipients" data-testid="select-gift-recipients">
-              <option value="">Select recipient type</option>
-              ${['Colleagues / Business associates','Elders / Gurus','Family members','Friends','Neighbors','Spouses'].map(o=>`<option ${d.gift_recipients===o?'selected':''}>${o}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Where do you usually shop for gifts? <span class="req">*</span></label>
-            <select class="form-select" id="f-channel" data-testid="select-shopping-channel">
-              <option value="">Select shopping channel</option>
-              ${['Quick Commerce (Blinkit, Zepto, etc.)','E-commerce (Amazon, Flipkart, etc.)','Retail (D-Mart, Big Bazaar, etc.)','Offline (Local shops, markets)'].map(o=>`<option ${d.shopping_channel===o?'selected':''}>${o}</option>`).join('')}
-            </select>
-          </div>
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">Who do you usually gift? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
+        <div class="chip-group" id="chips-recipients">
+          ${['Colleagues / Business associates','Elders / Gurus','Family members','Friends','Neighbors','Spouses'].map(o=>multiChip(o,o,d.gift_recipients)).join('')}
         </div>
       </div>
 
-      <div style="margin-top:2rem">
-        <div class="section-label">Gifting Insights</div>
-
-        <div style="margin-bottom:1.5rem">
-          <label class="q-label">How much do you usually spend on gifting? <span class="req">*</span></label>
-          <div class="selector-grid cols-4" data-group="gifting_spend" data-testid="gifting-spend-selector">
-            ${selectorCard('low',  'Under ₹500',     d.gifting_spend)}
-            ${selectorCard('mid',  '₹500 – ₹1,000',  d.gifting_spend)}
-            ${selectorCard('high', '₹1,000 – ₹2,000',d.gifting_spend)}
-            ${selectorCard('premium','₹2,000+',       d.gifting_spend)}
-          </div>
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">Where do you usually shop for gifts? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
+        <div class="chip-group" id="chips-channel">
+          ${['Quick Commerce (Blinkit, Zepto, etc.)','E-commerce (Amazon, Flipkart, etc.)','Retail (D-Mart, Big Bazaar, etc.)','Offline (Local shops, markets)'].map(o=>multiChip(o,o,d.shopping_channel)).join('')}
         </div>
+      </div>
 
-        <div>
-          <label class="q-label">Have you considered devotional gift boxes for gifting? <span class="req">*</span></label>
-          <div class="selector-grid cols-3" data-group="considered_devotional" data-testid="considered-devotional-selector">
-            ${selectorCard('yes',   'Yes',   d.considered_devotional)}
-            ${selectorCard('maybe', 'Maybe', d.considered_devotional)}
-            ${selectorCard('no',    'No',    d.considered_devotional)}
-          </div>
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">How much do you usually spend on gifting? <span class="req">*</span></label>
+        <div class="selector-grid cols-4" data-group="gifting_spend">
+          ${selectorCard('low',     'Under ₹500',      d.gifting_spend)}
+          ${selectorCard('mid',     '₹500 – ₹1,000',   d.gifting_spend)}
+          ${selectorCard('high',    '₹1,000 – ₹2,000', d.gifting_spend)}
+          ${selectorCard('premium', '₹2,000+',          d.gifting_spend)}
         </div>
+      </div>
+
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">Have you considered devotional gift boxes for gifting? <span class="req">*</span></label>
+        <div class="selector-grid cols-3" data-group="considered_devotional">
+          ${selectorCard('yes',   'Yes',   d.considered_devotional)}
+          ${selectorCard('maybe', 'Maybe', d.considered_devotional)}
+          ${selectorCard('no',    'No',    d.considered_devotional)}
+        </div>
+      </div>
+
+      <hr class="section-divider">
+
+      <!-- RITUALS -->
+      <div class="section-label">Your Rituals & Approach</div>
+
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">How do you usually decide what give as a festive gift? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
+        <div class="chip-group" id="chips-decision">
+          ${[
+            {v:'tradition',       l:'I stick to the classics'},
+            {v:'meaning',         l:'I look for something thoughtful'},
+            {v:'convenience',     l:'Whatever is quickest to get'},
+            {v:'recommendations', l:'I see what everyone else is buying'}
+          ].map(o=>multiChip(o.v, o.l, d.decision_logic)).join('')}
+        </div>
+      </div>
+
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">How often do you pray? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
+        <div class="chip-group" id="chips-prayer">
+          ${['Twice a day','Daily','Weekly','Monthly','On festivals','Rarely','Never'].map(o=>multiChip(o,o,d.prayer_frequency)).join('')}
+        </div>
+      </div>
+
+      <!-- ── Who taught you — now MULTI-SELECT chips ── -->
+      <div style="margin-bottom:1.4rem">
+        <label class="q-label">Who taught you your rituals? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
+        <div class="chip-group" id="chips-teacher">
+          ${['Parents / Grandparents','Priest / Pandit','YouTube / Social media','Books / Scriptures','Friends / Community','Self-taught','No one'].map(o=>multiChip(o,o,d.ritual_teacher)).join('')}
+        </div>
+      </div>
+
+      <div style="margin-bottom:1.5rem">
+        <label class="q-label">How particular are you about following rituals exactly as prescribed? <span class="req">*</span></label>
+        <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.ritual_strictness===n?' selected':''}" data-n="${n}" data-group="rs">${n}</button>`).join('')}</div>
+        <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
+      </div>
+
+      <div style="margin-bottom:1.5rem">
+        <label class="q-label">How important is authenticity (source, correctness, origin) in devotional items? <span class="req">*</span></label>
+        <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.authenticity_importance===n?' selected':''}" data-n="${n}" data-group="ai">${n}</button>`).join('')}</div>
+        <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
       </div>
 
       <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
-        <button type="submit" class="btn btn-primary" data-testid="page1-next-button">Continue ${ARROW_R}</button>
+        <button type="submit" class="btn btn-primary">Build Your Box ${ARROW_R}</button>
       </div>
     </form>
   </div>`;
 
-  // ── Save helper ──
-
-  function saveP1Inputs(){
-    const n=document.getElementById('f-name'); if(n) state.page1.name=n.value;
-    const e=document.getElementById('f-email'); if(e) state.page1.email=e.value;
-    const a=document.getElementById('f-age'); if(a) state.page1.age=a.value;
-    const g=document.getElementById('f-gender'); if(g) state.page1.gender=g.value;
-    const o=document.getElementById('f-occupation'); if(o) state.page1.occupation=o.value;
-    const r=document.getElementById('f-recipients'); if(r) state.page1.gift_recipients=r.value;
-    const c=document.getElementById('f-channel'); if(c) state.page1.shopping_channel=c.value;
-
-    // ✅ Use specific selector — avoids collision with identity-card .selected
-    const spend = document.querySelector('[data-group="gifting_spend"] .selector-card.selected');
-    if(spend) state.page1.gifting_spend = spend.dataset.id;
-
-    const devotional = document.querySelector('[data-group="considered_devotional"] .selector-card.selected');
-    if(devotional) state.page1.considered_devotional = devotional.dataset.id;
-
-  }
-  
-
-  // Identity cards
-  $$('.identity-card', el).forEach(c => c.addEventListener('click', ()=>{
-    saveP1Inputs();
-    state.page1.identity_type = c.dataset.id;
-    $$('.identity-card', el).forEach(ic=>{
-      const isSel = ic.dataset.id === state.page1.identity_type;
-      ic.classList.toggle('selected', isSel);
-      const existing = ic.querySelector('.identity-check');
-      if(isSel && !existing){
-        const badge = document.createElement('div');badge.className='identity-check';badge.innerHTML=CHECK_SVG;ic.appendChild(badge);
-      } else if(!isSel && existing){ existing.remove(); }
-    });
+  // ── Checkbox occasions ──
+  $$('.cb-item', el).forEach(c => c.addEventListener('click', ()=>{
+    const v = c.dataset.val, arr = state.page1.gift_occasions, idx = arr.indexOf(v);
+    if(idx >= 0) arr.splice(idx,1); else arr.push(v);
+    c.classList.toggle('checked');
+    c.querySelector('.cb-box').innerHTML = c.classList.contains('checked') ? CHECK_SVG : '';
   }));
 
-  // Selector grids (spend + devotional) — generic handler
+  // ── Multi-select chip groups ──
+  function bindChips(containerId, stateKey){
+    $$('.chip', $('#'+containerId, el)).forEach(chip => {
+      chip.addEventListener('click', ()=>{
+        const v = chip.dataset.val, arr = state.page1[stateKey], idx = arr.indexOf(v);
+        if(idx >= 0){ arr.splice(idx,1); chip.classList.remove('selected'); chip.innerHTML = `<span>${v}</span>`; }
+        else { arr.push(v); chip.classList.add('selected'); chip.innerHTML = CHECK_SVG + `<span>${v}</span>`; }
+      });
+    });
+  }
+  bindChips('chips-recipients', 'gift_recipients');
+  bindChips('chips-channel',    'shopping_channel');
+  bindChips('chips-decision',   'decision_logic');
+  bindChips('chips-prayer',     'prayer_frequency');
+  bindChips('chips-teacher',    'ritual_teacher');   // ← new
+
+  // ── Single-select selector grids ──
   $$('[data-group]', el).forEach(grid => {
+    if(!grid.classList.contains('selector-grid')) return;
     $$('.selector-card', grid).forEach(card => {
       card.addEventListener('click', ()=>{
-        saveP1Inputs();
         const group = grid.dataset.group;
         state.page1[group] = card.dataset.id;
         $$('.selector-card', grid).forEach(c => c.classList.remove('selected'));
@@ -553,199 +560,42 @@ function renderPage1(){
     });
   });
 
-  // Checkbox items
-  $$('.cb-item', el).forEach(c => c.addEventListener('click', ()=>{
-    const v = c.dataset.val;
-    const arr = state.page1.gift_occasions;
-    const idx = arr.indexOf(v);
-    if(idx >= 0) arr.splice(idx,1); else arr.push(v);
-    c.classList.toggle('checked');
-    c.querySelector('.cb-box').innerHTML = c.classList.contains('checked') ? CHECK_SVG : '';
+  // ── Likert ──
+  $$('.likert-btn', el).forEach(b => b.addEventListener('click', ()=>{
+    const n = parseInt(b.dataset.n);
+    const group = b.dataset.group;
+    if(group==='rs') state.page1.ritual_strictness = n;
+    else             state.page1.authenticity_importance = n;
+    $$('.likert-btn', el).forEach(btn => {
+      if(btn.dataset.group === group)
+        btn.classList.toggle('selected', parseInt(btn.dataset.n) === n);
+    });
   }));
 
-  // Form submit — stop at FIRST error only
+  // ── Submit with full validation ──
   $('#form1').addEventListener('submit', e => {
     e.preventDefault();
 
-    // Sync all inputs
-    state.page1.name = $('#f-name').value.trim();
-    state.page1.email = $('#f-email').value.trim();
-    state.page1.age = $('#f-age').value;
-    state.page1.gender = $('#f-gender').value;
-    state.page1.occupation = $('#f-occupation').value.trim();
-    state.page1.gift_recipients = $('#f-recipients').value;
-    state.page1.shopping_channel = $('#f-channel').value;
-
-    // Sync selector cards
-    const spendEl = document.querySelector('[data-group="gifting_spend"] .selector-card.selected');
-    if (spendEl) state.page1.gifting_spend = spendEl.dataset.id;
-
-    const devEl = document.querySelector('[data-group="considered_devotional"] .selector-card.selected');
-    if (devEl) state.page1.considered_devotional = devEl.dataset.id;
-
-    // Clear previous inline errors
-    $('#err-name').classList.add('hidden');
-    $('#f-name').classList.remove('error');
-    $('#err-email').classList.add('hidden');
-    $('#f-email').classList.remove('error');
-
-    // Validate in order, stop at first failure
-    if(!state.page1.name){
-      $('#err-name').textContent='Name is required';
-      $('#err-name').classList.remove('hidden');
-      $('#f-name').classList.add('error');
-      $('#f-name').focus();
-      return;
-    }
-    if(!state.page1.email){
-      $('#err-email').textContent='Email is required';
-      $('#err-email').classList.remove('hidden');
-      $('#f-email').classList.add('error');
-      $('#f-email').focus();
-      return;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(state.page1.email)){
-      $('#err-email').textContent='Enter a valid email';
-      $('#err-email').classList.remove('hidden');
-      $('#f-email').classList.add('error');
-      $('#f-email').focus();
-      return;
-    }
-    if(!state.page1.identity_type){
-      alert("Please select a personality that resonates with you");
-      return;
-    }
-    if(state.page1.gift_occasions.length === 0){
-      alert("Please select at least one gifting occasion");
-      return;
-    }
-    if(!state.page1.gift_recipients){
-      alert("Please select who you usually gift");
-      return;
-    }
-    if(!state.page1.shopping_channel){
-      alert("Please select where you shop for gifts");
-      return;
-    }
-    if(!state.page1.gifting_spend){
-      alert("Please select how much you usually spend on gifting");
-      return;
-    }
-    if(!state.page1.considered_devotional){
-      alert("Please answer the devotional gifting question");
-      return;
-    }
+    if(state.page1.gift_occasions.length === 0)        { alert("Please select at least one gifting occasion"); return; }
+    if(state.page1.gift_recipients.length === 0)       { alert("Please select who you usually gift"); return; }
+    if(state.page1.shopping_channel.length === 0)      { alert("Please select where you shop for gifts"); return; }
+    if(!state.page1.gifting_spend)                     { alert("Please select how much you usually spend on gifting"); return; }
+    if(!state.page1.considered_devotional)             { alert("Please answer the devotional gifting question"); return; }
+    if(state.page1.decision_logic.length === 0)        { alert("Please select how you decide what to gift"); return; }
+    if(state.page1.prayer_frequency.length === 0)      { alert("Please select how often you pray"); return; }
+    if(state.page1.ritual_teacher.length === 0)        { alert("Please select who taught you your rituals"); return; }
+    if(!state.page1.ritual_strictness)                 { alert("Please rate how particular you are about following rituals"); return; }
+    if(!state.page1.authenticity_importance)           { alert("Please rate how important authenticity is to you"); return; }
 
     showStep(1);
   });
 }
 
-// ══════════════════════════════
-//   PAGE 2 — Behavior / Rituals
-// ══════════════════════════════
+/* ══════════════════════════════════════════════
+   PAGE 2 — Gift Box Builder
+══════════════════════════════════════════════ */
 function renderPage2(){
   const el = $('#page2');
-  const d = state.page2;
-  el.innerHTML = `
-  <div class="card">
-    <div class="card-title">Your approach to gifting & rituals</div>
-    <div class="card-desc">Help us understand how you connect with traditions</div>
-    <form id="form2" style="margin-top:1.5rem" novalidate>
-      <div class="section-label">Decision Making</div>
-      <label class="q-label">How do you usually decide what to include in a puja / festive gift?</label>
-      <div class="pill-group" data-testid="decision-logic">
-        ${[{v:'tradition',l:'Based on tradition'},{v:'meaning',l:'Based on meaning'},{v:'convenience',l:'Based on convenience'},{v:'recommendations',l:'Based on recommendations'}].map(o=>`
-          <button type="button" class="pill${d.decision_logic===o.v?' selected':''}" data-val="${o.v}" data-testid="decision-${o.v}">${o.l}</button>
-        `).join('')}
-      </div>
-
-      <div style="margin-top:2rem">
-        <div class="section-label">Prayer & Ritual Background</div>
-        <div class="grid-2">
-          <div class="form-group">
-            <label>How often do you pray?</label>
-            <select class="form-select" id="f-prayer" data-testid="select-prayer-frequency">
-              <option value="">Select frequency</option>
-              ${['Twice a day','Daily','Weekly','Monthly','On festivals','Rarely','Never'].map(o=>`<option ${d.prayer_frequency===o?'selected':''}>${o}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Who taught you your rituals?</label>
-            <select class="form-select" id="f-teacher" data-testid="select-ritual-teacher">
-              <option value="">Select</option>
-              ${['Parents / Grandparents','Priest / Pandit','YouTube / Social media','Books / Scriptures','Friends / Community','Self-taught','No one'].map(o=>`<option ${d.ritual_teacher===o?'selected':''}>${o}</option>`).join('')}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:2rem">
-        <div class="section-label">Your Values</div>
-        <div style="margin-bottom:1.5rem" data-testid="likert-ritual-strictness">
-          <label class="q-label">How particular are you about following rituals exactly as prescribed?</label>
-          <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.ritual_strictness===n?' selected':''}" data-n="${n}" data-group="rs" data-testid="likert-ritual-strictness-${n}">${n}</button>`).join('')}</div>
-          <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
-        </div>
-        <div data-testid="likert-authenticity">
-          <label class="q-label">How important is authenticity (source, correctness, origin) in devotional items?</label>
-          <div class="likert">${[1,2,3,4,5].map(n=>`<button type="button" class="likert-btn${d.authenticity_importance===n?' selected':''}" data-n="${n}" data-group="ai" data-testid="likert-authenticity-${n}">${n}</button>`).join('')}</div>
-          <div class="likert-labels"><span>Not at all</span><span>Extremely</span></div>
-        </div>
-      </div>
-
-      <div class="cta-banner" style="margin-top:1.5rem">Build the box next — the big questions are done!</div>
-
-      <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
-        <button type="button" class="btn btn-ghost" id="p2-back" data-testid="page2-back-button">${ARROW_L} Back</button>
-        <button type="submit" class="btn btn-primary" data-testid="page2-next-button">Build Your Box ${ARROW_R}</button>
-      </div>
-    </form>
-  </div>`;
-
-
-  $$('.pill[data-testid^="decision-"]', el).forEach(b => 
-    b.addEventListener('click', ()=>{
-      // ✅ SAVE dropdown values before re-render
-      state.page2.prayer_frequency = $('#f-prayer').value;
-      state.page2.ritual_teacher = $('#f-teacher').value;
-
-      state.page2.decision_logic = b.dataset.val;
-      renderPage2();
-    })
-  );
-
-  $$('.likert-btn', el).forEach(b => 
-    b.addEventListener('click', ()=>{
-      // ✅ SAVE dropdown values before re-render
-      state.page2.prayer_frequency = $('#f-prayer').value;
-      state.page2.ritual_teacher = $('#f-teacher').value;
-
-      const n = parseInt(b.dataset.n);
-      if(b.dataset.group==='rs') 
-        state.page2.ritual_strictness = n; 
-      else 
-        state.page2.authenticity_importance = n;
-
-      renderPage2();
-    })
-  );
-
-
-
-  $('#p2-back').addEventListener('click', ()=> showStep(0));
-  $('#form2').addEventListener('submit', e=>{
-    e.preventDefault();
-    state.page2.prayer_frequency = $('#f-prayer').value;
-    state.page2.ritual_teacher = $('#f-teacher').value;
-    showStep(2);
-  });
-}
-
-// ══════════════════════════════
-//   PAGE 3 — Gift Box Builder
-// ══════════════════════════════
-function renderPage3(){
-  const el = $('#page3');
   const items = state.config.items;
   const sel = state.selectedItems;
 
@@ -754,12 +604,12 @@ function renderPage3(){
     <h2 class="h-font" style="font-size:clamp(1.2rem,3vw,1.5rem);font-weight:600;color:var(--maroon)">Build your own gift box</h2>
     <p style="font-size:.8rem;color:var(--muted);margin-top:.2rem">Tap items to add them to your ${state.config.occasion} gift box for ${state.config.deity}</p>
   </div>
-  <div class="items-layout" data-testid="page3-builder">
-    <div class="items-grid" data-testid="items-grid">
-      ${items.map(it => {
+  <div class="items-layout">
+    <div class="items-grid">
+      ${items.map(it=>{
         const isSel = sel.has(it.id);
         return `
-        <div class="item-card${isSel?' selected':''}" data-id="${it.id}" data-testid="gift-item-card-${it.id}">
+        <div class="item-card${isSel?' selected':''}" data-id="${it.id}">
           ${isSel ? `<div class="item-check">${CHECK_SVG}</div>` : ''}
           <img src="${it.image}" alt="${it.name}" loading="lazy" onerror="this.outerHTML='<div class=\\'ic-fallback\\'>${it.emoji||'\\uD83C\\uDF81'}</div>'">
           <div class="item-body">
@@ -767,12 +617,12 @@ function renderPage3(){
             ${it.description ? `<div class="item-desc">${it.description}</div>` : ''}
             <div class="item-badge ${isSel?'added':'add'}">${isSel ? CHECK_SVG+' Added' : 'Tap to add'}</div>
           </div>
-          ${it.lore ? `<button class="lore-toggle" data-lore="${it.id}" data-testid="lore-toggle-${it.id}">${BOOK_SVG} Read the story</button><div class="lore-text hidden" id="lore-${it.id}" data-testid="lore-text-${it.id}">${it.lore}</div>` : ''}
+          ${it.lore ? `<button class="lore-toggle" data-lore="${it.id}">${BOOK_SVG} Read the story</button><div class="lore-text hidden" id="lore-${it.id}">${it.lore}</div>` : ''}
         </div>`;
       }).join('')}
     </div>
     <div class="sidebar" style="display:none" id="sidebar-desktop">
-      <div class="sidebar-inner" data-testid="selection-widget">
+      <div class="sidebar-inner">
         <div style="display:flex;align-items:center;gap:.6rem">
           <div style="width:2.2rem;height:2.2rem;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center">${PKG_SVG}</div>
           <div><div style="font-size:.8rem;font-weight:600">Your Gift Box</div><div style="font-size:.65rem;color:var(--muted)" id="sidebar-count">${sel.size} items selected</div></div>
@@ -780,16 +630,16 @@ function renderPage3(){
         <div style="height:1px;background:rgba(234,179,8,.12);margin:.7rem 0"></div>
         <div class="sidebar-list"></div>
         <div style="margin-top:.7rem;display:flex;flex-direction:column;gap:.4rem">
-          <button class="btn btn-primary" style="width:100%" ${sel.size===0?'disabled':''} id="p3-continue-d" data-testid="page3-continue-button">See Your Box ${ARROW_R}</button>
-          <button class="btn btn-ghost" style="width:100%" id="p3-back-d" data-testid="page3-back-button">${ARROW_L} Back to Rituals</button>
+          <button class="btn btn-primary" style="width:100%" ${sel.size===0?'disabled':''} id="p2-continue-d">See Your Box ${ARROW_R}</button>
+          <button class="btn btn-ghost" style="width:100%" id="p2-back-d">${ARROW_L} Back</button>
         </div>
       </div>
     </div>
   </div>
-  <div class="mobile-bar" data-testid="mobile-bottom-bar">
-    <button class="btn btn-ghost" style="font-size:.8rem" id="p3-back-m" data-testid="page3-back-mobile">${ARROW_L} Back</button>
-    <div style="text-align:center"><div style="display:flex;align-items:center;gap:.3rem;justify-content:center">${PKG_SVG} <span style="font-size:.7rem;color:var(--muted)">${sel.size} items</span></div></div>
-    <button class="btn btn-primary" style="font-size:.8rem;padding:.5rem .8rem" ${sel.size===0?'disabled':''} id="p3-continue-m" data-testid="page3-continue-mobile">See Your Box ${ARROW_R}</button>
+  <div class="mobile-bar">
+    <button class="btn btn-ghost" style="font-size:.8rem" id="p2-back-m">${ARROW_L} Back</button>
+    <div style="display:flex;align-items:center;gap:.3rem">${PKG_SVG}<span style="font-size:.7rem;color:var(--muted)">${sel.size} items</span></div>
+    <button class="btn btn-primary" style="font-size:.8rem;padding:.5rem .8rem" ${sel.size===0?'disabled':''} id="p2-continue-m">See Your Box ${ARROW_R}</button>
   </div>
   <div class="mobile-spacer"></div>`;
 
@@ -802,19 +652,15 @@ function renderPage3(){
       if(state.selectedItems.has(id)){
         state.selectedItems.delete(id);
         c.classList.remove('selected');
-        const tick = c.querySelector('.item-check');
-        if(tick) tick.remove();
+        const tick = c.querySelector('.item-check'); if(tick) tick.remove();
         c.querySelector('.item-badge').className = 'item-badge add';
         c.querySelector('.item-badge').innerHTML = 'Tap to add';
       } else {
         state.selectedItems.add(id);
         c.classList.add('selected');
-        const tick = document.createElement('div');
-        tick.className = 'item-check';
-        tick.innerHTML = CHECK_SVG;
-        c.appendChild(tick);
+        const tick = document.createElement('div'); tick.className='item-check'; tick.innerHTML=CHECK_SVG; c.appendChild(tick);
         c.querySelector('.item-badge').className = 'item-badge added';
-        c.querySelector('.item-badge').innerHTML = CHECK_SVG + ' Added';
+        c.querySelector('.item-badge').innerHTML = CHECK_SVG+' Added';
       }
       updateSelectionUI();
       updateSidebar();
@@ -828,77 +674,95 @@ function renderPage3(){
     b.innerHTML = loreEl.classList.contains('hidden') ? BOOK_SVG+' Read the story' : BOOK_SVG+' Hide story';
   }));
 
-  const goP4 = ()=>{ if(state.selectedItems.size > 0){ renderPage4(); showStep(3); } };
-  const goP2 = ()=> showStep(1);
-  if($('#p3-continue-d')) $('#p3-continue-d').addEventListener('click', goP4);
-  if($('#p3-back-d')) $('#p3-back-d').addEventListener('click', goP2);
-  $('#p3-continue-m').addEventListener('click', goP4);
-  $('#p3-back-m').addEventListener('click', goP2);
+  const goP3 = ()=>{ if(state.selectedItems.size > 0){ renderPage3(); showStep(2); } };
+  const goP1 = ()=> showStep(0);
+  if($('#p2-continue-d')) $('#p2-continue-d').addEventListener('click', goP3);
+  if($('#p2-back-d'))     $('#p2-back-d').addEventListener('click', goP1);
+  $('#p2-continue-m').addEventListener('click', goP3);
+  $('#p2-back-m').addEventListener('click', goP1);
   updateSidebar();
 }
 
 function updateSelectionUI(){
   const count = state.selectedItems.size;
-  const mobileCount = document.querySelector('[data-testid="mobile-bottom-bar"] span');
-  if(mobileCount) mobileCount.innerText = count + " items";
-  const btn1 = document.getElementById('p3-continue-d');
-  const btn2 = document.getElementById('p3-continue-m');
-  if(btn1) btn1.disabled = count === 0;
-  if(btn2) btn2.disabled = count === 0;
+  const mobileSpan = document.querySelector('.mobile-bar span');
+  if(mobileSpan) mobileSpan.innerText = count+' items';
+  const b1 = document.getElementById('p2-continue-d');
+  const b2 = document.getElementById('p2-continue-m');
+  if(b1) b1.disabled = count===0;
+  if(b2) b2.disabled = count===0;
 }
 
 function updateSidebar(){
-  const page3 = document.getElementById('page3');
-  if(!page3) return;
+  const page2 = document.getElementById('page2');
+  if(!page2) return;
   const items = state.config.items;
   const selected = Array.from(state.selectedItems);
-  const listContainer = page3.querySelector('.sidebar-list');
-  const countText = page3.querySelector('#sidebar-count');
-  if(countText) countText.innerText = selected.length + " items selected";
+  const countText = page2.querySelector('#sidebar-count');
+  if(countText) countText.innerText = selected.length+' items selected';
+  const listContainer = page2.querySelector('.sidebar-list');
   if(!listContainer) return;
-  if(selected.length === 0){
-    listContainer.innerHTML = `<p style="font-size:.7rem;color:var(--muted);text-align:center;padding:.5rem 0">Select items to build your box</p>`;
-    return;
-  }
-  const itemMap = Object.fromEntries(items.map(it => [it.id, it]));
-  listContainer.innerHTML = selected.map(id => {
-    const it = itemMap[id];
-    if(!it) return '';
-    return `<div class="sidebar-list-item">${CHECK_SVG} <span>${it.name}</span></div>`;
-  }).join('');
+  if(selected.length===0){ listContainer.innerHTML=`<p style="font-size:.7rem;color:var(--muted);text-align:center;padding:.5rem 0">Select items to build your box</p>`; return; }
+  const itemMap = Object.fromEntries(items.map(it=>[it.id,it]));
+  listContainer.innerHTML = selected.map(id=>{ const it=itemMap[id]; if(!it) return ''; return `<div class="sidebar-list-item">${CHECK_SVG} <span>${it.name}</span></div>`; }).join('');
 }
 
-// ══════════════════════════════
-//   PAGE 4 — WTP + Submit
-// ══════════════════════════════
-// ══════════════════════════════
-//   PAGE 4 — WTP + Submit
-// ══════════════════════════════
-function renderPage4(){
-  const el = $('#page4');
+/* ══════════════════════════════════════════════
+   PAGE 3 — WTP + About You + Submit + Reveal
+══════════════════════════════════════════════ */
+function renderPage3(){
+  const el = $('#page3');
   const items = state.config.items;
-  const sel = state.selectedItems;
-  const selectedArray = Array.from(state.selectedItems).map(id => String(id));
-  const itemMap = Object.fromEntries(items.map(it => [String(it.id), it]));
-  const selList = selectedArray.map(id => itemMap[id]).filter(Boolean);
+  const selectedArray = Array.from(state.selectedItems).map(id=>String(id));
+  const itemMap = Object.fromEntries(items.map(it=>[String(it.id),it]));
+  const selList = selectedArray.map(id=>itemMap[id]).filter(Boolean);
+  const d = state.page3;
 
+  // ── Personality reveal screen ──
   if(state.result){
+    const pKey = computePersonality(state.page1);
+    const p = PERSONALITIES[pKey];
     el.innerHTML = `
-    <div style="max-width:28rem;margin:0 auto" data-testid="confirmation-screen">
-      <div class="success-ring"><div class="success-ring-inner"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--maroon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
-      <div class="card" style="margin-top:1.2rem;text-align:center">
-        <div class="badge" style="margin-bottom:1rem">${CHECK_SVG} Submitted Successfully</div>
-        <div class="card-title" style="font-size:1.2rem">Your gift box preferences are saved!</div>
-        ${state.config.deity_blessing ? `<p class="h-font" style="font-size:1.1rem;color:var(--saffron);margin-top:.5rem;font-weight:600">${state.config.deity_blessing}</p>` : ''}
-        <div style="background:var(--parchment);border-radius:var(--radius);padding:1rem;margin:1rem 0">
+    <div style="max-width:32rem;margin:0 auto">
+      <div class="card">
+        <div style="text-align:center;margin-bottom:1rem">
+          <div class="badge">${CHECK_SVG_DARK} Submitted Successfully</div>
+        </div>
+
+        <div class="personality-card" style="background:var(--parchment);border:1px solid rgba(234,179,8,.2);margin-bottom:1.2rem">
+          <span class="personality-icon">${p.icon}</span>
+          <div class="personality-type">${p.type}</div>
+          <div class="personality-subtitle">${p.subtitle}</div>
+          <div class="personality-desc">${p.desc}</div>
+          <div class="trait-bars" style="margin-top:1.2rem">
+            ${Object.entries(p.traits).map(([label, pct])=>`
+              <div class="trait-row">
+                <div class="trait-label"><span>${label}</span><span>${pct}%</span></div>
+                <div class="trait-bar-bg"><div class="trait-bar-fill" style="width:0" data-target="${pct}"></div></div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div style="background:var(--parchment);border-radius:var(--radius);padding:1rem;margin-bottom:1.2rem">
           <p style="font-size:.7rem;color:var(--muted);margin-bottom:.5rem">Your selected items (${state.result.item_count})</p>
-          <div style="display:flex;flex-wrap:wrap;gap:.3rem;justify-content:center">
+          <div style="display:flex;flex-wrap:wrap;gap:.3rem">
             ${state.result.selected_items.split(', ').map(n=>`<span class="badge" style="font-size:.65rem">${n}</span>`).join('')}
           </div>
         </div>
-        <button class="btn btn-outline" style="margin-top:1rem" id="start-over">↺ Build Another Box</button>
+
+        <button class="btn btn-outline" style="width:100%" id="start-over">↺ Build Another Box</button>
       </div>
     </div>`;
+
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        $$('.trait-bar-fill', el).forEach(bar=>{
+          bar.style.width = bar.dataset.target + '%';
+        });
+      }, 200);
+    });
+
     $('#start-over').addEventListener('click', ()=>{
       state.step=0; state.result=null; state.selectedItems=new Set(); render();
     });
@@ -910,119 +774,124 @@ function renderPage4(){
     <div class="card">
       <div style="text-align:center;margin-bottom:1.2rem">
         <div class="card-title" style="font-size:1.3rem">Your gift box is ready</div>
-        <p class="card-desc">Review your selections and tell us what you think</p>
+        <p class="card-desc">Review your selections and answer a few final questions</p>
       </div>
 
       ${state.images?.product_images ? `
         <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem">
-          ${Object.values(state.images.product_images).map(img => `
-            <img src="${img}" style="width:300px;height:180px;object-fit:cover;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)">
-          `).join('')}
+          ${Object.values(state.images.product_images).map(img=>`<img src="${img}" style="width:300px;height:180px;object-fit:cover;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.1)">`).join('')}
         </div>
       ` : ''}
 
       <div style="background:var(--parchment);border-radius:var(--radius);padding:1rem 1.2rem;margin-bottom:1.5rem">
         <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem">
           ${PKG_SVG}
-          <span style="font-size:.85rem;font-weight:700">Your Box (${selList.length || sel.size} items)</span>
+          <span style="font-size:.85rem;font-weight:700">Your Box (${selList.length} items)</span>
         </div>
         <div class="wtp-items">
           ${selList.map(it=>`
             <div class="wtp-chip">
-              ${it.image ? `<img src="${it.image}" style="width:28px;height:28px;object-fit:contain;">` : `<span class="emoji">${it.emoji||'🎁'}</span>`}
+              ${it.image ? `<img src="${it.image}" style="width:28px;height:28px;object-fit:contain;">` : `<span>${it.emoji||'🎁'}</span>`}
               <span>${it.name}</span>
             </div>
           `).join('')}
         </div>
       </div>
 
-      <form id="form4">
-        <div style="background:rgba(92,24,16,.02);border:1px solid rgba(92,24,16,.08);border-radius:var(--radius);padding:1rem 1.2rem;display:flex;flex-direction:column;gap:1.2rem">
+      <form id="form3">
 
+        <div style="background:rgba(92,24,16,.02);border:1px solid rgba(92,24,16,.08);border-radius:var(--radius);padding:1rem 1.2rem;display:flex;flex-direction:column;gap:1.2rem;margin-bottom:1.5rem">
           <div class="form-group">
-            <label>If all items were to be selected, what do you think this box should cost? <span class="req">*</span></label>
+            <label>If all items were selected, what do you think this box should cost? <span class="req">*</span></label>
             <div class="price-input-wrap">
               <span class="rupee">₹</span>
-              <input class="form-input" type="number" id="f-price1" value="${state.page4.perceived_price}" placeholder="0" min="0">
+              <input class="form-input" type="number" id="f-price1" value="${d.perceived_price}" placeholder="0" min="0">
             </div>
           </div>
-
           <div class="form-group">
-            <label>If the box was authorised by Ayodhya's Ram Temple, with all items selected, how much would you be willing to pay? <span class="req">*</span></label>
+            <label>If authorised by Ayodhya's Ram Temple, how much would you be willing to pay? <span class="req">*</span></label>
             <div class="price-input-wrap">
               <span class="rupee">₹</span>
-              <input class="form-input" type="number" id="f-price2" value="${state.page4.temple_vetted_price}" placeholder="0" min="0">
+              <input class="form-input" type="number" id="f-price2" value="${d.temple_vetted_price}" placeholder="0" min="0">
             </div>
           </div>
-
           <div class="form-group">
             <label>Any other item, beyond the suggestions, that you wish to add? <span class="req">*</span></label>
-            <input class="form-input" type="text" id="f-other-item" value="${state.page4.other_item_suggestion || ''}" placeholder="e.g. Tulsi mala, Panchamrit kit…">
+            <input class="form-input" type="text" id="f-other-item" value="${d.other_item_suggestion}" placeholder="e.g. Tulsi mala, Panchamrit kit… or type 'None'">
           </div>
-
         </div>
 
-        <div style="display:flex;justify-content:space-between;margin-top:1.5rem">
-          <button type="button" class="btn btn-ghost" id="p4-back">${ARROW_L} Back</button>
-          <button type="submit" class="btn btn-primary" data-testid="page4-submit-button">
-            ${state.submitting ? 'Saving...' : 'Submit'} ${SEND_SVG}
-          </button>
+        <hr class="section-divider" style="margin:0 0 1.2rem">
+        <div class="section-label">A little about you</div>
+        <div class="grid-2" style="margin-bottom:1.5rem">
+          <div class="form-group">
+            <label>Age</label>
+            <input class="form-input" type="number" min="1" max="120" id="f-age" value="${d.age}" placeholder="Your age">
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select class="form-select" id="f-gender">
+              <option value="">Select gender</option>
+              <option ${d.gender==='Male'?'selected':''}>Male</option>
+              <option ${d.gender==='Female'?'selected':''}>Female</option>
+              <option ${d.gender==='Other'?'selected':''}>Other</option>
+              <option ${d.gender==='Prefer not to say'?'selected':''}>Prefer not to say</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column:1/-1">
+            <label>Occupation</label>
+            <input class="form-input" id="f-occupation" value="${d.occupation}" placeholder="What do you do?">
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:1rem">
+          <button type="button" class="btn btn-ghost" id="p3-back">${ARROW_L} Back</button>
+          <button type="submit" class="btn btn-primary">${state.submitting ? 'Saving...' : 'Submit & Reveal My Type'} ${SEND_SVG}</button>
         </div>
       </form>
     </div>
   </div>`;
 
-  $('#p4-back').addEventListener('click', ()=> showStep(2));
+  $('#p3-back').addEventListener('click', ()=> showStep(1));
 
-  $('#form4').addEventListener('submit', async e=>{
+  $('#form3').addEventListener('submit', async e=>{
     e.preventDefault();
     if(state.submitting) return;
 
-    state.page4.perceived_price      = $('#f-price1').value.trim();
-    state.page4.temple_vetted_price  = $('#f-price2').value.trim();
-    state.page4.other_item_suggestion = $('#f-other-item').value.trim();
+    state.page3.perceived_price       = $('#f-price1').value.trim();
+    state.page3.temple_vetted_price   = $('#f-price2').value.trim();
+    state.page3.other_item_suggestion = $('#f-other-item').value.trim();
+    state.page3.age                   = $('#f-age').value.trim();
+    state.page3.gender                = $('#f-gender').value;
+    state.page3.occupation            = $('#f-occupation').value.trim();
 
-    // Validate — stop at first missing field
-    if(!state.page4.perceived_price){
-      $('#f-price1').focus();
-      alert("Please enter what you think this box should cost");
-      return;
-    }
-    if(!state.page4.temple_vetted_price){
-      $('#f-price2').focus();
-      alert("Please enter what you would pay for a temple-vetted version");
-      return;
-    }
-    if(!state.page4.other_item_suggestion){
-      $('#f-other-item').focus();
-      alert("Please suggest any other item you would like to add (or type 'None' if you have no suggestions)");
-      return;
-    }
+    if(!state.page3.perceived_price){ $('#f-price1').focus(); alert("Please enter what you think this box should cost"); return; }
+    if(!state.page3.temple_vetted_price){ $('#f-price2').focus(); alert("Please enter what you'd pay for a temple-vetted version"); return; }
+    if(!state.page3.other_item_suggestion){ $('#f-other-item').focus(); alert("Please suggest an item (or type 'None')"); return; }
 
     state.submitting = true;
-    const submitBtn = document.querySelector('#form4 button[type="submit"]');
+    const submitBtn = document.querySelector('#form3 button[type="submit"]');
     if(submitBtn){ submitBtn.innerText = 'Saving...'; submitBtn.disabled = true; }
 
     try{
       const res = await fetch(getBackendUrl() + '/api/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
           page1: state.page1,
-          page2: state.page2,
           selected_item_ids: Array.from(state.selectedItems),
-          page4: state.page4
+          page3: state.page3,
         })
       });
       const text = await res.text();
       let data;
-      try{ data = JSON.parse(text); } catch(e){ throw new Error('Backend is not returning valid JSON'); }
+      try{ data = JSON.parse(text); } catch(err){ throw new Error('Backend returned invalid JSON'); }
       if(!res.ok) throw new Error(data.error || 'Submission failed');
       state.result = data;
-      renderPage4();
+      renderPage3();
     } catch(err){
       alert(err.message);
-      if(submitBtn){ submitBtn.innerText = 'Submit'; submitBtn.disabled = false; }
+      if(submitBtn){ submitBtn.innerText = 'Submit & Reveal My Type'; submitBtn.disabled = false; }
     } finally {
       state.submitting = false;
     }
