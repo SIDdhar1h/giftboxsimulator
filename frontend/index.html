@@ -182,6 +182,13 @@ input,select{font-family:inherit}
 /* ─── FOOTER ─── */
 .app-footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;text-align:center;font-size:.7rem;color:var(--muted)}
 
+/* ─── SUBMIT PROGRESS BAR ─── */
+.submit-progress-wrap{margin:.75rem 0 .25rem;display:none}
+.submit-progress-wrap.visible{display:block}
+.submit-progress-track{height:4px;background:#e8ddd0;border-radius:2rem;overflow:hidden;margin-bottom:.45rem}
+.submit-progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--copper),var(--saffron));border-radius:2rem;transition:width .4s ease}
+.submit-progress-label{font-size:.7rem;color:var(--muted);text-align:center}
+
 /* ─── ANIM ─── */
 .fade-in{animation:fadeIn .35s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -443,7 +450,7 @@ function renderPage1(){
       <div style="margin-bottom:1.4rem">
         <label class="q-label">Who do you usually gift? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
         <div class="chip-group" id="chips-recipients">
-          ${['Colleagues / Business associates','Elders / Gurus','Family members','Friends','Neighbors','Spouse'].map(o=>multiChip(o,o,d.gift_recipients)).join('')}
+          ${['Colleagues / Business associates','Elders / Gurus','Family members','Friends','Neighbors','Spouses'].map(o=>multiChip(o,o,d.gift_recipients)).join('')}
         </div>
       </div>
 
@@ -825,11 +832,11 @@ function renderPage3(){
         <div class="section-label">A little about you</div>
         <div class="grid-2" style="margin-bottom:1.5rem">
           <div class="form-group">
-            <label>Age</label>
+            <label>Age <span class="req">*</span></label>
             <input class="form-input" type="number" min="1" max="120" id="f-age" value="${d.age}" placeholder="Your age">
           </div>
           <div class="form-group">
-            <label>Gender</label>
+            <label>Gender <span class="req">*</span></label>
             <select class="form-select" id="f-gender">
               <option value="">Select gender</option>
               <option ${d.gender==='Male'?'selected':''}>Male</option>
@@ -839,11 +846,15 @@ function renderPage3(){
             </select>
           </div>
           <div class="form-group" style="grid-column:1/-1">
-            <label>Occupation</label>
+            <label>Occupation <span class="req">*</span></label>
             <input class="form-input" id="f-occupation" value="${d.occupation}" placeholder="What do you do?">
           </div>
         </div>
 
+        <div class="submit-progress-wrap" id="submit-progress-wrap">
+          <div class="submit-progress-track"><div class="submit-progress-fill" id="submit-progress-fill"></div></div>
+          <div class="submit-progress-label" id="submit-progress-label">Preparing…</div>
+        </div>
         <div style="display:flex;justify-content:space-between;margin-top:1rem">
           <button type="button" class="btn btn-ghost" id="p3-back">${ARROW_L} Back</button>
           <button type="submit" class="btn btn-primary">${state.submitting ? 'Saving...' : 'Submit & Reveal My Type'} ${SEND_SVG}</button>
@@ -868,13 +879,30 @@ function renderPage3(){
     if(!state.page3.perceived_price){ $('#f-price1').focus(); alert("Please enter what you think this box should cost"); return; }
     if(!state.page3.temple_vetted_price){ $('#f-price2').focus(); alert("Please enter what you'd pay for a temple-vetted version"); return; }
     if(!state.page3.other_item_suggestion){ $('#f-other-item').focus(); alert("Please suggest an item (or type 'None')"); return; }
+    if(!state.page3.age){ $('#f-age').focus(); alert("Please enter your age"); return; }
+    if(!state.page3.gender){ $('#f-gender').focus(); alert("Please select your gender"); return; }
+    if(!state.page3.occupation){ $('#f-occupation').focus(); alert("Please enter your occupation"); return; }
 
     state.submitting = true;
     const submitBtn = document.querySelector('#form3 button[type="submit"]');
     if(submitBtn){ submitBtn.innerText = 'Saving...'; submitBtn.disabled = true; }
 
+    // ── SSE-driven submit with progress bar ──
+    const progressWrap  = document.getElementById('submit-progress-wrap');
+    const progressFill  = document.getElementById('submit-progress-fill');
+    const progressLabel = document.getElementById('submit-progress-label');
+    const STEP_PCT = {1: 20, 2: 55, 3: 80, 4: 100};
+
+    function setProgress(pct, label){
+      if(progressFill)  progressFill.style.width = pct + '%';
+      if(progressLabel) progressLabel.textContent = label;
+    }
+
+    if(progressWrap) progressWrap.classList.add('visible');
+    setProgress(5, 'Connecting…');
+
     try{
-      const res = await fetch(getBackendUrl() + '/api/submit', {
+      const res = await fetch(getBackendUrl() + '/api/submit-stream', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({
@@ -883,13 +911,41 @@ function renderPage3(){
           page3: state.page3,
         })
       });
-      const text = await res.text();
-      let data;
-      try{ data = JSON.parse(text); } catch(err){ throw new Error('Backend returned invalid JSON'); }
-      if(!res.ok) throw new Error(data.error || 'Submission failed');
-      state.result = data;
-      renderPage3();
+
+      if(!res.ok){
+        const errData = await res.json().catch(()=>({}));
+        throw new Error(errData.error || 'Submission failed');
+      }
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let   buffer  = '';
+
+      while(true){
+        const {value, done} = await reader.read();
+        if(done) break;
+        buffer += decoder.decode(value, {stream: true});
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+        for(const line of lines){
+          if(!line.startsWith('data: ')) continue;
+          let event;
+          try{ event = JSON.parse(line.slice(6)); } catch{ continue; }
+
+          if(event.error){ throw new Error(event.error); }
+
+          const pct   = STEP_PCT[event.step] || 10;
+          const label = event.label || '';
+          setProgress(pct, label);
+
+          if(event.done && event.result){
+            state.result = event.result;
+            setTimeout(()=>{ renderPage3(); }, 350);
+          }
+        }
+      }
     } catch(err){
+      if(progressWrap) progressWrap.classList.remove('visible');
       alert(err.message);
       if(submitBtn){ submitBtn.innerText = 'Submit & Reveal My Type'; submitBtn.disabled = false; }
     } finally {
