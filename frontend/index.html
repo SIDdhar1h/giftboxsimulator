@@ -234,6 +234,41 @@ input,select{font-family:inherit}
 (function(){
 "use strict";
 
+/* ─── SUBMISSION LOCK CHECK ─── */
+if (localStorage.getItem("formSubmitted") === "true") {
+  document.body.innerHTML = `
+    <div style="
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Figtree',system-ui,sans-serif;
+      background:#faf6f0;
+      padding:2rem;
+    ">
+      <div style="
+        text-align:center;
+        max-width:26rem;
+        background:#fff;
+        border:1px solid #d6c8b8;
+        border-radius:0.75rem;
+        box-shadow:0 8px 24px rgba(92,24,16,.08);
+        padding:2.5rem 2rem;
+      ">
+        <div style="font-size:3rem;margin-bottom:1rem">🙏</div>
+        <h2 style="font-family:'EB Garamond',Georgia,serif;font-size:1.5rem;font-weight:600;color:#5c1810;margin-bottom:.5rem">
+          You've already completed this experience
+        </h2>
+        <p style="color:#a89480;font-size:.85rem;line-height:1.6">
+          Thank you for your responses. Your gifting personality and box selections have been recorded.
+        </p>
+      </div>
+    </div>
+  `;
+  // Stop all further script execution
+  throw new Error("already_submitted");
+}
+
 /* ─── STATE ─── */
 const state = {
   step: 0,
@@ -247,7 +282,7 @@ const state = {
     considered_devotional: '',
     decision_logic: [],
     prayer_frequency: [],
-    ritual_teacher: [],       // ← now an array (multi-select)
+    ritual_teacher: [],
     ritual_strictness: 0,
     authenticity_importance: 0,
   },
@@ -324,7 +359,6 @@ function computePersonality(p1) {
   if (p1.prayer_frequency.includes('On festivals'))score += 3;
   if (p1.prayer_frequency.includes('Rarely'))      score -= 5;
   if (p1.prayer_frequency.includes('Never'))       score -= 10;
-  // ritual_teacher is now an array — check if any traditional source is included
   const teacherArr = Array.isArray(p1.ritual_teacher) ? p1.ritual_teacher : [p1.ritual_teacher];
   if (teacherArr.includes('Parents / Grandparents') || teacherArr.includes('Priest / Pandit')) score += 10;
   if (teacherArr.includes('YouTube / Social media') || teacherArr.includes('Self-taught'))     score -= 5;
@@ -504,7 +538,6 @@ function renderPage1(){
         </div>
       </div>
 
-      <!-- ── Who taught you — now MULTI-SELECT chips ── -->
       <div style="margin-bottom:1.4rem">
         <label class="q-label">Who taught you your rituals? <span class="req">*</span> <span style="font-size:.65rem;color:var(--muted);font-weight:400">(select all that apply)</span></label>
         <div class="chip-group" id="chips-teacher">
@@ -530,7 +563,6 @@ function renderPage1(){
     </form>
   </div>`;
 
-  // ── Checkbox occasions ──
   $$('.cb-item', el).forEach(c => c.addEventListener('click', ()=>{
     const v = c.dataset.val, arr = state.page1.gift_occasions, idx = arr.indexOf(v);
     if(idx >= 0) arr.splice(idx,1); else arr.push(v);
@@ -538,7 +570,6 @@ function renderPage1(){
     c.querySelector('.cb-box').innerHTML = c.classList.contains('checked') ? CHECK_SVG : '';
   }));
 
-  // ── Multi-select chip groups ──
   function bindChips(containerId, stateKey){
     $$('.chip', $('#'+containerId, el)).forEach(chip => {
       chip.addEventListener('click', ()=>{
@@ -552,9 +583,8 @@ function renderPage1(){
   bindChips('chips-channel',    'shopping_channel');
   bindChips('chips-decision',   'decision_logic');
   bindChips('chips-prayer',     'prayer_frequency');
-  bindChips('chips-teacher',    'ritual_teacher');   // ← new
+  bindChips('chips-teacher',    'ritual_teacher');
 
-  // ── Single-select selector grids ──
   $$('[data-group]', el).forEach(grid => {
     if(!grid.classList.contains('selector-grid')) return;
     $$('.selector-card', grid).forEach(card => {
@@ -567,7 +597,6 @@ function renderPage1(){
     });
   });
 
-  // ── Likert ──
   $$('.likert-btn', el).forEach(b => b.addEventListener('click', ()=>{
     const n = parseInt(b.dataset.n);
     const group = b.dataset.group;
@@ -579,7 +608,6 @@ function renderPage1(){
     });
   }));
 
-  // ── Submit with full validation ──
   $('#form1').addEventListener('submit', e => {
     e.preventDefault();
 
@@ -609,7 +637,7 @@ function renderPage2(){
   el.innerHTML = `
   <div style="text-align:center;margin-bottom:1.2rem">
     <h2 class="h-font" style="font-size:clamp(1.2rem,3vw,1.5rem);font-weight:600;color:var(--maroon)">Build your own gift box</h2>
-    <p style="font-size:.8rem;color:var(--muted);margin-top:.2rem">Do go through the list and tap as many items as you feel to add them to your ${state.config.occasion} gift box for ${state.config.deity}</p>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:.2rem">Check all and Tap all items that you like, to add them to your ${state.config.occasion} gift box for ${state.config.deity}</p>
   </div>
   <div class="items-layout">
     <div class="items-grid">
@@ -758,7 +786,6 @@ function renderPage3(){
           </div>
         </div>
 
-        <button class="btn btn-outline" style="width:100%" id="start-over">↺ Build Another Box</button>
       </div>
     </div>`;
 
@@ -768,10 +795,6 @@ function renderPage3(){
           bar.style.width = bar.dataset.target + '%';
         });
       }, 200);
-    });
-
-    $('#start-over').addEventListener('click', ()=>{
-      state.step=0; state.result=null; state.selectedItems=new Set(); render();
     });
     return;
   }
@@ -887,7 +910,6 @@ function renderPage3(){
     const submitBtn = document.querySelector('#form3 button[type="submit"]');
     if(submitBtn){ submitBtn.innerText = 'Saving...'; submitBtn.disabled = true; }
 
-    // ── SSE-driven submit with progress bar ──
     const progressWrap  = document.getElementById('submit-progress-wrap');
     const progressFill  = document.getElementById('submit-progress-fill');
     const progressLabel = document.getElementById('submit-progress-label');
@@ -939,6 +961,8 @@ function renderPage3(){
           setProgress(pct, label);
 
           if(event.done && event.result){
+            // ── Set the submission lock ──
+            localStorage.setItem("formSubmitted", "true");
             state.result = event.result;
             setTimeout(()=>{ renderPage3(); }, 350);
           }
