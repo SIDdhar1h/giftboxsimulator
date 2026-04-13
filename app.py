@@ -56,8 +56,8 @@ def get_selected_names(selected_ids, items):
 
 def compute_personality(p1: dict) -> str:
     score = 0
-    score += (p1.get("ritual_strictness") or 0) * 12
-    score += (p1.get("authenticity_importance") or 0) * 10
+    score += (p1.get("ritual_strictness") or 0) * 5
+    score += (p1.get("authenticity_importance") or 0) * 4
 
     decision_logic = p1.get("decision_logic") or []
     if isinstance(decision_logic, str):
@@ -69,8 +69,8 @@ def compute_personality(p1: dict) -> str:
     prayer = p1.get("prayer_frequency") or []
     if isinstance(prayer, str):
         prayer = [x.strip() for x in prayer.split(",")]
-    if "Twice a day"  in prayer: score += 20
-    if "Daily"        in prayer: score += 14
+    if "Twice a day"  in prayer: score += 30
+    if "Daily"        in prayer: score += 20
     if "Weekly"       in prayer: score += 8
     if "On festivals" in prayer: score += 3
     if "Rarely"       in prayer: score -= 5
