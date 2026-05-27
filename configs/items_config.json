@@ -1,115 +1,106 @@
 {
-  "occasion": "Diwali",
-  "deity": "Lord Ram",
-  "deity_blessing": "Jai Shri Ram",
+  "occasion": "Janmashtami",
+  "deity": "Lord Krishna",
+  "deity_blessing": "Hare Krishna",
   "items": [
     {
-      "id": "metal_plate",
-      "name": "Ram Sita Wall Plate",
-      "price": 155,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Ram_Wall_Plate_dk8t6b.png",
-      "emoji": "🥏",
-      "description": "Premium brass wall plate for hanging",
-      "lore": "Images of Ram and Sita are kept in homes as a reminder of ideal dharma, devotion, and balance in relationships. Displaying them in living spaces is a way of keeping those values present in daily life."
-    },
-    {
-      "id": "jap_mala_108",
-      "name": "108 Jaap Metal Flower Plate",
-      "price": 94,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775820207/108_jap_plate_vodaa9.png",
-      "emoji": "📿",
-      "description": "Sacred 108 bead japa mala for prayer",
-      "lore": "Each hole you mark while chanting serves as a physical step alongside Rama. Moving through all 108 holes represents completing the arduous journey from Ayodhya to the battlefields of Lanka and his eventual return."
-    },
-    {
-      "id": "cone_holder",
-      "name": "Dhoop Cone Holder",
-      "price": 55,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775819493/dhoop_x5ogto.webp",
-      "emoji": "🔮",
-      "description": "Ornate wood incense cone holder",
-      "lore": "Dhoop cones trace their origin to the yagnas of ancient Ayodhya. The rising smoke symbolizes prayers ascending to the heavens, carrying devotion from earth to the divine court."
-    },
-    {
-      "id": "ram_booklet",
-      "name": "Ram Naam Booklet",
-      "price": 12,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/ram_booklet_itadzr.png",
-      "emoji": "📖",
-      "description": "Devotional booklet for Lord Ram",
-      "lore": "Writing or reciting Ram's name is a long-standing devotional practice. Small booklets like this help devotees stay connected to that practice in everyday life."
-    },
-    {
-      "id": "margdarshan",
-      "name": "Margdarshan Cards",
-      "price": 38,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Margdarshan_Cards_gstdvc.png",
-      "emoji": "🪵",
-      "description": "Affirmation cards inspired from Ram's Margdarshan",
-      "lore": "Inspired by values associated with Ram — such as duty, patience, and righteousness — these cards are meant to offer simple reflections and guidance for daily life."
-    },
-    {
-      "id": "tulsi",
-      "name": "Tulsi Mala Bracelet",
-      "price": 25,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/Bracelet_tc0qab.png",
-      "emoji": "🌿",
-      "description": "Ram's favourite Tulsi Bracelet",
-      "lore": "Tulsi is considered a manifestation of Goddess Lakshmi. In the Ramayana, Tulsi leaves were an essential offering during Ram's coronation ceremony in Ayodhya."
-    },
-    {
-      "id": "sarayu",
-      "name": "Sarayu Water Spray",
-      "price": 35,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747658/Sarayu_Jal_Spray_jykf6z.png",
-      "emoji": "🌊",
-      "description": "Sacred Sarayu river at Ayodhya's boundary",
-      "lore": "The Sarayu river flows through Ayodhya, where Lord Ram spent his earthly life. Its waters are believed to carry the blessings of millennia of devotion and are used in the most sacred rituals."
-    },
-    {
-      "id": "chandan",
-      "name": "Ram's Favourite Chandan",
-      "price": 22,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775820207/chandan_hi_res_fqlrq0.png",
-      "emoji": "🪨",
-      "description": "Pure sandalwood paste for tilak",
-      "lore": "Chandan tilak on the forehead represents the third eye of wisdom. Lord Ram was always adorned with a sandalwood mark, symbolizing purity and the awakened mind."
-    },
-    {
-      "id": "ayodhya_diya",
-      "name": "Ayodhya Mitti Diya",
-      "price": 26,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775748164/Ayodhya_diya_rsta9q.png",
+      "id": "gopi_chandan",
+      "name": "Gopi Chandan and Tilak",
+      "price": 32,
+      "image": "https://ik.imagekit.io/Mangaldeep/Krishna's%20Favourite%20Gopi%20Chandan%20and%20Tilak.png",
       "emoji": "🪔",
-      "description": "Diya from Ayodhya's soil",
-      "lore": "When Ram returned to Ayodhya after 14 years of exile, the entire city was lit with millions of diyas. This tradition became Diwali — the festival of lights. Each diya carries that homecoming joy."
+      "description": "Sacred Gopi Chandan for Vaishnav tilak",
+      "lore": "Gopi Chandan is considered sacred clay from Dwarka and is traditionally used by Krishna devotees for applying tilak. The tilak symbolizes surrender to Krishna and reminds devotees to live with devotion and humility."
     },
     {
-      "id": "magnet",
-      "name": "Ram Fridge Magnet",
-      "price": 30,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/ram_fridge_magnet_bsxd71.png",
-      "emoji": "🧲",
-      "description": "Decorative Ram fridge magnet",
-      "lore": "A miniature reminder of Ayodhya's Ram Mandir. Place it where you see it daily — a small anchor of faith in your everyday life."
+      "id": "hare_krishna_card",
+      "name": "Hare Krishna Chant Card",
+      "price": 18,
+      "image": "https://ik.imagekit.io/Mangaldeep/Hare%20Krishna%20Mantra%20Card.png",
+      "emoji": "📿",
+      "description": "Wallet-sized Maha Mantra chant card",
+      "lore": "The Hare Krishna Maha Mantra is regarded in ISKCON tradition as the simplest path to spiritual joy in Kali Yuga. Keeping the chant close serves as a reminder to reconnect with Krishna through naam jap anytime, anywhere."
     },
     {
-      "id": "hanuman_chalisa",
-      "name": "Hanuman Chalisa",
-      "price": 24,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775819373/hanuman_chalisa_1_aqnpkq.webp",
-      "emoji": "📜",
-      "description": "Pocket-sized Hanuman Chalisa book",
-      "lore": "The 40 verses composed by Tulsidas celebrate Hanuman — Ram's greatest devotee. Carrying the Hanuman Chalisa is believed to provide protection and courage in all endeavors."
+      "id": "radha_krishna_stand",
+      "name": "Krishna and Radha Acrylic Stand",
+      "price": 88,
+      "image": "https://ik.imagekit.io/Mangaldeep/Krishna%20and%20Radha%20Acrylic%20Desk%20Stand.png",
+      "emoji": "💙",
+      "description": "Decorative Radha Krishna acrylic display",
+      "lore": "Radha and Krishna together symbolize divine love, devotion, and spiritual union. Their playful leelas in Vrindavan continue to inspire bhakti traditions across generations."
     },
     {
-      "id": "dhoop",
-      "name": "Ayodhya Dhoop Sticks",
-      "price": 30,
-      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_auto,f_auto/v1775747657/Dhoop_Set_vrcx1w.png",
-      "emoji": "🌫️",
-      "description": "Dhoop with the fragrance of Ram Temple",
-      "lore": "Dhoop purifies the atmosphere and prepares the space for prayer. In ancient Ayodhya, specific blends were used during Ram's daily sandhya prayers at sunrise and sunset."
+      "id": "gita_cards",
+      "name": "Krishna Bhagavad Gita Cards",
+      "price": 38,
+      "image": "https://ik.imagekit.io/Mangaldeep/Krishna's%20Bhagavad%20Gita%20Margdarshan%20Cards.png",
+      "emoji": "🪷",
+      "description": "Pocket wisdom cards inspired by Bhagavad Gita",
+      "lore": "The Bhagavad Gita captures Krishna's timeless guidance on life, purpose, and inner peace. These cards present simple reflections that bring Krishna's teachings into everyday moments."
+    },
+    {
+      "id": "laddu_gopal",
+      "name": "Laddu Gopal Idol and Shringar Set",
+      "price": 133,
+      "image": "https://ik.imagekit.io/Mangaldeep/Laddu%20Gopal%20Idol%20with%20Sringar%20Set.png",
+      "emoji": "👶",
+      "description": "Laddu Gopal idol with decorative shringar",
+      "lore": "Laddu Gopal represents Krishna's joyful childhood form. Devotees lovingly care for Bal Gopal with clothes, bhog, and shringar as an expression of affection and seva."
+    },
+    {
+      "id": "makkhan_matki_diya",
+      "name": "Makkhan Matki Diya",
+      "price": 26,
+      "image": "https://ik.imagekit.io/Mangaldeep/Makhan%20Matki%20shaped%20Diya.png",
+      "emoji": "🪔",
+      "description": "Matki-style diya inspired by Krishna's makhan leela",
+      "lore": "Krishna's childhood stories are filled with playful butter-stealing leelas. The makkhan matki symbolizes innocence, joy, and the sweetness of devotion."
+    },
+    {
+      "id": "yamuna_water_spray",
+      "name": "Yamuna Water Spray",
+      "price": 45,
+      "image": "https://ik.imagekit.io/Mangaldeep/Yamuna%20Water%20Spray%20(2).png",
+      "emoji": "💧",
+      "description": "Sacred Yamuna jal spray inspired by Krishna's Vrindavan leelas",
+      "lore": "The Yamuna River holds deep significance in Krishna bhakti traditions and is closely associated with Krishna's childhood leelas in Vrindavan. This sacred water spray brings a refreshing sense of devotion, purity, and spiritual calm into everyday spaces."
+    },
+    {
+      "id": "krishna_metal_figurine",
+      "name": "Krishna Metal Figurine",
+      "price": 115,
+      "image": "https://ik.imagekit.io/Mangaldeep/Metal%20based%20Lord%20Krishna%20Figurine.png",
+      "emoji": "🎶",
+      "description": "Metal figurine of Krishna playing flute",
+      "lore": "Krishna's flute is believed to call souls toward divine love and bliss. The image of Krishna playing bansuri in Vrindavan represents peace, attraction, and spiritual harmony."
+    },
+    {
+      "id": "peacock_agarbatti_holder",
+      "name": "Peacock Feather Agarbatti Stand and Dhoop Holder",
+      "price": 55,
+      "image": "https://ik.imagekit.io/Mangaldeep/Peacock%20Shaped%20metal%20dhoop%20cone%20and%20agarbatti%20stand.png",
+      "emoji": "🦚",
+      "description": "Peacock feather incense and dhoop holder",
+      "lore": "The peacock feather is one of Krishna's most beloved symbols, representing beauty, grace, and divine playfulness. Incense offerings create a sacred atmosphere during prayer and meditation."
+    },
+    {
+      "id": "peacock_bookmark",
+      "name": "Peacock Feather Bookmark with Tassle",
+      "price": 62,
+      "image": "https://ik.imagekit.io/Mangaldeep/Metal%20Peacock%20Bookmark%20with%20thread%20tassle.png",
+      "emoji": "📖",
+      "description": "Elegant Krishna-inspired peacock feather bookmark",
+      "lore": "Peacock feathers are deeply associated with Krishna's crown and Vrindavan leelas. This bookmark brings a touch of devotion and beauty to daily reading and reflection."
+    },
+    {
+      "id": "tulsi_mala",
+      "name": "Tulsi Mala",
+      "price": 20,
+      "image": "https://ik.imagekit.io/Mangaldeep/Tulsi%20Mala.png",
+      "emoji": "🌿",
+      "description": "Sacred Tulsi mala for chanting and devotion",
+      "lore": "Tulsi is deeply revered in Krishna bhakti traditions and is considered especially dear to Lord Krishna. Chanting on a Tulsi mala is believed to purify the heart and deepen devotion."
     }
   ]
 }
