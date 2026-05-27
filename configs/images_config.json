@@ -26,9 +26,9 @@
     }
   ],
   "product_images": {
-    "box_open": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Back.png",
-    "box_closed": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Front.png",
-    "box_items_display": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Isometric.png"
+    "box_open": "https://ik.imagekit.io/Mangaldeep/KGB%20Box%20Iso",
+    "box_closed": "https://ik.imagekit.io/Mangaldeep/KGB%20Box%20front.png",
+    "box_items_display": "https://ik.imagekit.io/Mangaldeep/KGB%20Box%20Iso"
   },
   "hero_background": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Front.png"
 }
