@@ -1,34 +1,34 @@
 {
   "personalities": [
-  {
-    "id": "purist",
-    "label": "The Devoted",
-    "subtitle": "Rooted in scripture and tradition",
-    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Purist_ptlqgb.png"
-  },
-  {
-    "id": "traditional_ritualist",
-    "label": "The Ritualist",
-    "subtitle": "Every step has meaning",
-    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748725/Traditional_Ritualist_ddkzpp.png"
-  },
-  {
-    "id": "spiritual_seeker",
-    "label": "The Seeker",
-    "subtitle": "Finding meaning beyond ritual",
-    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748709/Spritual_Seeker_vnux46.png"
-  },
-  {
-    "id": "festive_devotee",
-    "label": "The Celebrant",
-    "subtitle": "Faith through celebration",
-    "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Festive_devotee_wccszl.png"
-  }
-],
+    {
+      "id": "purist",
+      "label": "The Devoted",
+      "subtitle": "Rooted in bhakti and seva",
+      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Purist_ptlqgb.png"
+    },
+    {
+      "id": "traditional_ritualist",
+      "label": "The Ritualist",
+      "subtitle": "Every ritual carries devotion",
+      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748725/Traditional_Ritualist_ddkzpp.png"
+    },
+    {
+      "id": "spiritual_seeker",
+      "label": "The Seeker",
+      "subtitle": "Finding Krishna through reflection",
+      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748709/Spritual_Seeker_vnux46.png"
+    },
+    {
+      "id": "festive_devotee",
+      "label": "The Celebrant",
+      "subtitle": "Celebrating Krishna Leela with joy",
+      "image": "https://res.cloudinary.com/dqxwjbcac/image/upload/w_400,q_100/v1775748592/Festive_devotee_wccszl.png"
+    }
+  ],
   "product_images": {
-    "box_open": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818388/box_items_jrcmm8.png",
-    "box_closed": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818386/box_close_kvntrx.png",
-    "box_items_display": "https://res.cloudinary.com/dqxwjbcac/image/upload/v1775818386/box_open_rygbeo.png"
+    "box_open": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Back.png",
+    "box_closed": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Front.png",
+    "box_items_display": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Isometric.png"
   },
-  "hero_background": "https://images.unsplash.com/photo-1590297827410-3c566433f427?crop=entropy&cs=srgb&fm=jpg&q=85"
+  "hero_background": "https://ik.imagekit.io/Mangaldeep/Krishna%20Giftbox%20Front.png"
 }
