@@ -9,7 +9,7 @@
       "price": 115,
       "image": "https://ik.imagekit.io/Mangaldeep/Metal%20based%20Lord%20Krishna%20Figurine.png",
       "emoji": "🎶",
-      "description": "Metal figurine of Krishna playing flute",
+      "description": "Metal figurine of Krishna playing the flute",
       "lore": "Krishna's flute is believed to call souls toward divine love and bliss. The image of Krishna playing bansuri in Vrindavan represents peace, attraction, and spiritual harmony."
     },
     {
@@ -32,7 +32,7 @@
     },
     {
       "id": "peacock_bookmark",
-      "name": "Peacock Feather Bookmark with Tassle",
+      "name": "Peacock Feather Bookmark with Tassel",
       "price": 62,
       "image": "https://ik.imagekit.io/Mangaldeep/Metal%20Peacock%20Bookmark%20with%20thread%20tassle.png",
       "emoji": "📖",
@@ -41,29 +41,29 @@
     },
     {
       "id": "braj_ki_raj",
-      "name": "Braj Ki Raj",
+      "name": "ISKCON Braj Ki Raj",
       "price": 35,
       "image": "https://ik.imagekit.io/Mangaldeep/Braj%20Ki%20Raj.png",
       "emoji": "🟤",
-      "description": "Sacred dust from Braj Bhoomi",
+      "description": "ISKCON-sourced sacred dust from Braj Bhoomi (Vrindavan)",
       "lore": "The sacred land of Braj is revered as the playground of Lord Krishna. Devotees cherish Braj Raj as a symbol of humility, devotion, and connection to Krishna's divine leelas in Vrindavan."
     },
     {
       "id": "tulsi_mala",
-      "name": "Tulsi Mala",
+      "name": "ISKCON Tulsi Mala",
       "price": 20,
       "image": "https://ik.imagekit.io/Mangaldeep/Tulsi%20Mala.png",
       "emoji": "🌿",
-      "description": "Sacred Tulsi mala for chanting and devotion",
+      "description": "ISKCON Tulsi mala for chanting, japa, and Krishna devotion",
       "lore": "Tulsi is deeply revered in Krishna bhakti traditions and is considered especially dear to Lord Krishna. Chanting on a Tulsi mala is believed to purify the heart and deepen devotion."
     },
     {
       "id": "cow_dung_cakes",
-      "name": "Gomata Cow Dung Cakes",
+      "name": "ISKCON Gomata Cow Dung Cakes",
       "price": 30,
       "image": "https://ik.imagekit.io/Mangaldeep/GomataCakes.png",
       "emoji": "🔥",
-      "description": "Natural cow dung cakes for havan and devotional rituals",
+      "description": "ISKCON-sourced Gomata cow dung cakes for havan, yajna, and devotional rituals",
       "lore": "Cow dung cakes have traditionally been used in Vedic yajnas and sacred rituals. They are regarded as pure and sattvic, helping create a spiritually uplifting atmosphere during worship."
     },
     {
@@ -72,25 +72,25 @@
       "price": 95,
       "image": "https://ik.imagekit.io/Mangaldeep/ISKCON%20Gaushala%20Ghee.png",
       "emoji": "🥣",
-      "description": "Traditional cow ghee sourced from ISKCON Gaushala",
+      "description": "ISKCON Gaushala cow ghee for bhog, diyas, and devotional offerings",
       "lore": "Pure cow ghee holds a special place in Vedic culture and devotional offerings. It is commonly used in diyas, yajnas, and bhog preparations offered to Lord Krishna."
     },
     {
       "id": "gita_cards",
-      "name": "Krishna Bhagavad Gita Cards",
+      "name": "ISKCON Bhagavad Gita Margdarshan Cards",
       "price": 38,
       "image": "https://ik.imagekit.io/Mangaldeep/Krishna's%20Bhagavad%20Gita%20Margdarshan%20Cards.png",
       "emoji": "🪷",
-      "description": "Pocket wisdom cards inspired by Bhagavad Gita",
+      "description": "ISKCON Bhagavad Gita wisdom cards inspired by Krishna's teachings",
       "lore": "The Bhagavad Gita captures Krishna's timeless guidance on life, purpose, and inner peace. These cards present simple reflections that bring Krishna's teachings into everyday moments."
     },
     {
       "id": "yamuna_water_spray",
-      "name": "Yamuna Water Spray",
+      "name": "ISKCON Yamuna Water Spray",
       "price": 45,
       "image": "https://ik.imagekit.io/Mangaldeep/Yamuna%20Water%20Spray%20(2).png",
       "emoji": "💧",
-      "description": "Sacred Yamuna jal spray inspired by Krishna's Vrindavan leelas",
+      "description": "ISKCON Yamuna jal spray inspired by Krishna's Vrindavan leelas",
       "lore": "The Yamuna River holds deep significance in Krishna bhakti traditions and is closely associated with Krishna's childhood leelas in Vrindavan. This sacred water spray brings a refreshing sense of devotion, purity, and spiritual calm into everyday spaces."
     },
     {
@@ -99,7 +99,7 @@
       "price": 75,
       "image": "https://ik.imagekit.io/Mangaldeep/ISKCON%20Mahamantra%20wall%20plate.png",
       "emoji": "📿",
-      "description": "Decorative wall plate featuring the Hare Krishna Mahamantra",
+      "description": "ISKCON devotional wall plate featuring the Hare Krishna Mahamantra",
       "lore": "The Hare Krishna Mahamantra is regarded as the most powerful chant for spiritual upliftment in Kali Yuga. Displaying the Mahamantra in one's home serves as a constant reminder of devotion, remembrance, and divine connection."
     }
   ]
