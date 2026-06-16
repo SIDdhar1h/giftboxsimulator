@@ -130,7 +130,17 @@ input,select{font-family:inherit}
 .item-card .ic-fallback{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:var(--parchment);font-size:2rem}
 .item-card .item-body{padding:.6rem .7rem}
 .item-card .item-name{font-size:.8rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.item-card .item-desc{font-size:.65rem;color:var(--muted);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-card .item-desc{
+  font-size:.65rem;
+  color:var(--muted);
+  margin-top:.1rem;
+
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+
+  overflow:hidden;
+}
 .item-badge{display:inline-flex;align-items:center;gap:.2rem;font-size:.65rem;font-weight:600;padding:.15rem .5rem;border-radius:1rem;margin-top:.35rem}
 .item-badge.added{background:rgba(234,179,8,.1);color:var(--copper)}
 .item-badge.add{color:var(--muted)}
